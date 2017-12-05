@@ -1,4 +1,3 @@
-Requirements
 | Date         | Requirement    | 
 | ------------- |:-------------:| 
 |dd.mm.rrrr|It must work (it it doesn’t, it’s disqualified): if I cannot play, it doesn't work.|
