@@ -1,6 +1,6 @@
-package com.epam;
+package com.epam.solidnie;
 
-public class App {
+public class Game {
     public static void main(String[] args) {
 
     }
