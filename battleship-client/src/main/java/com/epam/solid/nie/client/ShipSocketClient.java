@@ -20,7 +20,6 @@ class ShipSocketClient implements ShipClient {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
         ){
-            System.out.println("here1");
             String fromServer;
             String fromUser;
             while ((fromServer = in.readLine()) != null) {
@@ -35,7 +34,6 @@ class ShipSocketClient implements ShipClient {
                 }
             }
         } catch (IOException ignored){
-            System.out.println("was here");
             System.out.println(ignored.getMessage());
         }
     }
