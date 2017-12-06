@@ -91,16 +91,6 @@
                     <version>3.6</version>
                 </plugin>
 
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
-                    <configuration>
-                        <configLocation>google_checks.xml</configLocation>
-                    </configuration>
-                </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -109,7 +99,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
     <reporting>
 
     </reporting>
