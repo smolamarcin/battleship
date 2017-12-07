@@ -1,8 +1,5 @@
 package com.epam.solid.nie.config;
 
-import com.epam.solid.nie.config.ConfigProperty;
-import com.epam.solid.nie.config.Configuration;
-import com.epam.solid.nie.config.FileConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
