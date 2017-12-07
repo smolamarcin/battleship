@@ -19,7 +19,7 @@ class ShipSocketServer implements ShipServer {
         try (
                 ServerSocket serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip))
         ) {
-            System.out.println("was here");
+            System.out.println("Server is here");
             for (int nbOfPlayer = 0; nbOfPlayer < 2; nbOfPlayer++) {
                 Socket clientSocket = serverSocket.accept();
                 ServerThread serverThread = new ServerThread(clientSocket, nbOfPlayer);
