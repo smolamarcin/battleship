@@ -8,9 +8,11 @@ import java.net.Socket;
 
 class ServerThread extends Thread{
     private final Socket clientSocket;
+    private final int id;
 
-    ServerThread(Socket clientSocket) {
+    ServerThread(Socket clientSocket, int id) {
         this.clientSocket = clientSocket;
+        this.id = id;
     }
 
     @Override
@@ -23,11 +25,11 @@ class ServerThread extends Thread{
             String outputLine;
 
             Protocol protocol = new CommunicationProtocol();
-            outputLine = protocol.processInput("initial value");
+            outputLine = protocol.processInput("initial value", id);
             out.println(outputLine);
 
             while ((inputLine = in.readLine()) != null) {
-                outputLine = protocol.processInput(inputLine);
+                outputLine = protocol.processInput(inputLine, id);
                 out.println(outputLine);
                 if (outputLine.equals("Bye."))
                     break;

@@ -6,16 +6,25 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 class ShipSocketServer implements ShipServer {
-    private final int portNumber = 8080;
+
+    private final String ip;
+
+    ShipSocketServer(String ip) {
+        this.ip = ip;
+    }
 
     @Override
     public void run() {
-        try (ServerSocket serverSocket = new ServerSocket(portNumber, 0, InetAddress.getLoopbackAddress())) {
+        int portNumber = 8080;
+        try (
+                ServerSocket serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip))
+        ) {
+            System.out.println("was here");
             for (int nbOfPlayer = 0; nbOfPlayer < 2; nbOfPlayer++) {
                 Socket clientSocket = serverSocket.accept();
-                ServerThread serverThread = new ServerThread(clientSocket);
+                ServerThread serverThread = new ServerThread(clientSocket, nbOfPlayer);
                 serverThread.start();
-                //System.out.println("registered");
+                System.out.println("registered");
             }
         } catch (IOException ignored) {
         }
