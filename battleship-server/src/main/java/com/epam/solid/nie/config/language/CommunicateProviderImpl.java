@@ -23,4 +23,8 @@ public class CommunicateProviderImpl implements CommunicateProvider {
     public String getCommunicate(Communicate communicate) {
         return communicates.get(communicate);
     }
+
+    public boolean isMapEmpty(){
+        return communicates.isEmpty();
+    }
 }
