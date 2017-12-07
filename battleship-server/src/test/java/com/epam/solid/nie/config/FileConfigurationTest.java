@@ -5,9 +5,9 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
+@Test
 public class FileConfigurationTest {
 
-    @Test
     public void shouldProvideConfig() {
         //given
         Configuration conf = new FileConfiguration();
