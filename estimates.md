@@ -1,26 +1,22 @@
-| Optimistic         |  Realistic         |  Pesimistic         | Requirement    | 
-| ------------- | ------------- | ------------- |:-------------:| 
-|06.12.17|07.12.17|08.12.17|Project mantra followed (Git, Maven, test cases, etc.).|
-|12.12.17|14.12.17|16.12.17|Java FX simple GUI|
-|07.12.17|08.12.17|10.12.17|client-server architecture|
-|08.12.17|11.12.17|12.12.17|Both players are human players|
-|11.12.17|12.12.17|13.12.17|One game only(Game configuration, game starts)|
-|10.12.17|11.12.17|12.12.17|10x10 board|
-|13.12.17|14.12.17|15.12.17|Fleet consists of: 4-mast ship, 2 3-mast ships, 3 2-mast ships and 4 1-mast ships.|
-|16.12.17|17.12.17|18.12.17|Winner has ships remaining while loser has none.|
-|11.12.17|12.12.17|13.12.17|Game messages have configurable target: console (System.out, System.err) or logs or external printer.|
-|08.12.17|09.12.17|10.12.17|We are bi-lingual: Polish and English are fine. In future we want to add more languages: messages are to be read from a file for chosen language. Choosing the language depends on configuration variable.|
-|13.12.17|14.12.17|15.12.17|Drawing the boards for a player (fleet board has player's fleet and where opponent shot, "seen" board has where player fired and what he has shot).|
-|16.12.17|17.12.17|18.12.17|Placing the fleet - diagonal placing is disallowed, only horizontal and vertical. Humans can place ships but they can also choose to randomize placement. Ships cannot touch (no adjacent field to a ship can have a ship). Ships can be partially vertical and partially horizontal, if they have the length.|
-|18.12.17|19.12.17|20.12.17|Firing the shot - choose a place, shoot. If you hit, you repeat the shot. You can repeat as many times as you hit.|
-|20.12.17|21.12.17|22.12.17|Hitting the ship - hit happens when place chosen has enemy ship. Mark this part of ship as hit, ask for another shot. One can repeat the shot into already hit (or even sunken) ship, but this doesn't give the right to another shot.|
-|21.12.17|21.12.17|21.12.17|Missing the ship - misses are marked on "seen" board. One can shoot twice in the same place if it's a miss.|
-|21.12.17|21.12.17|22.12.17|Sinking the ship - if all masts of a ship are hit, ship sinks. Once the ship has sunk, mark all adjacent fields as "missed", since none of them can have a ship anyway.|
-|22.12.17|22.12.17|22.12.17|Sinking last ship, that is, winning.|
-|24.12.17|24.12.17|24.12.17|Nuke - thrice per game player chooses a 3x3 area and "nukes" it, that is, all ships within take damage as if shot. This is done in addition to normal shot. Only 4-mast ship has nukes, so once they are sunk, nukes cannot be used.|
-|08.12.17|11.12.17|12.12.17|CI server - before anything gets pulled into master, it is integrated with master by CI server, it runs tests, checks, etc.|
-|05.12.17|06.12.17|11.12.17|Jenkins (or equivalent) is used as CI server|
-|05.12.17|05.12.17|05.12.17|Maven is used by Jenkins and team|
-|08.12.17|08.12.17|09.12.17|Maven has Findbugs, JaCoCo and Checkstyle integration|
-|11.12.17|12.12.17|13.12.17|Sonar is used to keep quality gates (just internally is fine).|
-|06.12.17|07.12.17|08.12.17|Documentation should be provided, explaining program architecture (diagram is necessary, CRC diagrams are most welcome)|
+| Date | Optimistic    |  Realistic       |  Pesimistic         |
+| ------------- | ------------- | ------------- |:-------------:|
+|05.12.17|Jenkins (or equivalent)|Maven is used||
+|06.12.17|Project mantra followed (Git, Maven, test cases, etc.)., Documentation should be provided, explaining program architecture|Jenkins (or equivalent)|Maven is used|
+|07.12.17|client-server architecture, Network game, client-server architecture|Project mantra followed (Git, Maven, test cases, etc.)., Documentation should be provided, explaining program architecture||
+|08.12.17|Both players are human players, We are bi-lingual, CI server, Maven has Findbugs, JaCoCo and Checkstyle integration|client-server architecture, Network game, client-server architecture|Project mantra followed (Git, Maven, test cases, etc.)., Documentation should be provided, explaining program architecture|
+|09.12.17||We are bi-lingual, Maven has Findbugs, JaCoCo and Checkstyle integration||
+|10.12.17|10x10 board||client-server architecture, Network game, client-server architecture, We are bi-lingual, Maven has Findbugs, JaCoCo and Checkstyle integration|
+|11.12.17|One game only(Game configuration, game starts), Game messages have configurable target: console (System.out, System.err) or logs or external printer., Sonar is used to keep quality gates|10x10 board, Both players are human players, CI server|Jenkins (or equivalent)|
+|12.12.17|Java FX simple GUI|One game only(Game configuration, game starts), Game messages have configurable target: console (System.out, System.err) or logs or external printer., Sonar is used to keep quality gates|10x10 board, Both players are human players, CI server|
+|13.12.17|Fleet consists of: 4-mast ship, 2 3-mast ships, 3 2-mast ships and 4 1-mast ships., Drawing the boards for a player||One game only(Game configuration, game starts), Game messages have configurable target: console (System.out, System.err) or logs or external printer., Sonar is used to keep quality gates|
+|14.12.17||Java FX simple GUI, Fleet consists of: 4-mast ship, 2 3-mast ships, 3 2-mast ships and 4 1-mast ships., Drawing the boards for a player||
+|15.12.17|||Fleet consists of: 4-mast ship, 2 3-mast ships, 3 2-mast ships and 4 1-mast ships., Drawing the boards for a player|
+|16.12.17|Winner has ships remaining while loser has none., Placing the fleet||Java FX simple GUI|
+|17.12.17||Winner has ships remaining while loser has none., Placing the fleet||
+|18.12.17|Firing the shot||Winner has ships remaining while loser has none., Placing the fleet|
+|19.12.17||Firing the shot||
+|20.12.17|Hitting the ship||Firing the shot|
+|21.12.17|Missing the ship, Sinking the ship|Hitting the ship||
+|22.12.17|Sinking last ship, that is, winning|Missing the ship, Sinking the ship|Hitting the ship|
+|23.12.17||Sinking last ship, that is, winning|Missing the ship, Sinking the ship|
+|24.12.17||Nuke|Sinking last ship, that is, winning|
