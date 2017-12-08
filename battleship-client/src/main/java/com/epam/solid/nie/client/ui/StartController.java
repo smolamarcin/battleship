@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class Controller {
+public class StartController {
     @FXML
     private Button btn_connect;
 
@@ -13,7 +13,5 @@ public class Controller {
     void btn_connect_clicked(ActionEvent event) {
         System.out.println("bulbulator");
     }
-
-
 
 }
