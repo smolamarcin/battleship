@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 class ShipSocketClient implements ShipClient {
-    final String hostName = "127.0.0.1";
+    /**
+     * dummy implementation
+     */
+    private final String hostName = "127.0.0.1";
+    private final int portNumber = 8080;
+    private Logger logger = Logger.getLogger("ShipSocketClient");
 
     public void run() {
-        int portNumber = 8080;
-
         try (
                 Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -28,7 +32,8 @@ class ShipSocketClient implements ShipClient {
                 if (fromUser != null)
                     out.println(fromUser);
             }
-        } catch (IOException ignored){
+        } catch (IOException e){
+            logger.warning(e.getMessage());
         }
     }
 }
