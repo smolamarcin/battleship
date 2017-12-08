@@ -15,7 +15,6 @@ class ShipSocketServer implements ShipServer {
                 Socket clientSocket = serverSocket.accept();
                 ServerThread serverThread = new ServerThread(clientSocket);
                 serverThread.start();
-                //System.out.println("registered");
             }
         } catch (IOException ignored) {
         }

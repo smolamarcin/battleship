@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 class ShipSocketClient implements ShipClient {
+    final String hostName = "127.0.0.1";
 
     public void run() {
-        String hostName = "127.0.0.1";
         int portNumber = 8080;
 
         try (
