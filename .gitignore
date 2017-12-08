@@ -4,16 +4,10 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
 # Intelij files
 target/
 .idea/
 *.iml
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
 
 # Package Files #
 *.jar
@@ -22,7 +16,3 @@ target/
 *.zip
 *.tar.gz
 *.rar
-/.idea
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
