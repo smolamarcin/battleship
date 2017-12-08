@@ -6,11 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.epam.solid.nie.client.ui.Controller">
    <children>
       <TextField layoutX="215.0" layoutY="188.0" />
-      <Button layoutX="269.0" layoutY="235.0" mnemonicParsing="false" text="Connect" />
-      <Label alignment="CENTER" layoutX="282.0" layoutY="156.0" text="Please insert IP adress" />
+      <Button fx:id="btn_connect" layoutX="269.0" layoutY="235.0" mnemonicParsing="false" onAction="#btn_connect_clicked" text="Connect" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="163.0" text="Please insert IP adress" />
    </children>
 </Pane>
