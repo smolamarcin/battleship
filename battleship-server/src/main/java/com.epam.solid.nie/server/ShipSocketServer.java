@@ -22,7 +22,7 @@ class ShipSocketServer implements ShipServer {
             System.out.println("Server is here");
             for (int nbOfPlayer = 0; nbOfPlayer < 2; nbOfPlayer++) {
                 Socket clientSocket = serverSocket.accept();
-                ServerThread serverThread = new ServerThread(clientSocket, nbOfPlayer);
+                ServerThread serverThread = new ServerThread(clientSocket);
                 serverThread.start();
                 System.out.println("registered");
             }
