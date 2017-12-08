@@ -1,0 +1,95 @@
+C-Main
+R-run the Game
+C-Game
+
+C-Game
+R-performs GameStates in loop
+C-GameState
+
+C-GameState<I>
+R-represents states
+C-Placement, Play, End
+
+C-Placement
+R-state in which Players put they Ships on Board
+C-Player, Ship, Board
+
+C-Play
+R-state in which Players make their Moves
+C-Player, Move, Judge?
+
+C-End
+R-state in game finishes
+C-Player
+
+C-Player
+R-interface of real player
+C-Messenger, Input
+
+C-Input
+R-intermediary between GUI and game logic in valid data provision
+C-Validator, Language
+
+C-JsonParser
+R-parse object to json
+C-<?>
+
+C-Messenger
+R-send messages to Output in chosen Language
+C-Output
+
+C-Language
+R-translate messages to version understandable by human
+C-Input
+
+C-Output
+R-intermediary between GUI and game logic in data sending
+C-Langauge
+
+C-LanguageFileNotFoundException
+R-exception in case of lack of chosen language file
+C-Language
+
+C-Validator
+R-validate Input
+C-Input
+
+C-Board
+R-place to mark Moves
+C-Move, Mark
+
+C-BoardBuilder
+R-builds board from GameProgress
+C-GameProgress
+
+C-GameProgress
+R-represent current state of game
+C-Move
+
+C-Ship
+R-representation of ship on the Board
+C-
+
+C-Move
+R-event of marking Field
+C-Field, Mark
+
+C-Judge
+R-decide whether any of Players win
+C-Player
+
+C-Mark<E>
+R-sign which can be put in Field
+C-Field
+
+C-MissMark<E>
+R-sign which represent lack of Ship at the Field
+C-Field
+
+C-HitMark<E>
+R-Mark which represent hitten Ship at the Field
+C-Field
+
+C-BoardPrinter
+R-intermediary between GUI and game logic in printing Board
+C-Board
