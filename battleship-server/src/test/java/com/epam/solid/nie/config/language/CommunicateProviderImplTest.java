@@ -16,7 +16,7 @@ public class CommunicateProviderImplTest {
     }
 
     @Test(dataProvider = "languages")
-    public void populateShould_FillCommunicatesMap(Language language) throws Exception {
+    public void populateShould_FillCommunicatesMap(Language language) {
         communicateProvider.populate(language);
         assertFalse(communicateProvider.isMapEmpty());
     }
