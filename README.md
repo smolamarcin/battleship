@@ -1,0 +1,2 @@
+In order to run server you need to use command "java -cp battleship-server/target/battleship-server-1.0.1.jar com.epam.solid.nie.server.Main yourExternalIPAddress" on previously build jar
+In order to run client there has to be currently running server of battleship game and also you need to use command "java -cp battleship-client/target/battleship-client-1.0.1.jar com.epam.solid.nie.client.Main externalIPAddressOfBattleshipServer" on previously build jar

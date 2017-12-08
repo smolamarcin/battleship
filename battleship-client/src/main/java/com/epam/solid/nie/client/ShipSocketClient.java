@@ -11,9 +11,13 @@ class ShipSocketClient implements ShipClient {
     /**
      * dummy implementation
      */
-    private final String hostName = "127.0.0.1";
     private final int portNumber = 8080;
-    private Logger logger = Logger.getLogger("ShipSocketClient");
+    private final Logger logger = Logger.getLogger("ShipSocketClient");
+    private String hostName;
+
+    ShipSocketClient(String arg) {
+        hostName = arg;
+    }
 
     public void run() {
         try (
@@ -25,14 +29,17 @@ class ShipSocketClient implements ShipClient {
             String fromServer;
             String fromUser;
             while ((fromServer = in.readLine()) != null) {
+                System.out.println("Server: " + fromServer);
                 if (fromServer.equals("Bye."))
                     break;
 
                 fromUser = stdIn.readLine();
                 if (fromUser != null)
                     out.println(fromUser);
+                    System.out.println("Server: " + fromUser);
+                }
             }
-        } catch (IOException e){
+        catch (IOException e){
             logger.warning(e.getMessage());
         }
     }
