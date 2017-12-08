@@ -20,3 +20,4 @@
 |22.12.17|Sinking last ship, that is, winning|Missing the ship, Sinking the ship|Hitting the ship|
 |23.12.17||Sinking last ship, that is, winning|Missing the ship, Sinking the ship|
 |24.12.17||Nuke|Sinking last ship, that is, winning|
+|27.12.17| | | Nuke|
