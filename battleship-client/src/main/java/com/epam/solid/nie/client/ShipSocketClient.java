@@ -8,8 +8,13 @@ import java.net.Socket;
 
 class ShipSocketClient implements ShipClient {
 
+    private String hostName;
+
+    ShipSocketClient(String arg) {
+        hostName = arg;
+    }
+
     public void run() {
-        String hostName = "127.0.0.1";
         int portNumber = 8080;
 
         try (
@@ -21,12 +26,15 @@ class ShipSocketClient implements ShipClient {
             String fromServer;
             String fromUser;
             while ((fromServer = in.readLine()) != null) {
+                System.out.println("Server: " + fromServer);
                 if (fromServer.equals("Bye."))
                     break;
 
                 fromUser = stdIn.readLine();
-                if (fromUser != null)
+                if (fromUser != null) {
                     out.println(fromUser);
+                    System.out.println("Server: " + fromUser);
+                }
             }
         } catch (IOException ignored){
         }
