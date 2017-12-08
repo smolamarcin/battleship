@@ -8,11 +8,9 @@ import java.net.Socket;
 
 class ServerThread extends Thread{
     private final Socket clientSocket;
-    private final int id;
 
-    ServerThread(Socket clientSocket, int id) {
+    ServerThread(Socket clientSocket {
         this.clientSocket = clientSocket;
-        this.id = id;
     }
 
     @Override
