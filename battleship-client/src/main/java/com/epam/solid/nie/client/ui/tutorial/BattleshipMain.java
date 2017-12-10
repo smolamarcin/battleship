@@ -35,7 +35,7 @@ public class BattleshipMain extends Application {
             if (!running)
                 return;
 
-            Board.Cell cell = (Board.Cell) event.getSource();
+            Cell cell = (Cell) event.getSource();
             if (cell.wasShot)
                 return;
 
@@ -54,8 +54,9 @@ public class BattleshipMain extends Application {
             if (running)
                 return;
 
-            Board.Cell cell = (Board.Cell) event.getSource();
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+            Cell cell = (Cell) event.getSource();
+            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY),
+                    cell.x, cell.y)) {
                 if (--shipsToPlace == 0) {
                     startGame();
                 }
@@ -75,7 +76,7 @@ public class BattleshipMain extends Application {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
 
-            Board.Cell cell = playerBoard.getCell(x, y);
+            Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot)
                 continue;
 

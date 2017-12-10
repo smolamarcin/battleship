@@ -4,14 +4,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
-    public int x, y;
-    public Ship ship = null;
-    public boolean wasShot = false;
+    private static final int DEFAULT_WIDTH = 30;
+    private static final int DEFAULT_HEIGHT = 30;
+    int x;
+    int y;
+    Ship ship = null;
+    boolean wasShot = false;
 
     private Board board;
 
     public Cell(int x, int y, Board board) {
-        super(30, 30);
+        super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.x = x;
         this.y = y;
         this.board = board;
