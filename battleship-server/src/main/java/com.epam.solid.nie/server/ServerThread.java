@@ -9,30 +9,9 @@ import java.net.Socket;
 class ServerThread extends Thread{
     private final Socket clientSocket;
 
-    ServerThread(Socket clientSocket {
+    ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
-    @Override
-    public void run() {
-        try (
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
-        ) {
-            String inputLine;
-            String outputLine;
 
-            Protocol protocol = new CommunicationProtocol();
-            outputLine = protocol.processInput("initial value", id);
-            out.println(outputLine);
-
-            while ((inputLine = in.readLine()) != null) {
-                outputLine = protocol.processInput(inputLine, id);
-                out.println(outputLine);
-                if (outputLine.equals("Bye."))
-                    break;
-            }q
-        } catch (IOException ignored){
-        }
-    }
 }
