@@ -31,7 +31,7 @@ class ServerThread extends Thread{
                 out.println(outputLine);
                 if (outputLine.equals("Bye."))
                     break;
-            }
+            }q
         } catch (IOException ignored){
         }
     }
