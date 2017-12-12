@@ -1,6 +1,9 @@
 package com.epam.solid.nie.client.ui;
 
 
+import com.epam.solid.nie.client.IpValidator;
+import com.epam.solid.nie.client.Validator;
+import com.epam.solid.nie.client.ui.tutorial.BattleshipMain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +15,13 @@ public class StartController {
 
     @FXML
     void btn_connect_clicked(ActionEvent event) {
-        System.out.println(field_ip.getText());
+        Validator ipValidator = new IpValidator();
+        String ip=field_ip.getText();
+        if (ipValidator.validate(ip)){
+            new BattleshipMain().start();
+        }else {
+            System.out.println("False");
+        }
 
     }
 

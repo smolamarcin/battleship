@@ -12,10 +12,6 @@ public class Main extends Application {
         Parent start = FXMLLoader.load(getClass().getResource("/startScreen.fxml"));
         primaryStage.setScene(new Scene(start));
         primaryStage.show();
-        Stage anotherStage = new Stage();
-        Parent game = FXMLLoader.load(getClass().getResource("/gameScreen.fxml"));
-        anotherStage.setScene(new Scene(game));
-        anotherStage.show();
     }
     public static void main(String[] args) {
         launch(args);

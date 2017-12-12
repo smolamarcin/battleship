@@ -105,8 +105,11 @@ public class BattleshipMain extends Application {
         running = true;
     }
 
+    public void start(){
+        start(new Stage());
+    }
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage)  {
         Scene scene = new Scene(createContent());
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(scene);
@@ -114,8 +117,5 @@ public class BattleshipMain extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
 
