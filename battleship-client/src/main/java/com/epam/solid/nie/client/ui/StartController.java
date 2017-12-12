@@ -30,7 +30,6 @@ public class StartController {
         }else {
             System.out.println("Wrong ip.");
         }
-
     }
 
     @FXML

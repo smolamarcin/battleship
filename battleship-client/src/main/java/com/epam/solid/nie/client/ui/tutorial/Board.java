@@ -13,15 +13,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Board extends Parent {
+    private static final int MAX_HEIGHT = 10;
+    private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
+    private StringBuilder positions=new StringBuilder();
 
     public Board(boolean enemy, EventHandler<? super MouseEvent> handler) {
         this.enemy = enemy;
-        for (int y = 0; y < 10; y++) {
+        for (int y = 0; y < MAX_WIDTH; y++) {
             HBox row = new HBox();
-            for (int x = 0; x < 10; x++) {
+            for (int x = 0; x < MAX_HEIGHT; x++) {
                 Cell c = new Cell(x, y, this);
                 c.setOnMouseClicked(handler);
                 row.getChildren().add(c);
@@ -36,7 +39,6 @@ public class Board extends Parent {
     public boolean placeShip(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
             int length = ship.type;
-
             if (ship.vertical) {
                 for (int i = y; i < y + length; i++) {
                     Cell cell = getCell(x, i);
@@ -44,6 +46,7 @@ public class Board extends Parent {
                     if (!enemy) {
                         cell.setFill(Color.WHITE);
                         cell.setStroke(Color.GREEN);
+                        savePositionAsString(x, i);
                     }
                 }
             }
@@ -54,14 +57,19 @@ public class Board extends Parent {
                     if (!enemy) {
                         cell.setFill(Color.WHITE);
                         cell.setStroke(Color.GREEN);
+                        savePositionAsString(i, y);
                     }
                 }
             }
-
+            positions.append("|");
             return true;
         }
 
         return false;
+    }
+
+    private StringBuilder savePositionAsString(int x, int y) {
+        return positions.append(x+","+y+" ");
     }
 
     public Cell getCell(int x, int y) {
@@ -135,7 +143,7 @@ public class Board extends Parent {
     }
 
     private boolean isValidPoint(double x, double y) {
-        return x >= 0 && x < 10 && y >= 0 && y < 10;
+        return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
 
 
