@@ -18,7 +18,7 @@ public class Board extends Parent {
     private VBox rows = new VBox();
     private boolean enemy = false;
     public int ships = 5;
-    private StringBuilder positions=new StringBuilder();
+    private static StringBuilder positions=new StringBuilder();
 
     public Board(boolean enemy, EventHandler<? super MouseEvent> handler) {
         this.enemy = enemy;
@@ -46,7 +46,7 @@ public class Board extends Parent {
                     if (!enemy) {
                         cell.setFill(Color.WHITE);
                         cell.setStroke(Color.GREEN);
-                        savePositionAsString(x, i);
+                        savePositionPieceOfShip(cell);
                     }
                 }
             }
@@ -57,20 +57,25 @@ public class Board extends Parent {
                     if (!enemy) {
                         cell.setFill(Color.WHITE);
                         cell.setStroke(Color.GREEN);
-                        savePositionAsString(i, y);
+                        savePositionPieceOfShip(cell);
                     }
                 }
             }
-            positions.append("|");
+            markEndOfShip();
             return true;
         }
-
+        System.out.println(positions);
         return false;
     }
 
-    private StringBuilder savePositionAsString(int x, int y) {
-        return positions.append(x+","+y+" ");
+    private StringBuilder savePositionPieceOfShip(Cell cell) {
+        return positions.append(cell.toString());
     }
+
+    private StringBuilder markEndOfShip() {
+        return positions.append("|");
+    }
+
 
     public Cell getCell(int x, int y) {
         return (Cell)((HBox)rows.getChildren().get(y)).getChildren().get(x);

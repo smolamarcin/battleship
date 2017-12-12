@@ -37,4 +37,9 @@ public class Cell extends Rectangle {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return " ("+x+" "+ y+") ";
+    }
 }
