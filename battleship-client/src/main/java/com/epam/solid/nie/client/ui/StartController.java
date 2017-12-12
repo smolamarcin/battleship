@@ -17,8 +17,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class StartController {
-    @FXML
-    private Pane root;
 
     @FXML
     private Button btn_connect;
@@ -30,8 +28,7 @@ public class StartController {
         if (ipValidator.validate(ip)){
             new BattleshipMain().start();
         }else {
-            Pane parent=FXMLLoader.load(getClass().getResource("/invalidInput.fxml"));
-            root.getChildren().setAll(parent);
+            System.out.println("Wrong ip.");
         }
 
     }
