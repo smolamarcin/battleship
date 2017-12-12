@@ -5,14 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.logging.Logger;
 
 class ShipSocketClient implements ShipClient {
-    /**
-     * dummy implementation
-     */
-    private final int portNumber = 8080;
-    private final Logger logger = Logger.getLogger("ShipSocketClient");
+
     private String hostName;
 
     ShipSocketClient(String arg) {
@@ -20,6 +15,8 @@ class ShipSocketClient implements ShipClient {
     }
 
     public void run() {
+        int portNumber = 8080;
+
         try (
                 Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -34,13 +31,12 @@ class ShipSocketClient implements ShipClient {
                     break;
 
                 fromUser = stdIn.readLine();
-                if (fromUser != null)
+                if (fromUser != null) {
                     out.println(fromUser);
                     System.out.println("Server: " + fromUser);
                 }
             }
-        catch (IOException e){
-            logger.warning(e.getMessage());
+        } catch (IOException ignored){
         }
     }
 }
