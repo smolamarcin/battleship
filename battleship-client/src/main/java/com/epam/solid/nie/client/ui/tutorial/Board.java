@@ -44,9 +44,7 @@ public class Board extends Parent {
                     Cell cell = getCell(x, i);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
-                        savePositionPieceOfShip(cell);
+                        markFieldAsOccupiedByShip(cell);
                     }
                 }
             }
@@ -55,9 +53,7 @@ public class Board extends Parent {
                     Cell cell = getCell(i, y);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
-                        cell.setStroke(Color.GREEN);
-                        savePositionPieceOfShip(cell);
+                        markFieldAsOccupiedByShip(cell);
                     }
                 }
             }
@@ -66,6 +62,12 @@ public class Board extends Parent {
         }
         System.out.println(positions);
         return false;
+    }
+
+    private void markFieldAsOccupiedByShip(Cell cell) {
+        cell.setFill(Color.WHITE);
+        cell.setStroke(Color.GREEN);
+        savePositionPieceOfShip(cell);
     }
 
     private StringBuilder savePositionPieceOfShip(Cell cell) {
@@ -139,7 +141,6 @@ public class Board extends Parent {
                 }
             }
         }
-
         return true;
     }
 
