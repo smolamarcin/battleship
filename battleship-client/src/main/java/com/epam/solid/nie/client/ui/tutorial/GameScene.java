@@ -66,10 +66,8 @@ public class GameScene extends Application {
                 return;
             Cell cell = (Cell) event.getSource();
             if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY),
-                    cell.x, cell.y)) {
-                if (--shipsToPlace == 0) {
-                    running = placeShipsRandomly();
-                }
+                    cell.x, cell.y) && --shipsToPlace == 0) {
+                running = placeShipsRandomly();
             }
         };
     }
@@ -78,13 +76,10 @@ public class GameScene extends Application {
         while (enemyTurn) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-
             Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot)
                 continue;
-
             enemyTurn = cell.shoot();
-
             if (checkForWin(playerBoard)) {
                 System.out.println("YOU LOSE");
                 System.exit(0);
@@ -96,13 +91,18 @@ public class GameScene extends Application {
         return board.ships == 0;
     }
 
+    /**
+     * There are 5 types of ships.
+     * Method picks random cell to place ship.
+     * Ship type is changed in every iteration
+     */
     private boolean placeShipsRandomly() {
-        int type = 5;
-        while (type > 0) {
+        int numberOfShipTypes = 5;
+        while (numberOfShipTypes > 0) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-            if (enemyBoard.placeShip(new Ship(type, Math.random() < 0.5), x, y)) {
-                type--;
+            if (enemyBoard.placeShip(new Ship(numberOfShipTypes, Math.random() < 0.5), x, y)) {
+                numberOfShipTypes--;
             }
         }
         return true;
