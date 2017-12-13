@@ -3,15 +3,15 @@ package com.epam.solid.nie.client.ui.tutorial;
 import javafx.scene.Parent;
 
 public class Ship extends Parent {
-    public int type;
-    public boolean vertical = true;
+    private int length;
+    public boolean vertical;
 
     private int health;
 
-    public Ship(int type, boolean vertical) {
-        this.type = type;
+    Ship(int length, boolean vertical) {
+        this.length = length;
         this.vertical = vertical;
-        health = type;
+        health = length;
 
         /*VBox vbox = new VBox();
         for (int i = 0; i < type; i++) {
@@ -29,5 +29,9 @@ public class Ship extends Parent {
 
     public boolean isAlive() {
         return health > 0;
+    }
+
+    public int getLength() {
+        return length;
     }
 }

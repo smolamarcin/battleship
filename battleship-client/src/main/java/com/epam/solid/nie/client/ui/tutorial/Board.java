@@ -40,32 +40,43 @@ public class Board extends Parent {
         getChildren().add(rows);
     }
 
-    public boolean placeShip(Ship ship, int x, int y) {
+    public boolean isShipPositionValid(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
-            int length = ship.type;
-            if (ship.vertical) {
-                for (int i = y; i < y + length; i++) {
-                    Cell cell = getCell(x, i);
-                    cell.ship = ship;
-                    if (!enemy) {
-                        markFieldAsOccupiedByShip(cell);
-                    }
-                }
-            }
-            else {
-                for (int i = x; i < x + length; i++) {
-                    Cell cell = getCell(i, y);
-                    cell.ship = ship;
-                    if (!enemy) {
-                        markFieldAsOccupiedByShip(cell);
-                    }
-                }
-            }
-            markEndOfShip();
-            return true;
+            return placeShip(ship, x, y);
         }
         System.out.println(positions);
         return false;
+    }
+
+    private boolean placeShip(Ship ship, int x, int y) {
+        if (ship.vertical) {
+            placeShipVertically(ship, x, y);
+        }
+        else {
+            placeShipHorizontally(ship, x, y);
+        }
+        markEndOfShip();
+        return true;
+    }
+
+    private void placeShipHorizontally(Ship ship, int x, int y) {
+        for (int i = x; i < x + ship.getLength(); i++) {
+            Cell cell = getCell(i, y);
+            cell.ship = ship;
+            if (!enemy) {
+                markFieldAsOccupiedByShip(cell);
+            }
+        }
+    }
+
+    private void placeShipVertically(Ship ship, int x, int y) {
+        for (int i = y; i < y + ship.getLength(); i++) {
+            Cell cell = getCell(x, i);
+            cell.ship = ship;
+            if (!enemy) {
+                markFieldAsOccupiedByShip(cell);
+            }
+        }
     }
 
     private void markFieldAsOccupiedByShip(Cell cell) {
@@ -107,7 +118,7 @@ public class Board extends Parent {
     }
 
     private boolean canPlaceShip(Ship ship, int x, int y) {
-        int length = ship.type;
+        int length = ship.getLength();
 
         if (ship.vertical) {
             for (int i = y; i < y + length; i++) {

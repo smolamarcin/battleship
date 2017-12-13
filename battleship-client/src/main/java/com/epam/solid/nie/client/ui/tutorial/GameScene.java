@@ -65,7 +65,7 @@ public class GameScene extends Application {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY),
+            if (playerBoard.isShipPositionValid(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY),
                     cell.x, cell.y) && --shipsToPlace == 0) {
                 running = placeShipsRandomly();
             }
@@ -101,7 +101,7 @@ public class GameScene extends Application {
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-            if (enemyBoard.placeShip(new Ship(numberOfShipTypes, Math.random() < 0.5), x, y)) {
+            if (enemyBoard.isShipPositionValid(new Ship(numberOfShipTypes, Math.random() < 0.5), x, y)) {
                 numberOfShipTypes--;
             }
         }
