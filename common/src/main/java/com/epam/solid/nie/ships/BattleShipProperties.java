@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by marek on 13.12.2017.
  */
-public interface ShipFactory {
-    BattleShip createShip(BattleShipType type, List<Point2D> positions);
+interface BattleShipProperties {
+    List<Point2D> getShipProperties();
+
 }
