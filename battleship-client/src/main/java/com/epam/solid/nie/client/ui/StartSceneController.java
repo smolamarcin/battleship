@@ -15,13 +15,22 @@ public class StartSceneController {
 
     @FXML
     private Button btn_connect;
-
+    //TODO:
+    //imie przeakaze do konstruktora
+    //ip
+    //rozstawienie statkow (jako string)
+    //pozycje po kazdym ruchu jako string
     @FXML
     void btn_connect_clicked(ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
         String ip=field_ip.getText();
         if (ipValidator.validate(ip)){
-            new GameScene().start();
+
+            Something something = new Something();
+            if (something.canConnect(ip)){
+                something.connect(ip);
+                new GameScene(something).start();
+            }
         }else {
             System.out.println("Wrong ip.");
         }
