@@ -16,21 +16,13 @@ public class Board extends Parent {
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
-    private boolean enemy = false;
+    private boolean enemy;
     public int ships = 5;
     private static StringBuilder positions=new StringBuilder();
-    private EventHandler<? super MouseEvent> handler;
 
     Board(boolean enemy){
         this.enemy = enemy;
     }
-
-    Board(boolean enemy, EventHandler<? super MouseEvent> handler){
-        this.enemy = enemy;
-        this.handler = handler;
-    }
-
-
 
 
     void initialize(EventHandler<? super MouseEvent> handler) {
