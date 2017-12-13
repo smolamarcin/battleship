@@ -38,7 +38,7 @@ public class GameScene extends Application {
 
             enemyTurn = !cell.shoot();
 
-            if (enemyBoard.ships == 0) {
+            if (checkForWin(enemyBoard)) {
                 System.out.println("YOU WIN");
                 System.exit(0);
             }
@@ -80,11 +80,15 @@ public class GameScene extends Application {
 
             enemyTurn = cell.shoot();
 
-            if (playerBoard.ships == 0) {
+            if (checkForWin(playerBoard)) {
                 System.out.println("YOU LOSE");
                 System.exit(0);
             }
         }
+    }
+
+    private boolean checkForWin(Board board) {
+        return board.ships == 0;
     }
 
     private boolean placeShipsRandomly() {
