@@ -1,7 +1,7 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
+import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -16,13 +16,12 @@ public class Board extends Parent {
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    public int ships = 5;
+    int ships = 5;
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy) {
         this.enemy = enemy;
     }
-
 
     void initialize(EventHandler<? super MouseEvent> handler) {
         for (int y = 0; y < MAX_WIDTH; y++) {
@@ -34,18 +33,19 @@ public class Board extends Parent {
     private void fillHorizontal(EventHandler<? super MouseEvent> handler, int y) {
         HBox row = new HBox();
         for (int x = 0; x < MAX_HEIGHT; x++) {
-            createCellInRow(handler, y, row, x);
+            Point2D point2D = new Point2D(x,y);
+            createCellInRow(handler, row, point2D);
         }
         rows.getChildren().add(row);
     }
 
-    private void createCellInRow(EventHandler<? super MouseEvent> handler, int y, HBox row, int x) {
-        Cell c = new Cell(x, y, this);
+    private void createCellInRow(EventHandler<? super MouseEvent> handler, HBox row, Point2D point2D) {
+        Cell c = new Cell(point2D, this);
         c.setOnMouseClicked(handler);
         row.getChildren().add(c);
     }
 
-    public boolean isShipPositionValid(Ship ship, Cell cell) {
+    boolean isShipPositionValid(Ship ship, Cell cell) {
         if (canPlaceShip(ship, cell)) {
             return placeShip(ship, cell);
         }
@@ -65,8 +65,7 @@ public class Board extends Parent {
 
     private void placeShipHorizontally(Ship ship, int x, int y) {
         for (int i = x; i < x + ship.getLength(); i++) {
-            Cell cell = getCell(i, y);
-            cell.ship = ship;
+            Cell cell = getCell(i, y).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
             }
@@ -75,8 +74,7 @@ public class Board extends Parent {
 
     private void placeShipVertically(Ship ship, int x, int y) {
         for (int i = y; i < y + ship.getLength(); i++) {
-            Cell cell = getCell(x, i);
-            cell.ship = ship;
+            Cell cell = getCell(x, i).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
             }
@@ -98,7 +96,7 @@ public class Board extends Parent {
     }
 
 
-    public Cell getCell(int x, int y) {
+    Cell getCell(int x, int y) {
         return (Cell) ((HBox) rows.getChildren().get(y)).getChildren().get(x);
     }
 
@@ -125,7 +123,7 @@ public class Board extends Parent {
         return neighbors.toArray(new Cell[0]);
     }
 
-    public boolean canPlaceShip(Ship ship, Cell cell) {
+    private boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getLength();
         int x = cell.getCellX();
         int y = cell.getCellY();
@@ -135,30 +133,28 @@ public class Board extends Parent {
                 if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
                     return false;
                 }
-
-                for (Cell neighbor : getNeighbors(x, i)) {
-                    if (!isInScope(x, i))
-                        return false;
-
-                    if (neighbor.isOccupied())
-                        return false;
-                }
+                if (canPlaceShip(i, x)) return false;
             }
         } else {
             for (int i = x; i < x + length; i++) {
                 if (!isInScope(i, y) || getCell(i, y).isOccupied())
                     return false;
 
-                for (Cell neighbor : getNeighbors(i, y)) {
-                    if (!isInScope(i, y))
-                        return false;
-
-                    if (neighbor.isOccupied())
-                        return false;
-                }
+                if (canPlaceShip(y, i)) return false;
             }
         }
         return true;
+    }
+
+    private boolean canPlaceShip(int y, int i) {
+        for (Cell neighbor : getNeighbors(i, y)) {
+            if (!isInScope(i, y))
+                return true;
+
+            if (neighbor.isOccupied())
+                return true;
+        }
+        return false;
     }
 
     private boolean isInScope(Point2D point) {
@@ -172,6 +168,5 @@ public class Board extends Parent {
     public String getAllpositions() {
         return positions.toString();
     }
-
 
 }

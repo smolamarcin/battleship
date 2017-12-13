@@ -1,6 +1,8 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
+import com.epam.solid.nie.state.State;
+import com.epam.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,6 +20,7 @@ import java.util.Random;
 
 public class GameScene extends Application {
 
+    private State state;
     private boolean running = false;
     private Board enemyBoard, playerBoard;
     private int shipsToPlace = 5;
@@ -99,7 +102,7 @@ public class GameScene extends Application {
             int x = random.nextInt(9);
             int y = random.nextInt(9);
             Ship ship = new Ship(numberOfShipTypes, Math.random() < 0.5);
-            if (enemyBoard.isShipPositionValid(ship, new Cell(x,y))) {
+            if (enemyBoard.isShipPositionValid(ship, new Cell(new Point2D(x,y)))) {
                 numberOfShipTypes--;
             }
         }

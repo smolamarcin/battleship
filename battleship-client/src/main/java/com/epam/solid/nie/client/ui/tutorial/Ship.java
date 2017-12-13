@@ -1,11 +1,12 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 import javafx.scene.Parent;
+import lombok.Getter;
 
-public class Ship extends Parent {
+@Getter
+class Ship extends Parent {
     private int length;
-    public boolean vertical;
-
+    boolean vertical;
     private int health;
 
     Ship(int length, boolean vertical) {
@@ -14,15 +15,15 @@ public class Ship extends Parent {
         health = length;
     }
 
-    public void hit() {
+    void hit() {
         health--;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return health > 0;
     }
 
-    public int getLength() {
+    int getLength() {
         return length;
     }
 }

@@ -1,33 +1,35 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
+import com.epam.solid.nie.utils.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
-    private int x;
-    private int y;
-    Ship ship = null;
-    boolean wasShot = false;
-
+    private Point2D point2D;
+    private Ship ship;
     private Board board;
+    boolean wasShot;
 
-    Cell(int x, int y, Board board) {
+    Cell(Point2D point2D, Board board) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        this.x = x;
-        this.y = y;
         this.board = board;
+        this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
         setStroke(Color.BLACK);
     }
 
-    Cell(int x, int y){
-        this.x = x;
-        this.y = y;
+    Cell(Point2D point2D){
+        this.point2D = point2D;
     }
 
-               public boolean shoot() {
+    Cell addShip(Ship ship){
+        this.ship = ship;
+        return this;
+    }
+
+    boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
 
@@ -42,20 +44,20 @@ public class Cell extends Rectangle {
 
         return false;
     }
-    public boolean isOccupied(){
+    boolean isOccupied(){
         return ship!=null;
     }
 
     @Override
     public String toString() {
-        return x+","+ y+",";
+        return point2D.getX()+","+ point2D.getY()+",";
     }
 
-    public int getCellX() {
-        return x;
+    int getCellX() {
+        return point2D.getX();
     }
 
-    public int getCellY() {
-        return y;
+    int getCellY() {
+        return point2D.getY();
     }
 }
