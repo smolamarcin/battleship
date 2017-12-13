@@ -19,9 +19,21 @@ public class Board extends Parent {
     private boolean enemy = false;
     public int ships = 5;
     private static StringBuilder positions=new StringBuilder();
+    private EventHandler<? super MouseEvent> handler;
 
-    public Board(boolean enemy, EventHandler<? super MouseEvent> handler) {
+    Board(boolean enemy){
         this.enemy = enemy;
+    }
+
+    Board(boolean enemy, EventHandler<? super MouseEvent> handler){
+        this.enemy = enemy;
+        this.handler = handler;
+    }
+
+
+
+
+    void initialize(EventHandler<? super MouseEvent> handler) {
         for (int y = 0; y < MAX_WIDTH; y++) {
             HBox row = new HBox();
             for (int x = 0; x < MAX_HEIGHT; x++) {

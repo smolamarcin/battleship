@@ -4,10 +4,12 @@ package com.epam.solid.nie.client.ui.tutorial;
 import java.util.Random;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -28,10 +30,20 @@ public class GameScene extends Application {
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);
-
+        enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+        enemyBoard.initialize(setUpAIShips());
+        playerBoard = new Board(false);
+        playerBoard.initialize(setUpPlayerShips());
+        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        vbox.setAlignment(Pos.CENTER);
+        root.setCenter(vbox);
 
-        enemyBoard = new Board(true, event -> {
+        return root;
+    }
+
+    private EventHandler<MouseEvent> setUpAIShips() {
+        return event -> {
             Cell cell = (Cell) event.getSource();
             if (!running || cell.wasShot)
                 return;
@@ -45,18 +57,11 @@ public class GameScene extends Application {
 
             if (enemyTurn)
                 enemyMove();
-        });
-
-        playerBoard = setUpShips();
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);
-        root.setCenter(vbox);
-
-        return root;
+        };
     }
 
-    private Board setUpShips() {
-        return new Board(false, event -> {
+    private EventHandler<MouseEvent> setUpPlayerShips() {
+        return event -> {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
@@ -66,7 +71,7 @@ public class GameScene extends Application {
                     running = placeShipsRandomly();
                 }
             }
-        });
+        };
     }
 
     private void enemyMove() {
