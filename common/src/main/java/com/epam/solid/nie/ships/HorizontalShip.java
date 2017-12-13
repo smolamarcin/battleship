@@ -11,9 +11,13 @@ public class HorizontalShip extends AbstractShipPositions implements BattleShip 
 
     private BattleShipType battleShipType;
 
-    HorizontalShip(BattleShipType battleShipType, List<Point2D> positions) {
-        this.battleShipType = battleShipType;
+    HorizontalShip(List<Point2D> positions) {
         setPositions(positions);
+    }
+
+    HorizontalShip addType(){
+        this.battleShipType = BattleShipType.valueOf(getShipsRemainingHealth(getPositions()));
+        return this;
     }
 
     public BattleShipType getBattleShipType() {

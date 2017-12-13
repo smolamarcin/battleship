@@ -7,6 +7,6 @@ import java.util.List;
 /**
  * Created by marek on 13.12.2017.
  */
-public interface ShipHealth {
+interface ShipHealth {
     int getShipsRemainingHealth(List<Point2D> positions);
 }

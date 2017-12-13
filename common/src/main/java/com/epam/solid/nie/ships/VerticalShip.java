@@ -11,10 +11,15 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
 
     private BattleShipType battleShipType;
 
-    VerticalShip(BattleShipType battleShipType, List<Point2D> positions) {
-        this.battleShipType = battleShipType;
+    VerticalShip(List<Point2D> positions) {
         setPositions(positions);
     }
+
+    VerticalShip addType(){
+        this.battleShipType = BattleShipType.valueOf(getShipsRemainingHealth(getPositions()));
+        return this;
+    }
+
     public BattleShipType getBattleShipType() {
         return battleShipType;
     }

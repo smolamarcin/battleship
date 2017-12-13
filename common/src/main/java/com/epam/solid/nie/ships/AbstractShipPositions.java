@@ -15,7 +15,7 @@ abstract class AbstractShipPositions {
         return positions;
     }
 
-    public void setPositions(List<Point2D> positions) {
+    void setPositions(List<Point2D> positions) {
         this.positions = positions;
     }
 }

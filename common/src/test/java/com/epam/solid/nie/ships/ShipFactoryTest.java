@@ -4,6 +4,7 @@ import com.epam.solid.nie.utils.Point2D;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,15 +14,16 @@ import java.util.List;
 @Test
 public class ShipFactoryTest {
 
+
     public void should_createHorizontalShip(){
         //given
         ShipFactory factory = new HorizontalShipFactory();
 
         //when
-        BattleShip ship = factory.createShip(BattleShipType.FIVE_MASTED, null);
+        BattleShip ship = factory.createShip(new ArrayList<Point2D>());
 
         //then
-        verifyType(ship, BattleShipType.FIVE_MASTED, HorizontalShip.class);
+        verifyType(ship, null, HorizontalShip.class);
     }
 
     public void should_CreateVerticalShip(){
@@ -29,10 +31,10 @@ public class ShipFactoryTest {
         ShipFactory factory = new VerticalShipFactory();
 
         //when
-        BattleShip ship = factory.createShip(BattleShipType.TWO_MASTED, null);
+        BattleShip ship = factory.createShip(new ArrayList<Point2D>());
 
         //then
-        verifyType(ship, BattleShipType.TWO_MASTED, VerticalShip.class);
+        verifyType(ship, null, VerticalShip.class);
     }
 
     public void should_CreateVerticalShip_WithPositions(){
@@ -41,7 +43,7 @@ public class ShipFactoryTest {
         List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,1), new Point2D(2,2));
 
         //when
-        BattleShip ship = factory.createShip(BattleShipType.THREE_MASTED, positions);
+        BattleShip ship = factory.createShip(positions);
         List<Point2D> shipProperties = ship.getShipProperties();
 
         //then
@@ -55,7 +57,7 @@ public class ShipFactoryTest {
         List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,0), new Point2D(2,0), new Point2D(3,0));
 
         //when
-        BattleShip ship = factory.createShip(BattleShipType.FOUR_MASTED, positions);
+        BattleShip ship = factory.createShip(positions);
         List<Point2D> shipProperties = ship.getShipProperties();
 
         //then
@@ -69,7 +71,7 @@ public class ShipFactoryTest {
         List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,0), new Point2D(2,0), new Point2D(3,0));
 
         //when
-        BattleShip ship = factory.createShip(BattleShipType.FOUR_MASTED, positions);
+        BattleShip ship = factory.createShip(positions);
         int shipsRemainingHealth = ship.getShipsRemainingHealth(ship.getShipProperties());
 
         //then
