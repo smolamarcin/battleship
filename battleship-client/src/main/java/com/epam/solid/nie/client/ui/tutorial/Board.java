@@ -132,7 +132,7 @@ public class Board extends Parent {
                     if (!isInScope(x, i))
                         return false;
 
-                    if (neighbor.ship != null)
+                    if (neighbor.isOccupied())
                         return false;
                 }
             }
@@ -146,7 +146,7 @@ public class Board extends Parent {
                     if (!isInScope(i, y))
                         return false;
 
-                    if (neighbor.ship != null)
+                    if (neighbor.isOccupied())
                         return false;
                 }
             }
