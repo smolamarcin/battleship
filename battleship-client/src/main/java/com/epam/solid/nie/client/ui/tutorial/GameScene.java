@@ -1,8 +1,6 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
-import java.util.Random;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.Random;
 
 
 public class GameScene extends Application {

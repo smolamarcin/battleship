@@ -1,4 +1,4 @@
-package com.epam.solid.nie.config.state;
+package com.epam.solid.nie.state;
 
 import com.epam.solid.nie.state.*;
 import org.testng.Assert;
