@@ -5,4 +5,9 @@ public class CommunicationProtocol implements Protocol {
     public String processInput(String inputString) {
         return inputString.equals("Q") ? "Bye." : "Provide location";
     }
+
+    @Override
+    public String processInput(String inputString, int id) {
+        return null;
+    }
 }
