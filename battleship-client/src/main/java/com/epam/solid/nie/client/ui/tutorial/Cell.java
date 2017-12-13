@@ -37,6 +37,9 @@ public class Cell extends Rectangle {
 
         return false;
     }
+    public boolean isOccupied(){
+        return ship!=null;
+    }
 
     @Override
     public String toString() {

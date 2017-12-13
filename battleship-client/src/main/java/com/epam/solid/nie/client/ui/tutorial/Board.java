@@ -111,7 +111,7 @@ public class Board extends Parent {
         List<Cell> neighbors = new ArrayList<>();
 
         for (Point2D p : points) {
-            if (isValidPoint(p)) {
+            if (isInScope(p)) {
                 neighbors.add(getCell((int)p.getX(), (int)p.getY()));
             }
         }
@@ -124,12 +124,12 @@ public class Board extends Parent {
 
         if (ship.vertical) {
             for (int i = y; i < y + length; i++) {
-                if (!isValidPoint(x, i) || getCell(x, i).ship != null ) {
+                if (!isInScope(x, i) || getCell(x, i).isOccupied() ) {
                     return false;
                 }
 
                 for (Cell neighbor : getNeighbors(x, i)) {
-                    if (!isValidPoint(x, i))
+                    if (!isInScope(x, i))
                         return false;
 
                     if (neighbor.ship != null)
@@ -139,11 +139,11 @@ public class Board extends Parent {
         }
         else {
             for (int i = x; i < x + length; i++) {
-                if (!isValidPoint(i, y) ||  getCell(i, y).ship != null)
+                if (!isInScope(i, y) ||  getCell(i, y).isOccupied())
                     return false;
 
                 for (Cell neighbor : getNeighbors(i, y)) {
-                    if (!isValidPoint(i, y))
+                    if (!isInScope(i, y))
                         return false;
 
                     if (neighbor.ship != null)
@@ -154,11 +154,11 @@ public class Board extends Parent {
         return true;
     }
 
-    private boolean isValidPoint(Point2D point) {
-        return isValidPoint(point.getX(), point.getY());
+    private boolean isInScope(Point2D point) {
+        return isInScope(point.getX(), point.getY());
     }
 
-    private boolean isValidPoint(double x, double y) {
+    private boolean isInScope(double x, double y) {
         return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
     public String getAllpositions(){
