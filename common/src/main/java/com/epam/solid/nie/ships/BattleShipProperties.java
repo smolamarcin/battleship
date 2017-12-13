@@ -9,5 +9,4 @@ import java.util.List;
  */
 interface BattleShipProperties {
     List<Point2D> getShipProperties();
-
 }

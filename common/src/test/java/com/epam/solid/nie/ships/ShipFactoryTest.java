@@ -63,7 +63,20 @@ public class ShipFactoryTest {
         Assert.assertEquals(positions, shipProperties);
     }
 
+    public void should_CreateHorizontalShip_WithPositions_andCheckHealth(){
+        //given
+        ShipFactory factory = new HorizontalShipFactory();
+        List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,0), new Point2D(2,0), new Point2D(3,0));
 
+        //when
+        BattleShip ship = factory.createShip(BattleShipType.FOUR_MASTED, positions);
+        int shipsRemainingHealth = ship.getShipsRemainingHealth(ship.getShipProperties());
+
+        //then
+        verifyType(ship, BattleShipType.FOUR_MASTED, HorizontalShip.class);
+        Assert.assertEquals(positions.size(), shipsRemainingHealth);
+
+    }
     private void verifyType(BattleShip battleShip, BattleShipType battleShipType, Class<?> clazz){
         Assert.assertTrue(clazz.isInstance(battleShip));
         Assert.assertEquals(battleShipType, battleShip.getBattleShipType());
