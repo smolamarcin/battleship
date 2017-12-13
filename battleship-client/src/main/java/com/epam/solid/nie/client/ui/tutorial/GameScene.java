@@ -99,8 +99,8 @@ public class GameScene extends Application {
     private boolean placeShipsRandomly() {
         int numberOfShipTypes = 5;
         while (numberOfShipTypes > 0) {
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
+            int x = random.nextInt(9);
+            int y = random.nextInt(9);
             if (enemyBoard.isShipPositionValid(new Ship(numberOfShipTypes, Math.random() < 0.5), x, y)) {
                 numberOfShipTypes--;
             }

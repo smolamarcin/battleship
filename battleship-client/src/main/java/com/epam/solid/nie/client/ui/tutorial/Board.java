@@ -122,12 +122,13 @@ public class Board extends Parent {
 
         if (ship.vertical) {
             for (int i = y; i < y + length; i++) {
-                if (!isValidPoint(x, i))
+                if (!isValidPoint(x, i)) {
                     return false;
-
+                }
                 Cell cell = getCell(x, i);
-                if (cell.ship != null)
+                if (cell.ship != null ) {
                     return false;
+                }
 
                 for (Cell neighbor : getNeighbors(x, i)) {
                     if (!isValidPoint(x, i))
