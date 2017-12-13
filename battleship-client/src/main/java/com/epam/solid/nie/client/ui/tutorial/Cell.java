@@ -40,6 +40,6 @@ public class Cell extends Rectangle {
 
     @Override
     public String toString() {
-        return " ("+x+" "+ y+") ";
+        return x+","+ y+",";
     }
 }

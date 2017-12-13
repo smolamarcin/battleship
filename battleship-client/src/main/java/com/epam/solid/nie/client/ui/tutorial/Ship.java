@@ -12,15 +12,6 @@ public class Ship extends Parent {
         this.length = length;
         this.vertical = vertical;
         health = length;
-
-        /*VBox vbox = new VBox();
-        for (int i = 0; i < type; i++) {
-            Rectangle square = new Rectangle(30, 30);
-            square.setFill(null);
-            square.setStroke(Color.BLACK);
-            vbox.getChildren().add(square);
-        }
-        getChildren().add(vbox);*/
     }
 
     public void hit() {
