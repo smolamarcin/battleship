@@ -6,14 +6,14 @@ import javafx.scene.shape.Rectangle;
 public class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
-    int x;
-    int y;
+    private int x;
+    private int y;
     Ship ship = null;
     boolean wasShot = false;
 
     private Board board;
 
-    public Cell(int x, int y, Board board) {
+    Cell(int x, int y, Board board) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.x = x;
         this.y = y;
@@ -22,7 +22,12 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
-    public boolean shoot() {
+    Cell(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+               public boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
 
@@ -44,5 +49,13 @@ public class Cell extends Rectangle {
     @Override
     public String toString() {
         return x+","+ y+",";
+    }
+
+    public int getCellX() {
+        return x;
+    }
+
+    public int getCellY() {
+        return y;
     }
 }

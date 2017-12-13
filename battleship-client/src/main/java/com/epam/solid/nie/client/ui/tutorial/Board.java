@@ -17,7 +17,7 @@ public class Board extends Parent {
     private VBox rows = new VBox();
     private boolean enemy;
     public int ships = 5;
-    private static StringBuilder positions=new StringBuilder();
+    private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy) {
         this.enemy = enemy;
@@ -36,7 +36,6 @@ public class Board extends Parent {
         for (int x = 0; x < MAX_HEIGHT; x++) {
             createRow(handler, y, row, x);
         }
-
         rows.getChildren().add(row);
     }
 
@@ -46,20 +45,19 @@ public class Board extends Parent {
         row.getChildren().add(c);
     }
 
-    public boolean isShipPositionValid(Ship ship, int x, int y) {
-        if (canPlaceShip(ship, x, y)) {
-            return placeShip(ship, x, y);
+    public boolean isShipPositionValid(Ship ship, Cell cell) {
+        if (canPlaceShip(ship, cell)) {
+            return placeShip(ship, cell);
         }
         System.out.println(positions);
         return false;
     }
 
-    private boolean placeShip(Ship ship, int x, int y) {
+    private boolean placeShip(Ship ship, Cell cell) {
         if (ship.vertical) {
-            placeShipVertically(ship, x, y);
-        }
-        else {
-            placeShipHorizontally(ship, x, y);
+            placeShipVertically(ship, cell.getCellX(), cell.getCellY());
+        } else {
+            placeShipHorizontally(ship, cell.getCellX(), cell.getCellY());
         }
         markEndOfShip();
         return true;
@@ -101,11 +99,11 @@ public class Board extends Parent {
 
 
     public Cell getCell(int x, int y) {
-        return (Cell)((HBox)rows.getChildren().get(y)).getChildren().get(x);
+        return (Cell) ((HBox) rows.getChildren().get(y)).getChildren().get(x);
     }
 
     private Cell[] getNeighbors(int x, int y) {
-        Point2D[] points = new Point2D[] {
+        Point2D[] points = new Point2D[]{
                 new Point2D(x - 1, y),
                 new Point2D(x + 1, y),
                 new Point2D(x, y - 1),
@@ -120,19 +118,21 @@ public class Board extends Parent {
 
         for (Point2D p : points) {
             if (isInScope(p)) {
-                neighbors.add(getCell((int)p.getX(), (int)p.getY()));
+                neighbors.add(getCell((int) p.getX(), (int) p.getY()));
             }
         }
 
         return neighbors.toArray(new Cell[0]);
     }
 
-    private boolean canPlaceShip(Ship ship, int x, int y) {
+    public boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getLength();
+        int x = cell.getCellX();
+        int y = cell.getCellY();
 
         if (ship.vertical) {
             for (int i = y; i < y + length; i++) {
-                if (!isInScope(x, i) || getCell(x, i).isOccupied() ) {
+                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
                     return false;
                 }
 
@@ -144,10 +144,9 @@ public class Board extends Parent {
                         return false;
                 }
             }
-        }
-        else {
+        } else {
             for (int i = x; i < x + length; i++) {
-                if (!isInScope(i, y) ||  getCell(i, y).isOccupied())
+                if (!isInScope(i, y) || getCell(i, y).isOccupied())
                     return false;
 
                 for (Cell neighbor : getNeighbors(i, y)) {
@@ -169,7 +168,8 @@ public class Board extends Parent {
     private boolean isInScope(double x, double y) {
         return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
-    public String getAllpositions(){
+
+    public String getAllpositions() {
         return positions.toString();
     }
 
