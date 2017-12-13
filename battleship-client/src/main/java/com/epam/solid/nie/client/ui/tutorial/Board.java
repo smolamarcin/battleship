@@ -151,6 +151,9 @@ public class Board extends Parent {
     private boolean isValidPoint(double x, double y) {
         return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
+    public String getAllpositions(){
+        return positions.toString();
+    }
 
 
 }

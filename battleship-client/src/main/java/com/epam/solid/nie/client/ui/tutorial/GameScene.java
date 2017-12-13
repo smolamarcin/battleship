@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-public class BattleshipMain extends Application {
+public class GameScene extends Application {
 
     private boolean running = false;
     private Board enemyBoard, playerBoard;
@@ -32,11 +32,8 @@ public class BattleshipMain extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
 
         enemyBoard = new Board(true, event -> {
-            if (!running)
-                return;
-
             Cell cell = (Cell) event.getSource();
-            if (cell.wasShot)
+            if (!running || cell.wasShot)
                 return;
 
             enemyTurn = !cell.shoot();
@@ -50,25 +47,26 @@ public class BattleshipMain extends Application {
                 enemyMove();
         });
 
-        playerBoard = new Board(false, event -> {
+        playerBoard = setUpShips();
+        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        vbox.setAlignment(Pos.CENTER);
+        root.setCenter(vbox);
+
+        return root;
+    }
+
+    private Board setUpShips() {
+        return new Board(false, event -> {
             if (running)
                 return;
-
             Cell cell = (Cell) event.getSource();
             if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY),
                     cell.x, cell.y)) {
                 if (--shipsToPlace == 0) {
-                    startGame();
+                    running = placeShipsRandomly();
                 }
             }
         });
-
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);
-
-        root.setCenter(vbox);
-
-        return root;
     }
 
     private void enemyMove() {
@@ -89,20 +87,16 @@ public class BattleshipMain extends Application {
         }
     }
 
-    private void startGame() {
-        // place enemy ships
+    private boolean placeShipsRandomly() {
         int type = 5;
-
         while (type > 0) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-
             if (enemyBoard.placeShip(new Ship(type, Math.random() < 0.5), x, y)) {
                 type--;
             }
         }
-
-        running = true;
+        return true;
     }
 
     public void start(){

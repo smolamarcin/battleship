@@ -3,20 +3,15 @@ package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.IpValidator;
 import com.epam.solid.nie.client.Validator;
-import com.epam.solid.nie.client.ui.tutorial.BattleshipMain;
+import com.epam.solid.nie.client.ui.tutorial.GameScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class StartController {
+public class StartSceneController {
 
     @FXML
     private Button btn_connect;
@@ -26,7 +21,7 @@ public class StartController {
         Validator ipValidator = new IpValidator();
         String ip=field_ip.getText();
         if (ipValidator.validate(ip)){
-            new BattleshipMain().start();
+            new GameScene().start();
         }else {
             System.out.println("Wrong ip.");
         }
