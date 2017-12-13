@@ -19,7 +19,7 @@ public class Board extends Parent {
     public int ships = 5;
     private static StringBuilder positions=new StringBuilder();
 
-    Board(boolean enemy){
+    Board(boolean enemy) {
         this.enemy = enemy;
     }
 
@@ -35,7 +35,6 @@ public class Board extends Parent {
 
             rows.getChildren().add(row);
         }
-
         getChildren().add(rows);
     }
 
@@ -102,10 +101,14 @@ public class Board extends Parent {
                 new Point2D(x - 1, y),
                 new Point2D(x + 1, y),
                 new Point2D(x, y - 1),
-                new Point2D(x, y + 1)
+                new Point2D(x, y + 1),
+                new Point2D(x - 1, y - 1),
+                new Point2D(x + 1, y - 1),
+                new Point2D(x - 1, y + 1),
+                new Point2D(x + 1, y + 1)
         };
 
-        List<Cell> neighbors = new ArrayList<Cell>();
+        List<Cell> neighbors = new ArrayList<>();
 
         for (Point2D p : points) {
             if (isValidPoint(p)) {
@@ -121,11 +124,7 @@ public class Board extends Parent {
 
         if (ship.vertical) {
             for (int i = y; i < y + length; i++) {
-                if (!isValidPoint(x, i)) {
-                    return false;
-                }
-                Cell cell = getCell(x, i);
-                if (cell.ship != null ) {
+                if (!isValidPoint(x, i) || getCell(x, i).ship != null ) {
                     return false;
                 }
 
@@ -140,11 +139,7 @@ public class Board extends Parent {
         }
         else {
             for (int i = x; i < x + length; i++) {
-                if (!isValidPoint(i, y))
-                    return false;
-
-                Cell cell = getCell(i, y);
-                if (cell.ship != null)
+                if (!isValidPoint(i, y) ||  getCell(i, y).ship != null)
                     return false;
 
                 for (Cell neighbor : getNeighbors(i, y)) {
