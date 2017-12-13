@@ -91,7 +91,7 @@ public class GameScene extends Application {
     /**
      * There are 5 types of ships.
      * Method picks random cell to place ship.
-     * Ship type is changed in every iteration
+     * ShipFactory type is changed in every iteration
      */
     private boolean placeShipsRandomly() {
         int numberOfShipTypes = 5;
