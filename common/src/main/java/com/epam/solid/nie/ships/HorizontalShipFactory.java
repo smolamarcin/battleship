@@ -8,7 +8,7 @@ import java.util.List;
  * Created by marek on 13.12.2017.
  */
 public class HorizontalShipFactory implements ShipFactory {
-    public BattleShip createShip(BattleShipType type,  List<Point2D> positions) {
-        return new HorizontalShip(type, positions);
+    public BattleShip createShip(List<Point2D> positions) {
+        return new HorizontalShip(positions).addType();
     }
 }

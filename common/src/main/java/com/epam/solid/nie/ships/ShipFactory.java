@@ -8,5 +8,5 @@ import java.util.List;
  * Created by marek on 13.12.2017.
  */
 public interface ShipFactory {
-    BattleShip createShip(BattleShipType type, List<Point2D> positions);
+    BattleShip createShip(List<Point2D> positions);
 }
