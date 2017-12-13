@@ -20,11 +20,8 @@ public class GameScene extends Application {
 
     private boolean running = false;
     private Board enemyBoard, playerBoard;
-
     private int shipsToPlace = 5;
-
     private boolean enemyTurn = false;
-
     private Random random = new Random();
 
     private Parent createContent() {
@@ -101,7 +98,8 @@ public class GameScene extends Application {
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);
             int y = random.nextInt(9);
-            if (enemyBoard.isShipPositionValid(new Ship(numberOfShipTypes, Math.random() < 0.5), new Cell(x,y))) {
+            Ship ship = new Ship(numberOfShipTypes, Math.random() < 0.5);
+            if (enemyBoard.isShipPositionValid(ship, new Cell(x,y))) {
                 numberOfShipTypes--;
             }
         }

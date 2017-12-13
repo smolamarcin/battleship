@@ -34,12 +34,12 @@ public class Board extends Parent {
     private void fillHorizontal(EventHandler<? super MouseEvent> handler, int y) {
         HBox row = new HBox();
         for (int x = 0; x < MAX_HEIGHT; x++) {
-            createRow(handler, y, row, x);
+            createCellInRow(handler, y, row, x);
         }
         rows.getChildren().add(row);
     }
 
-    private void createRow(EventHandler<? super MouseEvent> handler, int y, HBox row, int x) {
+    private void createCellInRow(EventHandler<? super MouseEvent> handler, int y, HBox row, int x) {
         Cell c = new Cell(x, y, this);
         c.setOnMouseClicked(handler);
         row.getChildren().add(c);
