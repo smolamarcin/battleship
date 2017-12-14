@@ -1,9 +1,9 @@
 package com.epam.solid.nie.client.ui;
 
 
-import com.epam.solid.nie.client.IpValidator;
-import com.epam.solid.nie.client.Validator;
-import com.epam.solid.nie.client.ui.tutorial.GameScene;
+import com.epam.solid.nie.client.communication.IpValidator;
+import com.epam.solid.nie.client.communication.Validator;
+import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

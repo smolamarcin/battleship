@@ -1,4 +1,4 @@
-package com.epam.solid.nie.client;
+package com.epam.solid.nie.client.communication;
 
 public class IpValidator implements Validator {
     @Override

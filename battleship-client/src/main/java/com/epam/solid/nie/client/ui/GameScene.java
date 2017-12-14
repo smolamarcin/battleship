@@ -1,7 +1,7 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 
-import com.epam.solid.nie.client.ui.SocketServer;
+import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -71,7 +71,9 @@ public class GameScene extends Application {
             Ship ship = new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY);
             if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
                 socketServer.passAllShips(playerBoard.getAllpositions());
-                running = placeShipsRandomly();
+                //todo: method to place ships is called here!!!!!!
+                running = placeShips();
+
             }
         };
     }
@@ -102,7 +104,20 @@ public class GameScene extends Application {
      * Method picks random cell to place ship.
      * Ship type is changed in every iteration
      */
-    private boolean placeShipsRandomly() {
+    private boolean placeShips() {
+        int numberOfShipTypes = 5;
+        while (numberOfShipTypes > 0) {
+            int x = random.nextInt(9);
+            int y = random.nextInt(9);
+            Ship ship = new Ship(numberOfShipTypes, Math.random() < 0.5);
+            if (enemyBoard.isShipPositionValid(ship, new Cell(x, y))) {
+                numberOfShipTypes--;
+            }
+        }
+        return true;
+    }
+    //todo: dominik
+    private boolean placeShips(String placement) {
         int numberOfShipTypes = 5;
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);
