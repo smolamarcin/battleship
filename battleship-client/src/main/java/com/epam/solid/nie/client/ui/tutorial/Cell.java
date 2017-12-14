@@ -22,15 +22,14 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
-    Cell(int x, int y){
+    public Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-               public boolean shoot() {
+    public boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
-
         if (ship != null) {
             ship.hit();
             setFill(Color.RED);
@@ -42,13 +41,14 @@ public class Cell extends Rectangle {
 
         return false;
     }
-    public boolean isOccupied(){
-        return ship!=null;
+
+    public boolean isOccupied() {
+        return ship != null;
     }
 
     @Override
     public String toString() {
-        return x+","+ y+",";
+        return x + "," + y + ",";
     }
 
     public int getCellX() {
