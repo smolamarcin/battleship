@@ -1,29 +1,27 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
+import com.epam.solid.nie.ships.BattleShip;
+import com.epam.solid.nie.utils.Point2D;
 import javafx.scene.Parent;
 import lombok.Getter;
 
 @Getter
 class Ship extends Parent {
-    private int length;
-    boolean vertical;
-    private int health;
+    private BattleShip battleShip;
 
-    Ship(int length, boolean vertical) {
-        this.length = length;
-        this.vertical = vertical;
-        health = length;
+    Ship(BattleShip battleShip) {
+        this.battleShip = battleShip;
     }
 
-    void hit() {
-        health--;
+    void hit(Point2D point2D) {
+        battleShip.getShipProperties().remove(point2D);
     }
 
     boolean isAlive() {
-        return health > 0;
+        return battleShip.getShipProperties().size() > 0;
     }
 
-    int getLength() {
-        return length;
+    int getRemainingHealth() {
+        return battleShip.getShipsRemainingHealth(battleShip.getShipProperties());
     }
 }

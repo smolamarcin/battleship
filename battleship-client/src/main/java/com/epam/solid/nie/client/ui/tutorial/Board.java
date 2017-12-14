@@ -64,7 +64,7 @@ public class Board extends Parent {
     }
 
     private void placeShipHorizontally(Ship ship, int x, int y) {
-        for (int i = x; i < x + ship.getLength(); i++) {
+        for (int i = x; i < x + ship.getRemainingHealth(); i++) {
             Cell cell = getCell(i, y).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
@@ -73,7 +73,7 @@ public class Board extends Parent {
     }
 
     private void placeShipVertically(Ship ship, int x, int y) {
-        for (int i = y; i < y + ship.getLength(); i++) {
+        for (int i = y; i < y + ship.getRemainingHealth(); i++) {
             Cell cell = getCell(x, i).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
@@ -124,7 +124,7 @@ public class Board extends Parent {
     }
 
     private boolean canPlaceShip(Ship ship, Cell cell) {
-        int length = ship.getLength();
+        int length = ship.getRemainingHealth();
         int x = cell.getCellX();
         int y = cell.getCellY();
 

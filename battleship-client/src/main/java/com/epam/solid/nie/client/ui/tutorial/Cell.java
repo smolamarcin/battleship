@@ -34,7 +34,7 @@ public class Cell extends Rectangle {
         setFill(Color.BLACK);
 
         if (ship != null) {
-            ship.hit();
+            ship.hit(point2D);
             setFill(Color.RED);
             if (!ship.isAlive()) {
                 board.ships--;

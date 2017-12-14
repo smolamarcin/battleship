@@ -65,7 +65,10 @@ public class GameScene extends Application {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
-            Ship ship = new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY);
+            Ship ship;
+            if(event.getButton() == MouseButton.PRIMARY){
+                ship = new Ship();
+            }
             if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
                 running = placeShipsRandomly();
             }
