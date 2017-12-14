@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 public class GameScene extends Application {
     private State state;
-    private boolean running = false;
+    public static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
 

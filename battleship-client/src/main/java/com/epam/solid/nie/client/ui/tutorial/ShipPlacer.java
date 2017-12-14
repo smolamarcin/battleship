@@ -8,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 
+import static com.epam.solid.nie.client.ui.tutorial.GameScene.running;
+
 class ShipPlacer {
 
     private List<Cell> cells = new ArrayList<>();
@@ -23,29 +25,34 @@ class ShipPlacer {
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
     }
-
+    
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                if(typesOfShips.isEmpty()){
-                    return;
-                }
-                int poll = typesOfShips.peek();
-                for(int j = poll ;j > 0 ;j --) {
-                    Cell cell = (Cell) event.getSource();
-                    cells.add(cell);
-                }
-                Ship ship = shipCreator.createShip(cells);
-                if (playerBoard.isShipPositionValid(ship, cells)) {
-                    typesOfShips.poll();
-                    if(typesOfShips.isEmpty()){
-                        socketServer.passAllShips(playerBoard.getAllpositions());
-                    }
+            if (running)
+                return;
+            Cell cell = (Cell) event.getSource();
+            produceCells(cell);
+            if (playerBoard.isShipPositionValid(shipCreator.createShip(cells), cell)) {
+                typesOfShips.poll();
+                if (typesOfShips.isEmpty()) {
+                    socketServer.passAllShips(playerBoard.getAllpositions());
+                    //todo: method to place ships is called here!!!!!!
+                    running = placeShipsRandomly();
                 }
             }
             cells.clear();
         };
     }
+
+    private void produceCells(Cell cell) {
+        Integer poll = typesOfShips.peek();
+        for(int four = poll; four > 0 ; four--) {
+
+            cells.add(cell);
+        }
+
+    }
+
 
     /**
      * There are 5 types of typesOfShips.
