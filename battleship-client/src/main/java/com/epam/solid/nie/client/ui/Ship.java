@@ -1,4 +1,4 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.ships.BattleShip;
 import com.epam.solid.nie.utils.Point2D;

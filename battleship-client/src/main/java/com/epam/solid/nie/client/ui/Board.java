@@ -1,4 +1,4 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.ships.VerticalShip;
 import com.epam.solid.nie.utils.Point2D;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class Board extends Parent {
+class Board extends Parent {
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
@@ -54,15 +54,6 @@ public class Board extends Parent {
         }
         out.println(positions);
         return false;
-    }
-
-    boolean isShipPositionValid(Ship ship, List<Cell> cells) {
-        boolean result = false;
-        for(Cell cell : cells){
-            result = isShipPositionValid(ship, cell);
-            if(!result) return false;
-        }
-        return result;
     }
 
     private boolean placeShip(Ship ship, Cell cell) {

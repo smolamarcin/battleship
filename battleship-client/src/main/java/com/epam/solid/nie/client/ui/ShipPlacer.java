@@ -1,31 +1,29 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
-import com.epam.solid.nie.client.ui.SocketServer;
+import com.epam.solid.nie.client.communication.SocketServer;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 
-import static com.epam.solid.nie.client.ui.tutorial.GameScene.running;
+import static com.epam.solid.nie.client.ui.GameScene.running;
+
 
 class ShipPlacer {
-
-
     private ShipCreator shipCreator = new ShipCreator();
     private Random random = new Random();
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
-    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4,3,3,2,2,2,1,1,1,1));
+    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4, 3, 3, 2, 2, 2, 1, 1, 1, 1));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
     }
-    
+
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
             if (running)
@@ -45,7 +43,7 @@ class ShipPlacer {
     private List<Cell> produceCells(Cell cell) {
         List<Cell> cells = new ArrayList<>();
         Integer poll = typesOfShips.peek();
-        for(int four = poll; four > 0 ; four--) {
+        for (int four = poll; four > 0; four--) {
             cells.add(cell);
         }
         return cells;
@@ -70,4 +68,5 @@ class ShipPlacer {
         }
         return true;
     }
+    //todo: dominik
 }

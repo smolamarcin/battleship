@@ -1,7 +1,7 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 
-import com.epam.solid.nie.client.ui.SocketServer;
+import com.epam.solid.nie.client.communication.SocketServer;
 import com.epam.solid.nie.state.State;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -18,15 +18,16 @@ import javafx.stage.Stage;
 
 public class GameScene extends Application {
     private State state;
-    public static boolean running = false;
+    static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
+    private ShipPlacer shipPlacer;
 
-    public GameScene(SocketServer socketServer) {
+    GameScene(SocketServer socketServer) {
         this.socketServer = socketServer;
     }
 
-    private ShipPlacer shipPlacer;
+
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
