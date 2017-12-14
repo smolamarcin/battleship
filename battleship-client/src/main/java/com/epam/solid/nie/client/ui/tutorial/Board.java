@@ -1,5 +1,6 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
+import com.epam.solid.nie.ships.VerticalShip;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -54,7 +55,7 @@ public class Board extends Parent {
     }
 
     private boolean placeShip(Ship ship, Cell cell) {
-        if (ship.vertical) {
+        if (ship.getBattleShip() instanceof VerticalShip) {
             placeShipVertically(ship, cell.getCellX(), cell.getCellY());
         } else {
             placeShipHorizontally(ship, cell.getCellX(), cell.getCellY());
@@ -128,7 +129,7 @@ public class Board extends Parent {
         int x = cell.getCellX();
         int y = cell.getCellY();
 
-        if (ship.vertical) {
+        if (ship.getBattleShip() instanceof VerticalShip) {
             for (int i = y; i < y + length; i++) {
                 if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
                     return false;

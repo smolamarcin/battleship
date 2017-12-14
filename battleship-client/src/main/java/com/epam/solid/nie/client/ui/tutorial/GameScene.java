@@ -1,6 +1,9 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
+import com.epam.solid.nie.ships.BattleShip;
+import com.epam.solid.nie.ships.HorizontalShipFactory;
+import com.epam.solid.nie.ships.ShipFactory;
 import com.epam.solid.nie.state.State;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.application.Application;
@@ -15,17 +18,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 
 public class GameScene extends Application {
-
     private State state;
     private boolean running = false;
     private Board enemyBoard, playerBoard;
     private int shipsToPlace = 5;
     private boolean enemyTurn = false;
     private Random random = new Random();
+    private ShipFactory shipFactory;
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
@@ -40,6 +45,11 @@ public class GameScene extends Application {
         root.setCenter(vbox);
 
         return root;
+    }
+
+    private BattleShip createShip(List<Point2D> points) {
+        ShipFactory shipFactory = new HorizontalShipFactory();
+        return shipFactory.createShip(points);
     }
 
     private EventHandler<MouseEvent> setUpAIShips() {
@@ -65,13 +75,14 @@ public class GameScene extends Application {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
-            Ship ship;
+            Point2D point2D = new Point2D(cell.getCellX(), cell.getCellY());
             if(event.getButton() == MouseButton.PRIMARY){
-                ship = new Ship();
+                Ship ship = new Ship(createShip(Collections.singletonList(point2D)));
+                if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
+                    running = placeShipsRandomly();
+                }
             }
-            if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
-                running = placeShipsRandomly();
-            }
+
         };
     }
 
@@ -104,8 +115,9 @@ public class GameScene extends Application {
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);
             int y = random.nextInt(9);
-            Ship ship = new Ship(numberOfShipTypes, Math.random() < 0.5);
-            if (enemyBoard.isShipPositionValid(ship, new Cell(new Point2D(x,y)))) {
+            Point2D point2D = new Point2D(x, y);
+            Ship ship = new Ship(createShip(Collections.singletonList(point2D)));
+            if (enemyBoard.isShipPositionValid(ship, new Cell(point2D))) {
                 numberOfShipTypes--;
             }
         }
