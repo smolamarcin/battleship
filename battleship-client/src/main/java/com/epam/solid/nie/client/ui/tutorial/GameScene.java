@@ -1,7 +1,7 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
-import com.epam.solid.nie.client.ui.Something;
+import com.epam.solid.nie.client.ui.SocketServer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -24,10 +24,10 @@ public class GameScene extends Application {
     private int shipsToPlace = 5;
     private boolean enemyTurn = false;
     private Random random = new Random();
-    private Something something;
+    private SocketServer socketServer;
 
-    public GameScene(Something something) {
-        this.something = something;
+    public GameScene(SocketServer socketServer) {
+        this.socketServer = socketServer;
     }
 
     private Parent createContent() {
@@ -35,7 +35,7 @@ public class GameScene extends Application {
         root.setPrefSize(600, 800);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        enemyBoard.initialize(setUpAIShips());
+        enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
         playerBoard.initialize(setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
@@ -45,7 +45,7 @@ public class GameScene extends Application {
         return root;
     }
 
-    private EventHandler<MouseEvent> setUpAIShips() {
+    private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
             if (!running || cell.wasShot)
@@ -58,8 +58,10 @@ public class GameScene extends Application {
                 System.exit(0);
             }
 
-            if (enemyTurn)
+            if (enemyTurn){
                 enemyMove();
+            }
+
         };
     }
 
@@ -70,6 +72,7 @@ public class GameScene extends Application {
             Cell cell = (Cell) event.getSource();
             Ship ship = new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY);
             if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
+                socketServer.passAllShips(playerBoard.getAllpositions());
                 running = placeShipsRandomly();
             }
         };
@@ -93,7 +96,6 @@ public class GameScene extends Application {
     private boolean checkForWin(Board board) {
         return board.ships == 0;
     }
-
     /**
      * There are 5 types of ships.
      * Method picks random cell to place ship.

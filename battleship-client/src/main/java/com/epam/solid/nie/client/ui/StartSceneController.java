@@ -25,11 +25,10 @@ public class StartSceneController {
         Validator ipValidator = new IpValidator();
         String ip=field_ip.getText();
         if (ipValidator.validate(ip)){
-
-            Something something = new Something();
-            if (something.canConnect(ip)){
-                something.connect(ip);
-                new GameScene(something).start();
+            SocketServer socketServer = new SocketServer();
+            if (socketServer.canConnect(ip)){
+                socketServer.connect(ip);
+                new GameScene(socketServer).start();
             }
         }else {
             System.out.println("Wrong ip.");
