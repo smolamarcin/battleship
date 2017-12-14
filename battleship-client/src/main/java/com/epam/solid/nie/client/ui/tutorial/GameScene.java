@@ -1,9 +1,6 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
-import java.util.Random;
-
-import com.epam.solid.nie.client.ui.Something;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -16,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Random;
+
 
 public class GameScene extends Application {
 
@@ -24,10 +23,6 @@ public class GameScene extends Application {
     private int shipsToPlace = 5;
     private boolean enemyTurn = false;
     private Random random = new Random();
-    private Something something=new Something();
-    public GameScene(Something something) {
-
-    }
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
