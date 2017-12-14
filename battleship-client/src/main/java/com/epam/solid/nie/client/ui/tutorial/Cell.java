@@ -30,7 +30,6 @@ public class Cell extends Rectangle {
     public boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
-
         if (ship != null) {
             ship.hit();
             setFill(Color.RED);

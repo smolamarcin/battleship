@@ -22,7 +22,7 @@ public class GameScene extends Application {
     private boolean running = false;
     private Board enemyBoard, playerBoard;
     private int shipsToPlace = 5;
-    private boolean enemyTurn = false;
+//    private boolean enemyTurn = false;
     private Random random = new Random();
     private SocketServer socketServer;
 
@@ -51,14 +51,14 @@ public class GameScene extends Application {
             if (!running || cell.wasShot)
                 return;
 
-            enemyTurn = !cell.shoot();
+            running = cell.shoot();
 
             if (checkForWin(enemyBoard)) {
                 System.out.println("YOU WIN");
                 System.exit(0);
             }
 
-            if (enemyTurn){
+            if (!running){
                 enemyMove();
             }
 
@@ -79,13 +79,13 @@ public class GameScene extends Application {
     }
 
     private void enemyMove() {
-        while (enemyTurn) {
+        while (!running) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
             Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot)
                 continue;
-            enemyTurn = cell.shoot();
+            running = !cell.shoot();
             if (checkForWin(playerBoard)) {
                 System.out.println("YOU LOSE");
                 System.exit(0);
