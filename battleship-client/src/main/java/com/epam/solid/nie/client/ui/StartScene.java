@@ -18,7 +18,4 @@ public class StartScene extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-
-
 }
