@@ -18,7 +18,7 @@ class Ship extends Parent {
     }
 
     boolean isAlive() {
-        return battleShip.getShipProperties().size() > 0;
+        return !(battleShip.getShipProperties().isEmpty());
     }
 
     int getRemainingHealth() {

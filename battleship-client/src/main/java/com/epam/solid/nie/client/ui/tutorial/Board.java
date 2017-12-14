@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.out;
+
 public class Board extends Parent {
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
@@ -50,8 +52,17 @@ public class Board extends Parent {
         if (canPlaceShip(ship, cell)) {
             return placeShip(ship, cell);
         }
-        System.out.println(positions);
+        out.println(positions);
         return false;
+    }
+
+    boolean isShipPositionValid(Ship ship, List<Cell> cells) {
+        boolean result = false;
+        for(Cell cell : cells){
+            result = isShipPositionValid(ship, cell);
+            if(!result) return false;
+        }
+        return result;
     }
 
     private boolean placeShip(Ship ship, Cell cell) {
@@ -117,7 +128,7 @@ public class Board extends Parent {
 
         for (Point2D p : points) {
             if (isInScope(p)) {
-                neighbors.add(getCell((int) p.getX(), (int) p.getY()));
+                neighbors.add(getCell(p.getX(), p.getY()));
             }
         }
 

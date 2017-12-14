@@ -1,36 +1,31 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
-import com.epam.solid.nie.ships.BattleShip;
-import com.epam.solid.nie.ships.HorizontalShipFactory;
-import com.epam.solid.nie.ships.ShipFactory;
 import com.epam.solid.nie.state.State;
-import com.epam.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
+
+import static java.lang.System.out;
 
 
 public class GameScene extends Application {
     private State state;
     private boolean running = false;
     private Board enemyBoard, playerBoard;
-    private int shipsToPlace = 5;
     private boolean enemyTurn = false;
     private Random random = new Random();
-    private ShipFactory shipFactory;
+
+    private ShipPlacer shipPlacer;
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
@@ -39,18 +34,14 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(setUpAIShips());
         playerBoard = new Board(false);
-        playerBoard.initialize(setUpPlayerShips());
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard);
+        playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
-
         return root;
     }
 
-    private BattleShip createShip(List<Point2D> points) {
-        ShipFactory shipFactory = new HorizontalShipFactory();
-        return shipFactory.createShip(points);
-    }
 
     private EventHandler<MouseEvent> setUpAIShips() {
         return event -> {
@@ -61,28 +52,12 @@ public class GameScene extends Application {
             enemyTurn = !cell.shoot();
 
             if (checkForWin(enemyBoard)) {
-                System.out.println("YOU WIN");
+                out.println("YOU WIN");
                 System.exit(0);
             }
 
             if (enemyTurn)
                 enemyMove();
-        };
-    }
-
-    private EventHandler<MouseEvent> setUpPlayerShips() {
-        return event -> {
-            if (running)
-                return;
-            Cell cell = (Cell) event.getSource();
-            Point2D point2D = new Point2D(cell.getCellX(), cell.getCellY());
-            if(event.getButton() == MouseButton.PRIMARY){
-                Ship ship = new Ship(createShip(Collections.singletonList(point2D)));
-                if (playerBoard.isShipPositionValid(ship, cell) && --shipsToPlace == 0) {
-                    running = placeShipsRandomly();
-                }
-            }
-
         };
     }
 
@@ -95,7 +70,7 @@ public class GameScene extends Application {
                 continue;
             enemyTurn = cell.shoot();
             if (checkForWin(playerBoard)) {
-                System.out.println("YOU LOSE");
+                out.println("YOU LOSE");
                 System.exit(0);
             }
         }
@@ -105,36 +80,16 @@ public class GameScene extends Application {
         return board.ships == 0;
     }
 
-    /**
-     * There are 5 types of ships.
-     * Method picks random cell to place ship.
-     * Ship type is changed in every iteration
-     */
-    private boolean placeShipsRandomly() {
-        int numberOfShipTypes = 5;
-        while (numberOfShipTypes > 0) {
-            int x = random.nextInt(9);
-            int y = random.nextInt(9);
-            Point2D point2D = new Point2D(x, y);
-            Ship ship = new Ship(createShip(Collections.singletonList(point2D)));
-            if (enemyBoard.isShipPositionValid(ship, new Cell(point2D))) {
-                numberOfShipTypes--;
-            }
-        }
-        return true;
-    }
-
-    public void start(){
+    public void start() {
         start(new Stage());
     }
+
     @Override
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
         Scene scene = new Scene(createContent());
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-
 }
-
