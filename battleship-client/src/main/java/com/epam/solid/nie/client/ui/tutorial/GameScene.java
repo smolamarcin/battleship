@@ -1,6 +1,7 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
 
+import com.epam.solid.nie.client.ui.SocketServer;
 import com.epam.solid.nie.state.State;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,17 +14,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Random;
-
-import static java.lang.System.out;
 
 
 public class GameScene extends Application {
     private State state;
     private boolean running = false;
     private Board enemyBoard, playerBoard;
-    private boolean enemyTurn = false;
-    private Random random = new Random();
+    private SocketServer socketServer;
+
+    public GameScene(SocketServer socketServer) {
+        this.socketServer = socketServer;
+    }
 
     private ShipPlacer shipPlacer;
 
@@ -32,9 +33,9 @@ public class GameScene extends Application {
         root.setPrefSize(600, 800);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        enemyBoard.initialize(setUpAIShips());
+        enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -42,35 +43,37 @@ public class GameScene extends Application {
         return root;
     }
 
-
-    private EventHandler<MouseEvent> setUpAIShips() {
+    private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
             if (!running || cell.wasShot)
                 return;
-
-            enemyTurn = !cell.shoot();
-
+            running = cell.shoot();
             if (checkForWin(enemyBoard)) {
-                out.println("YOU WIN");
+                System.out.println("YOU WIN");
                 System.exit(0);
             }
+            socketServer.sendPlayerMove(cell.toString());
+            Cell enemyMove = socketServer.passEnemyMove();
+            if (!running) {
+                makeEnemyMove(enemyMove);
+            }
 
-            if (enemyTurn)
-                enemyMove();
         };
     }
 
-    private void enemyMove() {
-        while (enemyTurn) {
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
+    private void makeEnemyMove(Cell cell1) {
+        while (!running) {
+            int x = cell1.getCellX();
+            int y = cell1.getCellY();
             Cell cell = playerBoard.getCell(x, y);
-            if (cell.wasShot)
+            if (cell.wasShot) {
+                cell1 = socketServer.passEnemyMove();
                 continue;
-            enemyTurn = cell.shoot();
+            }
+            running = !cell.shoot();
             if (checkForWin(playerBoard)) {
-                out.println("YOU LOSE");
+                System.out.println("YOU LOSE");
                 System.exit(0);
             }
         }

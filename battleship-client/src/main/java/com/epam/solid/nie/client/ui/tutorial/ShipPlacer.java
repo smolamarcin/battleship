@@ -1,5 +1,6 @@
 package com.epam.solid.nie.client.ui.tutorial;
 
+import com.epam.solid.nie.client.ui.SocketServer;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
@@ -16,13 +17,15 @@ class ShipPlacer {
     private int shipsToPlace = 4;
     private ShipCreator shipCreator = new ShipCreator();
     private Random random = new Random();
+    private Board enemyBoard;
+    private Board playerBoard;
+    private SocketServer socketServer;
 
-    ShipPlacer(Board enemyBoard, Board playerBoard) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
+        this.socketServer = socketServer;
     }
-
-    private Board enemyBoard, playerBoard;
 
     EventHandler<MouseEvent> setUpPlayerShips() {
         return placeFourMastShip();
@@ -38,6 +41,7 @@ class ShipPlacer {
             if (event.getButton() == MouseButton.PRIMARY) {
                 Ship ship = shipCreator.createShip(cells);
                 if (playerBoard.isShipPositionValid(ship, cells) && shipsToPlace-- > 0) {
+                    socketServer.passAllShips(playerBoard.getAllpositions());
                     running = placeShipsRandomly();
                 }
             }
@@ -50,7 +54,7 @@ class ShipPlacer {
      * Method picks random cell to place ship.
      * Ship type is changed in every iteration
      */
-    private boolean placeShipsRandomly() {
+    boolean placeShipsRandomly() {
         int numberOfShipTypes = 5;
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);

@@ -20,7 +20,7 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
-    Cell(Point2D point2D){
+    public Cell(Point2D point2D){
         this.point2D = point2D;
     }
 
