@@ -12,7 +12,7 @@ import static com.epam.solid.nie.client.ui.tutorial.GameScene.running;
 
 class ShipPlacer {
 
-    private List<Cell> cells = new ArrayList<>();
+
     private ShipCreator shipCreator = new ShipCreator();
     private Random random = new Random();
     private Board enemyBoard;
@@ -31,8 +31,7 @@ class ShipPlacer {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
-            produceCells(cell);
-            if (playerBoard.isShipPositionValid(shipCreator.createShip(cells), cell)) {
+            if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.passAllShips(playerBoard.getAllpositions());
@@ -40,17 +39,16 @@ class ShipPlacer {
                     running = placeShipsRandomly();
                 }
             }
-            cells.clear();
         };
     }
 
-    private void produceCells(Cell cell) {
+    private List<Cell> produceCells(Cell cell) {
+        List<Cell> cells = new ArrayList<>();
         Integer poll = typesOfShips.peek();
         for(int four = poll; four > 0 ; four--) {
-
             cells.add(cell);
         }
-
+        return cells;
     }
 
 
