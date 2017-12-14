@@ -1,4 +1,6 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.communication;
+
+import com.epam.solid.nie.client.ui.Cell;
 
 public interface Server {
     void connect(String ip);

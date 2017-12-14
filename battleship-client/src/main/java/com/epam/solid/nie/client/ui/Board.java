@@ -1,4 +1,4 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;

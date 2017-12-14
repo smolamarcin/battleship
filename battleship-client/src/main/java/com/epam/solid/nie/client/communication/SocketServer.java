@@ -1,7 +1,6 @@
-package com.epam.solid.nie.client.ui;
+package com.epam.solid.nie.client.communication;
 
-import com.epam.solid.nie.client.ui.tutorial.Cell;
-import com.epam.solid.nie.client.ui.tutorial.Server;
+import com.epam.solid.nie.client.ui.Cell;
 
 import java.util.Random;
 

@@ -1,6 +1,6 @@
 package com.epam.solid.nie.config;
 
-import com.epam.solid.nie.client.IpValidator;
+import com.epam.solid.nie.client.communication.IpValidator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

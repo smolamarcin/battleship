@@ -1,7 +1,7 @@
-package com.epam.solid.nie.client.ui.tutorial;
+package com.epam.solid.nie.client.ui;
 
 
-import com.epam.solid.nie.client.ui.SocketServer;
+import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
