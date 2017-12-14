@@ -6,20 +6,17 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 class ShipPlacer {
 
     private List<Cell> cells = new ArrayList<>();
-    private int shipsToPlace = 4;
     private ShipCreator shipCreator = new ShipCreator();
     private Random random = new Random();
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4,3,3,2,2,2,1,1,1,1));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
@@ -28,21 +25,22 @@ class ShipPlacer {
     }
 
     EventHandler<MouseEvent> setUpPlayerShips() {
-        return placeFourMastShip();
-    }
-
-    private EventHandler<MouseEvent> placeFourMastShip(){
         return event -> {
-            if (running) return;
-            for(int four = 4; four > 0 ; four--) {
-                Cell cell = (Cell) event.getSource();
-                cells.add(cell);
-            }
             if (event.getButton() == MouseButton.PRIMARY) {
+                if(typesOfShips.isEmpty()){
+                    return;
+                }
+                int poll = typesOfShips.peek();
+                for(int j = poll ;j > 0 ;j --) {
+                    Cell cell = (Cell) event.getSource();
+                    cells.add(cell);
+                }
                 Ship ship = shipCreator.createShip(cells);
-                if (playerBoard.isShipPositionValid(ship, cells) && shipsToPlace-- > 0) {
-                    socketServer.passAllShips(playerBoard.getAllpositions());
-                    running = placeShipsRandomly();
+                if (playerBoard.isShipPositionValid(ship, cells)) {
+                    typesOfShips.poll();
+                    if(typesOfShips.isEmpty()){
+                        socketServer.passAllShips(playerBoard.getAllpositions());
+                    }
                 }
             }
             cells.clear();
@@ -50,7 +48,7 @@ class ShipPlacer {
     }
 
     /**
-     * There are 5 types of ships.
+     * There are 5 types of typesOfShips.
      * Method picks random cell to place ship.
      * Ship type is changed in every iteration
      */
