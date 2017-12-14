@@ -22,7 +22,7 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
-    Cell(int x, int y) {
+    public Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
