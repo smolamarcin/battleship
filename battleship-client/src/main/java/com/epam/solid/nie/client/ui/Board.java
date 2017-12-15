@@ -36,7 +36,7 @@ class Board extends Parent {
     private void fillHorizontal(EventHandler<? super MouseEvent> handler, int y) {
         HBox row = new HBox();
         for (int x = 0; x < MAX_HEIGHT; x++) {
-            Point2D point2D = new Point2D(x,y);
+            Point2D point2D = Point2D.of(x,y);
             createCellInRow(handler, row, point2D);
         }
         rows.getChildren().add(row);
@@ -105,14 +105,14 @@ class Board extends Parent {
 
     private Cell[] getNeighbors(int x, int y) {
         Point2D[] points = new Point2D[]{
-                new Point2D(x - 1, y),
-                new Point2D(x + 1, y),
-                new Point2D(x, y - 1),
-                new Point2D(x, y + 1),
-                new Point2D(x - 1, y - 1),
-                new Point2D(x + 1, y - 1),
-                new Point2D(x - 1, y + 1),
-                new Point2D(x + 1, y + 1)
+                Point2D.of(x - 1, y),
+                Point2D.of(x + 1, y),
+                Point2D.of(x, y - 1),
+                Point2D.of(x, y + 1),
+                Point2D.of(x - 1, y - 1),
+                Point2D.of(x + 1, y - 1),
+                Point2D.of(x - 1, y + 1),
+                Point2D.of(x + 1, y + 1)
         };
 
         List<Cell> neighbors = new ArrayList<>();

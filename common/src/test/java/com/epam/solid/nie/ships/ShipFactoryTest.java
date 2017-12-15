@@ -40,7 +40,7 @@ public class ShipFactoryTest {
     public void should_CreateVerticalShip_WithPositions(){
         //given
         ShipFactory factory = new VerticalShipFactory();
-        List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,1), new Point2D(2,2));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,1), Point2D.of(2,2));
 
         //when
         BattleShip ship = factory.createShip(positions);
@@ -54,7 +54,7 @@ public class ShipFactoryTest {
     public void should_CreateHorizontalShip_WithPositions(){
         //given
         ShipFactory factory = new HorizontalShipFactory();
-        List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,0), new Point2D(2,0), new Point2D(3,0));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,0), Point2D.of(2,0), Point2D.of(3,0));
 
         //when
         BattleShip ship = factory.createShip(positions);
@@ -68,7 +68,7 @@ public class ShipFactoryTest {
     public void should_CreateHorizontalShip_WithPositions_andCheckHealth(){
         //given
         ShipFactory factory = new HorizontalShipFactory();
-        List<Point2D> positions = Arrays.asList(new Point2D(0,0), new Point2D(1,0), new Point2D(2,0), new Point2D(3,0));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,0), Point2D.of(2,0), Point2D.of(3,0));
 
         //when
         BattleShip ship = factory.createShip(positions);

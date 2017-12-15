@@ -1,8 +1,11 @@
 package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
+import com.epam.solid.nie.ships.HorizontalShipFactory;
+import com.epam.solid.nie.ships.VerticalShipFactory;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
@@ -11,7 +14,7 @@ import static com.epam.solid.nie.client.ui.GameScene.running;
 
 
 class ShipPlacer {
-    private ShipCreator shipCreator = new ShipCreator();
+    private ShipCreator shipCreator;
     private Random random = new Random();
     private Board enemyBoard;
     private Board playerBoard;
@@ -29,6 +32,7 @@ class ShipPlacer {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
+            shipOrientation(event);
             if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
@@ -38,6 +42,14 @@ class ShipPlacer {
                 }
             }
         };
+    }
+
+    private void shipOrientation(MouseEvent event) {
+        if(event.getButton() == MouseButton.PRIMARY) {
+            shipCreator = new ShipCreator(new VerticalShipFactory());
+        } else {
+            shipCreator = new ShipCreator(new HorizontalShipFactory());
+        }
     }
 
     private List<Cell> produceCells(Cell cell) {
@@ -60,7 +72,7 @@ class ShipPlacer {
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);
             int y = random.nextInt(9);
-            Point2D point2D = new Point2D(x, y);
+            Point2D point2D = Point2D.of(x, y);
             Ship ship = new Ship(shipCreator.createBattleShip(Collections.singletonList(point2D)));
             if (enemyBoard.isShipPositionValid(ship, new Cell(point2D))) {
                 numberOfShipTypes--;
