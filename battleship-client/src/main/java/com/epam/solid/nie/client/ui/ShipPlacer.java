@@ -60,7 +60,7 @@ class ShipPlacer {
         while (numberOfShipTypes > 0) {
             int x = random.nextInt(9);
             int y = random.nextInt(9);
-            Point2D point2D = new Point2D(x, y);
+            Point2D point2D = Point2D.of(x, y);
             Ship ship = new Ship(shipCreator.createBattleShip(Collections.singletonList(point2D)));
             if (enemyBoard.isShipPositionValid(ship, new Cell(point2D))) {
                 numberOfShipTypes--;

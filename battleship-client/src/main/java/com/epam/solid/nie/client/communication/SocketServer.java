@@ -30,7 +30,7 @@ public class SocketServer implements Server {
         Random random = new Random();
         int x = random.nextInt(10);
         int y = random.nextInt(10);
-        return new Cell(new Point2D(x,y));
+        return new Cell(Point2D.of(x,y));
     }
 
     @Override

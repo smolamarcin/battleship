@@ -24,6 +24,6 @@ class ShipCreator {
     }
 
     private Function<Cell, Point2D> cellToPoint2D() {
-        return c -> new Point2D(c.getCellX(), c.getCellY());
+        return c -> Point2D.of(c.getCellX(), c.getCellY());
     }
 }
