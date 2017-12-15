@@ -7,18 +7,22 @@ import lombok.Getter;
 
 @Getter
 class Ship extends Parent {
+    private int health;
     private BattleShip battleShip;
 
     Ship(BattleShip battleShip) {
         this.battleShip = battleShip;
+        this.health = getRemainingHealth();
     }
 
     void hit(Point2D point2D) {
         battleShip.getShipProperties().remove(point2D);
+        health--;
     }
 
     boolean isAlive() {
-        return !(battleShip.getShipProperties().isEmpty());
+        //return !(battleShip.getShipProperties().isEmpty());
+        return health!=0;
     }
 
     int getRemainingHealth() {
