@@ -81,7 +81,7 @@ public class GameScene extends Application {
     }
 
     private boolean checkForWin(Board board) {
-        return board.ships == 0;
+        return board.areAllShipsSunk();
     }
 
     public void start() {

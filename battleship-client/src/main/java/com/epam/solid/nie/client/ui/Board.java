@@ -20,6 +20,7 @@ class Board extends Parent {
     private VBox rows = new VBox();
     private boolean enemy;
     int ships = 5;
+    List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy) {
@@ -50,6 +51,7 @@ class Board extends Parent {
 
     boolean isShipPositionValid(Ship ship, Cell cell) {
         if (canPlaceShip(ship, cell)) {
+            allShips.add(ship);
             return placeShip(ship, cell);
         }
         out.println(positions);
@@ -170,6 +172,13 @@ class Board extends Parent {
 
     public String getAllpositions() {
         return positions.toString();
+    }
+
+    public boolean areAllShipsSunk() {
+        for (Ship ship : allShips)
+            if(ship.isAlive())
+                return false;
+        return true;
     }
 
 }
