@@ -1,8 +1,11 @@
 package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
+import com.epam.solid.nie.ships.HorizontalShipFactory;
+import com.epam.solid.nie.ships.VerticalShipFactory;
 import com.epam.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
@@ -11,7 +14,7 @@ import static com.epam.solid.nie.client.ui.GameScene.running;
 
 
 class ShipPlacer {
-    private ShipCreator shipCreator = new ShipCreator();
+    private ShipCreator shipCreator;
     private Random random = new Random();
     private Board enemyBoard;
     private Board playerBoard;
@@ -29,6 +32,7 @@ class ShipPlacer {
             if (running)
                 return;
             Cell cell = (Cell) event.getSource();
+            shipOrientation(event);
             if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
@@ -38,6 +42,14 @@ class ShipPlacer {
                 }
             }
         };
+    }
+
+    private void shipOrientation(MouseEvent event) {
+        if(event.getButton() == MouseButton.PRIMARY) {
+            shipCreator = new ShipCreator(new VerticalShipFactory());
+        } else {
+            shipCreator = new ShipCreator(new HorizontalShipFactory());
+        }
     }
 
     private List<Cell> produceCells(Cell cell) {
