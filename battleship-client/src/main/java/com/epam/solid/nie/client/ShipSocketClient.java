@@ -30,10 +30,12 @@ class ShipSocketClient implements ShipClient {
                 if (fromServer.equals("Bye."))
                     break;
 
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    out.println(fromUser);
-                    System.out.println("Server: " + fromUser);
+                if (fromServer.equals("Provide ships") || fromServer.equals("Make move")) {
+                    fromUser = stdIn.readLine();
+                    if (fromUser != null) {
+                        out.println(fromUser);
+                        System.out.println("Me: " + fromUser);
+                    }
                 }
             }
         } catch (IOException ignored){
