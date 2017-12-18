@@ -9,19 +9,13 @@ public class Cell extends Rectangle {
     private static final int DEFAULT_HEIGHT = 30;
     private Point2D point2D;
     private Ship ship;
-    private Board board;
     boolean wasShot;
 
-    Cell(Point2D point2D, Board board) {
+    Cell(Point2D point2D) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        this.board = board;
         this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
         setStroke(Color.BLACK);
-    }
-
-    public Cell(Point2D point2D){
-        this.point2D = point2D;
     }
 
     Cell addShip(Ship ship){
@@ -36,9 +30,6 @@ public class Cell extends Rectangle {
         if (ship != null) {
             ship.hit(point2D);
             setFill(Color.RED);
-            if (!ship.isAlive()) {
-                board.ships--;
-            }
             return true;
         }
 
