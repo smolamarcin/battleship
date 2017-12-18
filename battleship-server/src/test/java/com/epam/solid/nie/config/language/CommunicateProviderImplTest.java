@@ -11,8 +11,8 @@ public class CommunicateProviderImplTest {
     @DataProvider
     public static Object[][] languages() {
         return new Object[][]{{Language.ENGLISH},
-            {Language.POLISH}
-        }
+                {Language.POLISH}
+        };
     }
 
     @Test(dataProvider = "languages")
