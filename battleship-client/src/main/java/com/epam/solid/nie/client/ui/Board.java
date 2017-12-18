@@ -19,7 +19,6 @@ class Board extends Parent {
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    int ships = 5;
     List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
