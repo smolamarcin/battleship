@@ -4,6 +4,10 @@ import com.epam.solid.nie.utils.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+
+/**
+ *
+ */
 public class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;

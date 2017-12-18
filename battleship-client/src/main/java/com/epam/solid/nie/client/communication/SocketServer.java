@@ -5,6 +5,9 @@ import com.epam.solid.nie.client.ui.Cell;
 
 import java.util.Random;
 
+/**
+ * SocketServer implementation to communicate with server side
+ */
 public class SocketServer implements Server {
     public SocketServer() {
 

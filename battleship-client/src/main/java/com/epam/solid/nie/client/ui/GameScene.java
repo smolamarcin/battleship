@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 
 
 
+/**
+ *
+ */
 public class GameScene extends Application {
     private State state;
     static boolean running = false;

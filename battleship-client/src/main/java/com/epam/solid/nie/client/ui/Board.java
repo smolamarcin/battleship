@@ -14,6 +14,10 @@ import java.util.List;
 
 import static java.lang.System.out;
 
+
+/**
+ *
+ */
 class Board extends Parent {
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;

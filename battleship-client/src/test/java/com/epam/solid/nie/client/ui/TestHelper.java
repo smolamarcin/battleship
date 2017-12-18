@@ -7,6 +7,9 @@ import com.epam.solid.nie.utils.Point2D;
 
 import java.util.List;
 
+/**
+ *
+ */
 public interface TestHelper {
 
     default Ship createShipHorizontally(List<Point2D> positions){

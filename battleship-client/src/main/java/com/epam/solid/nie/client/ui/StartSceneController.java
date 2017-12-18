@@ -11,6 +11,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
+
+/**
+ *
+ */
 public class StartSceneController {
 
     @FXML

@@ -5,6 +5,9 @@ import com.epam.solid.nie.utils.Point2D;
 import javafx.scene.Parent;
 import lombok.Getter;
 
+/**
+ *
+ */
 @Getter
 class Ship extends Parent {
     private int health;

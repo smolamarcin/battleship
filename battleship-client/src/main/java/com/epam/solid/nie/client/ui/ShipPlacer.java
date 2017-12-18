@@ -13,6 +13,9 @@ import java.util.*;
 import static com.epam.solid.nie.client.ui.GameScene.running;
 
 
+/**
+ *
+ */
 class ShipPlacer {
     private ShipCreator shipCreator;
     private Random random = new Random();
