@@ -8,6 +8,7 @@ import java.net.Socket;
 
 class ServerThread extends Thread{
     private final Socket clientSocket;
+    private final Logger logger = Logger.getLogger("SocketThread");
 
     ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -33,6 +34,7 @@ class ServerThread extends Thread{
                     break;
             }
         } catch (IOException ignored){
+            logger.warning(ignored.getMessage());
         }
     }
 }
