@@ -16,7 +16,7 @@ public class StartSceneController {
     @FXML
     private Button btn_connect;
     //TODO:
-    //imie przeakaze do konstruktora
+    //imie przeakazse do konstruktora
     //ip
     //rozstawienie statkow (jako string)
     //pozycje po kazdym ruchu jako string
