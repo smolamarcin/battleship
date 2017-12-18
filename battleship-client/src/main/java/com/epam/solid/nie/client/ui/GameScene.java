@@ -27,8 +27,6 @@ public class GameScene extends Application {
         this.socketServer = socketServer;
     }
 
-
-
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);

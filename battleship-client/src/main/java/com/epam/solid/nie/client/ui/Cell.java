@@ -11,7 +11,7 @@ public class Cell extends Rectangle {
     private Ship ship;
     boolean wasShot;
 
-    Cell(Point2D point2D) {
+    public Cell(Point2D point2D) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
@@ -26,7 +26,6 @@ public class Cell extends Rectangle {
     boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
-
         if (ship != null) {
             ship.hit(point2D);
             setFill(Color.RED);
