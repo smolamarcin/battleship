@@ -44,7 +44,7 @@ class Board extends Parent {
     }
 
     private void createCellInRow(EventHandler<? super MouseEvent> handler, HBox row, Point2D point2D) {
-        Cell c = new Cell(point2D, this);
+        Cell c = new Cell(point2D);
         c.setOnMouseClicked(handler);
         row.getChildren().add(c);
     }
