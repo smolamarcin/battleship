@@ -38,8 +38,8 @@ class ShipPlacer {
                 if (typesOfShips.isEmpty()) {
                     socketServer.passAllShips(playerBoard.getAllpositions());
                     //running = placeShipsRandomly();
-                    running = placeShipsRandomly(socketServer.receiveAllShips());
-//                    running = placeShips();
+//                     running = placeShipsRandomly(socketServer.receiveAllShips());
+                    running = placeShips();
                 }
             }
         };
@@ -82,10 +82,10 @@ class ShipPlacer {
         return true;
     }
 
-    private boolean placeShipsRandomly(String shipsString) {
+    List<Ship> placeShipsRandomly(String shipsString) {
         String[] ships = shipsString.split(",\\|");
-        List<Point2D> point2DOfShip = new ArrayList<>();
         for (String shipStr : ships) {
+            List<Point2D> point2DOfShip = new ArrayList<>();
             System.out.println(shipStr);
             String[] coords = shipStr.split(",");
             for (int i = 0; i < coords.length - 1; i += 2) {
@@ -100,9 +100,8 @@ class ShipPlacer {
             Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
             System.out.println(Arrays.toString(coords));
-            point2DOfShip.clear();
         }
-        return true;
+        return enemyBoard.allShips;
     }
 
     boolean placeShips() {
