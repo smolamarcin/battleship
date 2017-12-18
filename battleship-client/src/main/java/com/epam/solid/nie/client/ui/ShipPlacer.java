@@ -38,7 +38,7 @@ class ShipPlacer {
                 if (typesOfShips.isEmpty()) {
                     socketServer.passAllShips(playerBoard.getAllpositions());
                     //running = placeShipsRandomly();
-                    running = placeShipsRandomly(socketServer.receiveAllShips());
+                     running = placeShipsRandomly(socketServer.receiveAllShips());
 //                    running = placeShips();
                 }
             }
@@ -78,6 +78,7 @@ class ShipPlacer {
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
             //System.out.println(Arrays.toString(coords));
         }
+        //return enemyBoard.allShips;
         return true;
     }
 

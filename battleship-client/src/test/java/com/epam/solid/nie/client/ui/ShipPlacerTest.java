@@ -1,10 +1,8 @@
 package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
-import com.epam.solid.nie.ships.HorizontalShip;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
