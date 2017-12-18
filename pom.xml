@@ -10,8 +10,7 @@
     <name>battleship</name>
 
     <modules>
-        <module>battleship-server</module>
-        <module>battleship-client</module>
+        <module>common</module>
     </modules>
 
     <properties>
@@ -153,6 +152,19 @@
     </reporting>
 
     <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.12.4</version>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>

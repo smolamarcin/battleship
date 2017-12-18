@@ -36,9 +36,8 @@ class ShipSocketClient implements ShipClient {
                 fromUser = stdIn.readLine();
                 if (fromUser != null)
                     out.println(fromUser);
-                    System.out.println("Server: " + fromUser);
-                }
             }
+        }
         catch (IOException e){
             logger.warning(e.getMessage());
         }
