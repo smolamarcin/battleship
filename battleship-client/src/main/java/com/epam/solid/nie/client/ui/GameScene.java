@@ -17,14 +17,16 @@ import javafx.stage.Stage;
 
 
 public class GameScene extends Application {
+    private boolean whichPlayer;
     private State state;
     static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer) {
+    GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
+        this.whichPlayer = whichPlayer;
     }
 
     private Parent createContent() {
@@ -45,18 +47,22 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!running || cell.wasShot)
-                return;
-            running = cell.shoot();
-            if (checkForWin(enemyBoard)) {
-                System.out.println("YOU WIN");
-                System.exit(0);
+            if(whichPlayer){
+                if (!running || cell.wasShot)
+                    return;
+                running = cell.shoot();
+                if (checkForWin(enemyBoard)) {
+                    System.out.println("YOU WIN");
+                    System.exit(0);
+                }
+
             }
             socketServer.sendPlayerMove(cell.toString());
             Cell enemyMove = socketServer.passEnemyMove();
             if (!running) {
                 makeEnemyMove(enemyMove);
             }
+            whichPlayer = true;
 
         };
     }

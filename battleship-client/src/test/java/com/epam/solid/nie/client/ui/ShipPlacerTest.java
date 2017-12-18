@@ -1,6 +1,7 @@
 package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
+import com.epam.solid.nie.ships.HorizontalShip;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -16,22 +17,39 @@ public class ShipPlacerTest {
     @Test
     public void descriptionHere() {
         //given
-        VBox rows = new VBox();
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
-        Board enemyBoard = new Board(false, rows);
+        Board enemyBoard = new Board(false);
         enemyBoard.initialize(handler);
-        Board playerBoard = new Board(false, rows);
+        Board playerBoard = new Board(false);
         playerBoard.initialize(handler);
         List<Ship> expected = new ArrayList<>();
 
         ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, new SocketServer());
 
         //when
-        List<Ship> ships = shipPlacer.placeShipsRandomly("7,0,8,0,|");
-
+        String[] arr = {"8", "0", "8", "1"};
+        String val = shipPlacer.createShip(arr, false);
         //then
-        Assert.assertEquals(ships, expected);
+        Assert.assertEquals(val, "vertical");
+    }
 
+    @Test
+    public void descriptionHere2() {
+        //given
+        EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
+        Board enemyBoard = new Board(false);
+        enemyBoard.initialize(handler);
+        Board playerBoard = new Board(false);
+        playerBoard.initialize(handler);
+        List<Ship> expected = new ArrayList<>();
+
+        ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, new SocketServer());
+
+        //when
+        String[] arr = {"7", "1", "8", "1"};
+        String val = shipPlacer.createShip(arr, false);
+        //then
+        Assert.assertEquals(val, "horizontal");
     }
 
 }

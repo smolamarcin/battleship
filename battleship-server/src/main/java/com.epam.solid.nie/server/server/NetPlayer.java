@@ -37,7 +37,7 @@ public class NetPlayer implements Player {
 
     @Override
     public String makeMove() throws IOException {
-        out.println("Make move");
+        //out.println("Make move");
         return in.readLine();
     }
 }

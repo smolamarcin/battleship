@@ -27,8 +27,8 @@ public class StartSceneController {
         if (ipValidator.validate(ip)){
             SocketServer socketServer = new SocketServer();
             if (socketServer.canConnect(ip)){
-                socketServer.connect(ip);
-                new GameScene(socketServer).start();
+                boolean whichPlayer = socketServer.connect(ip);
+                new GameScene(socketServer, whichPlayer).start();
             }
         }else {
             System.out.println("Wrong ip.");

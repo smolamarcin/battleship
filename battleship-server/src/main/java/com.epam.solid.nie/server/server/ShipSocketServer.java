@@ -37,8 +37,8 @@ class ShipSocketServer implements ShipServer {
         second.register(serverSocket);
         players.add(second);
 
-        second.inform("Game has started.");
-        first.inform("Game has started.");
+        second.inform("Game has started. 1");
+        first.inform("Game has started. 2");
 
         String firstShips = first.provideShips();
         System.out.println("First's ships:" + firstShips);
@@ -57,8 +57,8 @@ class ShipSocketServer implements ShipServer {
 
     @Override
     public void play() throws IOException {
-        System.out.println("play");
         String move = currentPlayer.makeMove();
+        System.out.println(players.indexOf(currentPlayer) + ":" + move);
         if(move.equals("Q"))
             isGameOver = true;
         changeCurrentPlayer();

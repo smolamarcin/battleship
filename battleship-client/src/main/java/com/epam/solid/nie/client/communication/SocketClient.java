@@ -18,8 +18,9 @@ public class SocketClient implements ShipClient {
         this.ip = ip;
     }
 
-    public void run() throws IOException {
+    public boolean run() throws IOException {
         int portNumber = 8080;
+        boolean result = false;
 
         socket = new Socket(ip, portNumber);
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -29,7 +30,10 @@ public class SocketClient implements ShipClient {
         String fromServer;
         while (!(fromServer = in.readLine()).equals("Provide ships")) {
             System.out.println("Server: " + fromServer);
+            if (fromServer.equals("Game has started. 1"))
+                result = true;
         }
+        return result;
     }
 
     @Override
