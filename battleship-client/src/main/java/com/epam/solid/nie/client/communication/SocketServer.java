@@ -21,22 +21,22 @@ public class SocketServer implements Server {
 
     @Override
     public void connect(String ip) {
-        server = new SocketClient(ip);
-        try {
-            server.run();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        server = new SocketClient(ip);
+//        try {
+//            server.run();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     public void passAllShips(String allShips) {
-        System.out.println(allShips);
-        try {
-            server.send(allShips);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        System.out.println(allShips);
+//        try {
+//            server.send(allShips);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
