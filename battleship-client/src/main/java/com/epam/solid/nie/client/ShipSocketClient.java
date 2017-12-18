@@ -7,6 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+
+/**
+ *
+ */
 class ShipSocketClient implements ShipClient {
     /**
      * dummy implementation
