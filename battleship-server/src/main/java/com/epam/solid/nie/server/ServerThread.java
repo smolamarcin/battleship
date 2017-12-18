@@ -1,5 +1,7 @@
 package com.epam.solid.nie.server;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +10,7 @@ import java.net.Socket;
 
 class ServerThread extends Thread{
     private final Socket clientSocket;
+    private final Logger logger = Logger.getLogger("SocketThread");
 
     ServerThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -23,7 +26,7 @@ class ServerThread extends Thread{
             String outputLine;
 
             Protocol protocol = new CommunicationProtocol();
-            outputLine = "Place ships";
+            outputLine = protocol.processInput("initial value");
             out.println(outputLine);
 
             while ((inputLine = in.readLine()) != null) {
@@ -33,6 +36,7 @@ class ServerThread extends Thread{
                     break;
             }
         } catch (IOException ignored){
+            logger.warn(ignored.getMessage());
         }
     }
 }

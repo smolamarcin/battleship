@@ -1,4 +1,4 @@
-package com.epam.solid.nie.client.communication;
+package com.epam.solid.nie.client;
 
 /**
  *
