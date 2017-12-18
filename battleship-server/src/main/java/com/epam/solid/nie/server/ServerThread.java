@@ -1,5 +1,7 @@
 package com.epam.solid.nie.server;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +36,7 @@ class ServerThread extends Thread{
                     break;
             }
         } catch (IOException ignored){
-            logger.warning(ignored.getMessage());
+            logger.warn(ignored.getMessage());
         }
     }
 }
