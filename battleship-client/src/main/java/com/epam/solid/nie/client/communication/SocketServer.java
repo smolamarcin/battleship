@@ -3,9 +3,13 @@ package com.epam.solid.nie.client.communication;
 import com.epam.solid.nie.utils.Point2D;
 import com.epam.solid.nie.client.ui.Cell;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class SocketServer implements Server {
+
+    private ShipClient server;
+
     public SocketServer() {
 
     }
@@ -16,8 +20,23 @@ public class SocketServer implements Server {
     }
 
     @Override
+    public void connect(String ip) {
+        server = new SocketClient(ip);
+        try {
+            server.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void passAllShips(String allShips) {
         System.out.println(allShips);
+        try {
+            server.send(allShips);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -34,7 +53,7 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public void connect(String ip) {
-
+    public String receiveAllShips() {
+        return server.getEnemyShips();
     }
 }

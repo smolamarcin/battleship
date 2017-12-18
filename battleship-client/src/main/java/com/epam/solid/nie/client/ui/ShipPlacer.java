@@ -37,8 +37,9 @@ class ShipPlacer {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.passAllShips(playerBoard.getAllpositions());
-                    //todo: method to place ships is called here!!!!!!
-                    running = placeShipsRandomly();
+                    //running = placeShipsRandomly();
+                    running = placeShipsRandomly(socketServer.receiveAllShips());
+//                    running = placeShips();
                 }
             }
         };
@@ -80,5 +81,44 @@ class ShipPlacer {
         }
         return true;
     }
-    //todo: dominik
+
+    private boolean placeShipsRandomly(String shipsString) {
+        String[] ships = shipsString.split(",\\|");
+        List<Point2D> point2DOfShip = new ArrayList<>();
+        for (String shipStr : ships) {
+            System.out.println(shipStr);
+            String[] coords = shipStr.split(",");
+            for (int i = 0; i < coords.length - 1; i += 2) {
+                int x = Integer.valueOf(coords[i]);
+                int y = Integer.valueOf(coords[i+1]);
+                point2DOfShip.add(Point2D.of(x, y));
+            }
+            if(coords.length < 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2])))
+                shipCreator = new ShipCreator(new VerticalShipFactory());
+            else
+                shipCreator = new ShipCreator(new HorizontalShipFactory());
+            Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
+            enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
+            System.out.println(Arrays.toString(coords));
+            point2DOfShip.clear();
+        }
+        return true;
+    }
+
+    boolean placeShips() {
+        List<Point2D> positions = new ArrayList<>();
+        positions.add(Point2D.of(0, 1));
+        positions.add(Point2D.of(0, 2));
+        shipCreator = new ShipCreator(new VerticalShipFactory());
+        Ship ship = new Ship(shipCreator.createBattleShip(positions));
+        enemyBoard.isShipPositionValid(ship, new Cell(positions.get(0)));
+
+        List<Point2D> positions2 = new ArrayList<>();
+        shipCreator = new ShipCreator(new HorizontalShipFactory());
+        positions2.add(Point2D.of(0, 7));
+        positions2.add(Point2D.of(1, 7));
+        ship = new Ship(shipCreator.createBattleShip(positions2));
+        enemyBoard.isShipPositionValid(ship, new Cell(positions2.get(0)));
+        return true;
+    }
 }

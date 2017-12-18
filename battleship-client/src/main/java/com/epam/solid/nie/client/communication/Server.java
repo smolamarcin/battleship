@@ -8,4 +8,6 @@ public interface Server {
     void passAllShips(String allShips);
     void sendPlayerMove(String move);
     Cell passEnemyMove();
+
+    String receiveAllShips();
 }
