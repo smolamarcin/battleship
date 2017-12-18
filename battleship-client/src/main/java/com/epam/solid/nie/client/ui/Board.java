@@ -22,6 +22,12 @@ class Board extends Parent {
     List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
+    Board(boolean enemy, VBox rows) {
+        this.enemy = enemy;
+        this.rows = rows;
+    }
+
+
     Board(boolean enemy) {
         this.enemy = enemy;
     }
@@ -127,7 +133,7 @@ class Board extends Parent {
         return neighbors.toArray(new Cell[0]);
     }
 
-    private boolean canPlaceShip(Ship ship, Cell cell) {
+    boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getRemainingHealth();
         int x = cell.getCellX();
         int y = cell.getCellY();
