@@ -15,11 +15,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-
 public class GameScene extends Application {
     private boolean whichPlayer;
     private State state;
-    static boolean running = false;
+    public static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
@@ -47,7 +46,7 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if(whichPlayer){
+            if (whichPlayer) {
                 if (!running || cell.wasShot)
                     return;
                 running = cell.shoot();
@@ -55,11 +54,14 @@ public class GameScene extends Application {
                     System.out.println("YOU WIN");
                     System.exit(0);
                 }
-
+                socketServer.sendPlayerMove(cell.toString());
             }
-            socketServer.sendPlayerMove(cell.toString());
-            Cell enemyMove = socketServer.passEnemyMove();
+            Cell enemyMove;
             if (!running) {
+                if (!whichPlayer)
+                    enemyMove = socketServer.receiveFirstMove();
+                else
+                    enemyMove = socketServer.receiveEnemyMove();
                 makeEnemyMove(enemyMove);
             }
             whichPlayer = true;
@@ -73,7 +75,7 @@ public class GameScene extends Application {
             int y = cell1.getCellY();
             Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot) {
-                cell1 = socketServer.passEnemyMove();
+                cell1 = socketServer.receiveEnemyMove();
                 continue;
             }
             running = !cell.shoot();

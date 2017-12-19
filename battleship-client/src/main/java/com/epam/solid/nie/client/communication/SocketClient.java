@@ -11,7 +11,6 @@ public class SocketClient implements ShipClient {
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
-    private BufferedReader stdIn;
     private String enemyShips;
 
     SocketClient(String ip) {
@@ -25,7 +24,6 @@ public class SocketClient implements ShipClient {
         socket = new Socket(ip, portNumber);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        stdIn = new BufferedReader(new InputStreamReader(System.in));
 
         String fromServer;
         while (!(fromServer = in.readLine()).equals("Provide ships")) {

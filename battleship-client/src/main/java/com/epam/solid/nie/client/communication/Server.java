@@ -7,7 +7,9 @@ public interface Server {
     boolean canConnect(String ip);
     void passAllShips(String allShips);
     void sendPlayerMove(String move);
-    Cell passEnemyMove();
+    Cell receiveEnemyMove();
 
     String receiveAllShips();
+
+    Cell receiveFirstMove();
 }

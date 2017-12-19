@@ -6,6 +6,9 @@ import com.epam.solid.nie.client.ui.Cell;
 import java.io.IOException;
 import java.util.*;
 
+import static com.epam.solid.nie.client.ui.GameScene.running;
+
+
 public class SocketServer implements Server {
 
     private ShipClient server;
@@ -48,12 +51,29 @@ public class SocketServer implements Server {
     }
 
     @Override
+    public Cell receiveFirstMove() {
+        if (cells.isEmpty())
+            receiveAllMovesWithoutSending();
+        return cells.poll();
+    }
+
+    private void receiveAllMovesWithoutSending() {
+        allMoves = "";
+        String moves = server.getEnemyShips();
+        String[] movesArr = moves.split(",;");
+        for (int i = 0; i < movesArr.length; i++) {
+            String[] coordinates = movesArr[i].split(",");
+            cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
+        }
+    }
+
+    @Override
     public void sendPlayerMove(String move) {
         allMoves += move + ";";
     }
 
     @Override
-    public Cell passEnemyMove() {
+    public Cell receiveEnemyMove() {
         if (cells.isEmpty())
             receiveAllMoves();
         return cells.poll();
@@ -66,12 +86,16 @@ public class SocketServer implements Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         allMoves = "";
         String moves = server.getEnemyShips();
         String[] movesArr = moves.split(",;");
-        for (int i = 0; i < movesArr.length - 1; i++) {
+        for (int i = 0; i < movesArr.length; i++) {
             String[] coordinates = movesArr[i].split(",");
-            cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
+            String x = coordinates[0];
+            String y = coordinates[1];
+            Cell c = new Cell(Point2D.of(Integer.valueOf(x), Integer.valueOf(y)));
+            cells.add(c);
         }
     }
 }
