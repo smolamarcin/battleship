@@ -74,12 +74,12 @@ public class GameScene extends Application {
             Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot) {
                 cell1 = socketServer.receiveEnemyMove();
-                continue;
-            }
-            running = !cell.shoot();
-            if (checkForWin(playerBoard)) {
-                System.out.println("YOU LOSE");
-                System.exit(0);
+            } else {
+                running = !cell.shoot();
+                if (checkForWin(playerBoard)) {
+                    System.out.println("YOU LOSE");
+                    System.exit(0);
+                }
             }
         }
     }
