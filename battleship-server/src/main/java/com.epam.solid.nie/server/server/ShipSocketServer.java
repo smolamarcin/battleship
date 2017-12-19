@@ -10,11 +10,7 @@ import java.util.Queue;
 import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
-    /**
-     * dummy implementation
-     */
-    private final int portNumber = 8080;
-    private Logger logger = Logger.getLogger("ShipSocketServer");
+    private final int portNumber = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
     private ServerSocket serverSocket;

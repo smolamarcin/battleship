@@ -12,7 +12,7 @@ public class SocketClient implements ShipClient {
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    private int portNumber = 8080;
+    private int portNumber = 8081;
 
     SocketClient(String ip) {
         this.ip = ip;

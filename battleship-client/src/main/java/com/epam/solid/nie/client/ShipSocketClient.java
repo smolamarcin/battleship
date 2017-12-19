@@ -9,7 +9,7 @@ import java.net.Socket;
 class ShipSocketClient implements ShipClient {
 
     private String hostName;
-    private int portNumber = 8080;
+    private int portNumber = 8081;
 
     ShipSocketClient(String arg) {
         hostName = arg;
