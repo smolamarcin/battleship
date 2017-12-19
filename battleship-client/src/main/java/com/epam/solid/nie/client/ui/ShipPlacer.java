@@ -15,7 +15,6 @@ import static com.epam.solid.nie.client.ui.GameScene.running;
 
 class ShipPlacer {
     private ShipCreator shipCreator;
-    private Random random = new Random();
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
@@ -36,10 +35,8 @@ class ShipPlacer {
             if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
-                    socketServer.passAllShips(playerBoard.getAllpositions());
-                    //running = placeShipsRandomly();
-                     running = placeShipsRandomly(socketServer.receiveAllShips());
-//                    running = placeShips();
+                    socketServer.send(playerBoard.getAllpositions());
+                    running = placeShipsOfEnemy(socketServer.receiveAllShips());
                 }
             }
         };
@@ -62,11 +59,10 @@ class ShipPlacer {
         return cells;
     }
 
-    boolean placeShipsRandomly(String shipsString) {
+    boolean placeShipsOfEnemy(String shipsString) {
         String[] ships = shipsString.split(",\\|");
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
-            //System.out.println(shipStr);
             String[] coords = shipStr.split(",");
             for (int i = 0; i < coords.length - 1; i += 2) {
                 int x = Integer.valueOf(coords[i]);
@@ -76,21 +72,8 @@ class ShipPlacer {
             shipCreator = createShip(coords);
             Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
-            //System.out.println(Arrays.toString(coords));
         }
-        //return enemyBoard.allShips;
         return true;
-    }
-
-    String createShip(String[] coords, boolean v) {
-        if (coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2])))
-            return "vertical";
-//            return new ShipCreator(new VerticalShipFactory());
-        else
-        {
-//            return new ShipCreator(new HorizontalShipFactory());
-            return "horizontal";
-        }
     }
 
     ShipCreator createShip(String[] coords) {

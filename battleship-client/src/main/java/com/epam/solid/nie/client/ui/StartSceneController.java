@@ -15,6 +15,7 @@ public class StartSceneController {
 
     @FXML
     private Button btn_connect;
+
     //TODO:
     //imie przeakaze do konstruktora
     //ip
@@ -23,14 +24,12 @@ public class StartSceneController {
     @FXML
     void btn_connect_clicked(ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
-        String ip=field_ip.getText();
-        if (ipValidator.validate(ip)){
+        String ip = field_ip.getText();
+        if (ipValidator.validate(ip)) {
             SocketServer socketServer = new SocketServer();
-            if (socketServer.canConnect(ip)){
-                boolean whichPlayer = socketServer.connect(ip);
-                new GameScene(socketServer, whichPlayer).start();
-            }
-        }else {
+            boolean whichPlayer = socketServer.connect(ip);
+            new GameScene(socketServer, whichPlayer).start();
+        } else {
             System.out.println("Wrong ip.");
         }
     }

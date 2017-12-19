@@ -6,22 +6,15 @@ import com.epam.solid.nie.client.ui.Cell;
 import java.io.IOException;
 import java.util.*;
 
-import static com.epam.solid.nie.client.ui.GameScene.running;
-
 
 public class SocketServer implements Server {
 
     private ShipClient server;
     private String allMoves = "";
-    private Queue<Cell> cells = new LinkedList<>();//Arrays.asList(new Cell(Point2D.of(0, 0)), new Cell(Point2D.of(9, 9))));
+    private Queue<Cell> cells = new LinkedList<>();
 
     public SocketServer() {
 
-    }
-
-    @Override
-    public boolean canConnect(String ip) {
-        return true;
     }
 
     @Override
@@ -36,7 +29,7 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public void passAllShips(String allShips) {
+    public void send(String allShips) {
         System.out.println(allShips);
         try {
             server.send(allShips);
@@ -80,22 +73,7 @@ public class SocketServer implements Server {
     }
 
     private void receiveAllMoves() {
-        System.out.println(allMoves);
-        try {
-            server.send(allMoves);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        allMoves = "";
-        String moves = server.getEnemyShips();
-        String[] movesArr = moves.split(",;");
-        for (int i = 0; i < movesArr.length; i++) {
-            String[] coordinates = movesArr[i].split(",");
-            String x = coordinates[0];
-            String y = coordinates[1];
-            Cell c = new Cell(Point2D.of(Integer.valueOf(x), Integer.valueOf(y)));
-            cells.add(c);
-        }
+        send(allMoves);
+        receiveAllMovesWithoutSending();
     }
 }

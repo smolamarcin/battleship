@@ -20,7 +20,6 @@ public class NetPlayer implements Player {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         out.println("hi. wait.");
-
         System.out.println("registered");
     }
 
@@ -37,7 +36,6 @@ public class NetPlayer implements Player {
 
     @Override
     public String makeMove() throws IOException {
-        //out.println("Make move");
         return in.readLine();
     }
 }

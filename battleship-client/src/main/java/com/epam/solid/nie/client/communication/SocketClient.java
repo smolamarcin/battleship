@@ -12,13 +12,13 @@ public class SocketClient implements ShipClient {
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
+    private int portNumber = 8080;
 
     SocketClient(String ip) {
         this.ip = ip;
     }
 
     public boolean run() throws IOException {
-        int portNumber = 8080;
         boolean result = false;
 
         socket = new Socket(ip, portNumber);

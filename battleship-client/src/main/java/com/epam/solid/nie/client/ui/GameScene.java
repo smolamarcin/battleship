@@ -2,7 +2,6 @@ package com.epam.solid.nie.client.ui;
 
 
 import com.epam.solid.nie.client.communication.SocketServer;
-import com.epam.solid.nie.state.State;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
 
 public class GameScene extends Application {
     private boolean whichPlayer;
-    private State state;
     public static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
