@@ -1,5 +1,5 @@
 #! /bin/bash
-sett -e
+set -e
 #
 echo Hello Tomasz. Its our demo. Please enter a directory name:
 read foldername
