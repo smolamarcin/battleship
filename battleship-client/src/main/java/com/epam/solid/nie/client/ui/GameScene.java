@@ -28,7 +28,7 @@ public class GameScene extends Application {
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
+        root.setPrefSize(500, 1000);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
