@@ -9,14 +9,13 @@ import java.net.Socket;
 class ShipSocketClient implements ShipClient {
 
     private String hostName;
+    private int portNumber = 8080;
 
     ShipSocketClient(String arg) {
         hostName = arg;
     }
 
     public void run() {
-        int portNumber = 8080;
-
         try (
                 Socket socket = new Socket(hostName, portNumber);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -30,10 +29,12 @@ class ShipSocketClient implements ShipClient {
                 if (fromServer.equals("Bye."))
                     break;
 
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    out.println(fromUser);
-                    System.out.println("Server: " + fromUser);
+                if (fromServer.equals("Provide ships") || fromServer.equals("Make move")) {
+                    fromUser = stdIn.readLine();
+                    if (fromUser != null) {
+                        out.println(fromUser);
+                        System.out.println("Me: " + fromUser);
+                    }
                 }
             }
         } catch (IOException ignored){
