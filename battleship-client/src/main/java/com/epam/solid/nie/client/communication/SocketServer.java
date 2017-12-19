@@ -3,41 +3,75 @@ package com.epam.solid.nie.client.communication;
 import com.epam.solid.nie.utils.Point2D;
 import com.epam.solid.nie.client.ui.Cell;
 
-import java.util.Random;
+import java.io.IOException;
+import java.util.*;
+
 
 /**
  * SocketServer implementation to communicate with server side
  */
 public class SocketServer implements Server {
-    public SocketServer() {
+    private ShipClient server;
+    private String allMoves = "";
+    private Queue<Cell> cells = new LinkedList<>();
 
+    @Override
+    public boolean connect(String ip) {
+        server = new SocketClient(ip);
+        try {
+            return server.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public boolean canConnect(String ip) {
-        return true;
-    }
-
-    @Override
-    public void passAllShips(String allShips) {
+    public void send(String allShips) {
         System.out.println(allShips);
+        try {
+            server.send(allShips);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String receiveAllShips() {
+        return server.getEnemyShips();
+    }
+
+    @Override
+    public Cell receiveFirstMove() {
+        if (cells.isEmpty())
+            receiveAllMovesWithoutSending();
+        return cells.poll();
+    }
+
+    private void receiveAllMovesWithoutSending() {
+        allMoves = "";
+        String moves = server.getEnemyShips();
+        String[] movesArr = moves.split(",;");
+        for (int i = 0; i < movesArr.length; i++) {
+            String[] coordinates = movesArr[i].split(",");
+            cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
+        }
     }
 
     @Override
     public void sendPlayerMove(String move) {
-        System.out.println(move);
+        allMoves += move + ";";
     }
 
     @Override
-    public Cell passEnemyMove() {
-        Random random = new Random();
-        int x = random.nextInt(10);
-        int y = random.nextInt(10);
-        return new Cell(Point2D.of(x,y));
+    public Cell receiveEnemyMove() {
+        if (cells.isEmpty())
+            receiveAllMoves();
+        return cells.poll();
     }
 
-    @Override
-    public void connect(String ip) {
-
+    private void receiveAllMoves() {
+        send(allMoves);
+        receiveAllMovesWithoutSending();
     }
 }

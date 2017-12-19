@@ -2,7 +2,6 @@ package com.epam.solid.nie.client.ui;
 
 
 import com.epam.solid.nie.client.communication.SocketServer;
-import com.epam.solid.nie.state.State;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,24 +14,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
-
-/**
- *
- */
 public class GameScene extends Application {
-    private State state;
-    static boolean running = false;
+    private boolean whichPlayer;
+    public static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer) {
+    GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
+        this.whichPlayer = whichPlayer;
     }
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
+        root.setPrefSize(500, 1000);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
@@ -48,18 +44,25 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!running || cell.wasShot)
-                return;
-            running = cell.shoot();
-            if (checkForWin(enemyBoard)) {
-                System.out.println("YOU WIN");
-                System.exit(0);
+            if (whichPlayer) {
+                if (!running || cell.wasShot)
+                    return;
+                running = cell.shoot();
+                if (checkForWin(enemyBoard)) {
+                    System.out.println("YOU WIN");
+                    System.exit(0);
+                }
+                socketServer.sendPlayerMove(cell.toString());
             }
-            socketServer.sendPlayerMove(cell.toString());
-            Cell enemyMove = socketServer.passEnemyMove();
+            Cell enemyMove;
             if (!running) {
+                if (!whichPlayer)
+                    enemyMove = socketServer.receiveFirstMove();
+                else
+                    enemyMove = socketServer.receiveEnemyMove();
                 makeEnemyMove(enemyMove);
             }
+            whichPlayer = true;
 
         };
     }
@@ -70,7 +73,7 @@ public class GameScene extends Application {
             int y = cell1.getCellY();
             Cell cell = playerBoard.getCell(x, y);
             if (cell.wasShot) {
-                cell1 = socketServer.passEnemyMove();
+                cell1 = socketServer.receiveEnemyMove();
                 continue;
             }
             running = !cell.shoot();

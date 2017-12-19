@@ -15,6 +15,7 @@ public class StartScene extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent start = FXMLLoader.load(getClass().getResource("/startScreen.fxml"));
         Scene scene = new Scene(start);
+        primaryStage.setResizable(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
