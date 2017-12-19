@@ -8,14 +8,9 @@ import java.util.*;
 
 
 public class SocketServer implements Server {
-
     private ShipClient server;
     private String allMoves = "";
     private Queue<Cell> cells = new LinkedList<>();
-
-    public SocketServer() {
-
-    }
 
     @Override
     public boolean connect(String ip) {

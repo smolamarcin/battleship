@@ -16,11 +16,6 @@ public class StartSceneController {
     @FXML
     private Button btn_connect;
 
-    //TODO:
-    //imie przeakaze do konstruktora
-    //ip
-    //rozstawienie statkow (jako string)
-    //pozycje po kazdym ruchu jako string
     @FXML
     void btn_connect_clicked(ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
