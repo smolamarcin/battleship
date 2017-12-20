@@ -39,7 +39,7 @@ mvn test | grep elapsed | grep -Eo 'run: [0-9]{1,4}' | grep -Eo '[0-9]{1,4}'| pa
 
 #Count number of interfaces
 echo Number of interfaces
-grep -rl 'interface ' | grep java | wc -l
+grep -r --include=\*.java 'interface ' | wc -l
 
 #Count number of packages
 echo Number of packages
@@ -47,16 +47,17 @@ find . -type f -name "*.java" -printf '%h\n' | sort | uniq | wc -l
 
 #Count number of public class
 echo Number of public class
-grep -rl 'public class' | grep java | wc -l
+grep -r --include=\*.java 'public class' | wc -l
+#grep -r --include=\*.java 'public class' | grep -v "test" | wc -l
 
 #Count number of private class
-echo Number of public class
-grep -rl 'private class' | grep java | wc -l
+echo Number of private class
+grep -r --include=\*.java 'private class' | wc -l
 
 #Count number of abstract class
-echo Number of public class
-grep -rl 'abstract class' | grep java | wc -l
+echo Number of abstract class
+grep -r --include=\*.java 'abstract class' | wc -l
 
-#Count number of package default class
-echo Number of public class
-grep -rl 'class' | grep -v 'public class' | grep -v 'private class' | grep java | wc -l
+#Count number of package private class
+echo Number of package private class
+grep -r --include=\*.java "class " | grep -v "public" | grep -v "private" | wc -l
