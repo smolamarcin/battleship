@@ -12,4 +12,6 @@ public interface Server {
     Cell receiveEnemyMove();
     String receiveAllShips();
     Cell receiveFirstMove();
+
+    void sendOnly(String result);
 }

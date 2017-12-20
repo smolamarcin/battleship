@@ -43,4 +43,9 @@ public class SocketClient implements ShipClient {
     public String getEnemyShips() {
         return enemyShips;
     }
+
+    @Override
+    public void sendOnly(String result) {
+        out.println(result);
+    }
 }

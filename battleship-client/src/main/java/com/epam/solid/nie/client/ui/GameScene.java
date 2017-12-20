@@ -50,6 +50,7 @@ public class GameScene extends Application {
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
                     System.out.println("YOU WIN");
+                    socketServer.sendOnly("Q");
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());

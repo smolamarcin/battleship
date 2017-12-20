@@ -6,4 +6,6 @@ interface ShipClient {
     boolean run() throws IOException;
     void send(String allShips) throws IOException;
     String getEnemyShips();
+
+    void sendOnly(String result);
 }
