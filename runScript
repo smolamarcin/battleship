@@ -1,13 +1,13 @@
 #! /bin/bash
 set -e
 #
-echo Hello Tomasz. It's our demo. Please enter a directory name:
+echo Hello Tomasz. It is is our demo. Please enter a directory name:
 read foldername
 git clone https://github.com/smolamarcin/battleship $foldername
 cd "$foldername"
 echo Invoking mvn clean install command
 mvn clean install;
-echo: Invoking mvn test
+echo Invoking mvn test
 mvn test;
 
 #checkstyle
@@ -32,5 +32,31 @@ git shortlog | grep -E '^[^ ]'
 #count of lines per author
 echo Number of lines per author 
 git ls-files | while read f; do git blame --line-porcelain $f | grep '^author '; done | sort -f | uniq -ic | sort -n 
-#Count of tests
 
+#Count of tests
+echo Number of tests
+mvn test | grep elapsed | grep -Eo 'run: [0-9]{1,4}' | grep -Eo '[0-9]{1,4}'| paste -sd+ | bc
+
+#Count number of interfaces
+echo Number of interfaces
+grep -rl 'interface ' | grep java | wc -l
+
+#Count number of packages
+echo Number of packages
+find . -type f -name "*.java" -printf '%h\n' | sort | uniq | wc -l
+
+#Count number of public class
+echo Number of public class
+grep -rl 'public class' | grep java | wc -l
+
+#Count number of private class
+echo Number of public class
+grep -rl 'private class' | grep java | wc -l
+
+#Count number of abstract class
+echo Number of public class
+grep -rl 'abstract class' | grep java | wc -l
+
+#Count number of package default class
+echo Number of public class
+grep -rl 'class' | grep -v 'public class' | grep -v 'private class' | grep java | wc -l
