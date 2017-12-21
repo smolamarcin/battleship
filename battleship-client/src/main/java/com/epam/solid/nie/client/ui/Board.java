@@ -143,21 +143,31 @@ class Board extends Parent {
         int y = cell.getCellY();
 
         if (ship.getBattleShip() instanceof VerticalShip) {
-            for (int i = y; i < y + length; i++) {
-                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
-                    return false;
-                }
-                if (canPlaceShip(i, x)) return false;
-            }
+            if (handleVerticalShip(length, x, y)) return false;
         } else {
-            for (int i = x; i < x + length; i++) {
-                if (!isInScope(i, y) || getCell(i, y).isOccupied())
-                    return false;
-
-                if (canPlaceShip(y, i)) return false;
-            }
+            if (handleHorizontalShip(length, x, y)) return false;
         }
         return true;
+    }
+
+    private boolean handleHorizontalShip(int length, int x, int y) {
+        for (int i = x; i < x + length; i++) {
+            if (!isInScope(i, y) || getCell(i, y).isOccupied())
+                return true;
+
+            if (canPlaceShip(y, i)) return true;
+        }
+        return false;
+    }
+
+    private boolean handleVerticalShip(int length, int x, int y) {
+        for (int i = y; i < y + length; i++) {
+            if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
+                return true;
+            }
+            if (canPlaceShip(i, x)) return true;
+        }
+        return false;
     }
 
     private boolean canPlaceShip(int y, int i) {
