@@ -20,9 +20,9 @@ public class GameScene extends Application {
     private Logger logger = Logger.getLogger(GameScene.class.getName());
     private boolean whichPlayer;
     static boolean running = false;
-    private Board enemyBoard, playerBoard;
+    private Board enemyBoard;
+    private Board playerBoard;
     private SocketServer socketServer;
-    private ShipPlacer shipPlacer;
 
     GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
@@ -36,7 +36,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        final ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);

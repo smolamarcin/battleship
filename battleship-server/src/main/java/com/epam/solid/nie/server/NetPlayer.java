@@ -10,13 +10,12 @@ import java.util.logging.Logger;
 
 public class NetPlayer implements Player {
     private Logger logger = Logger.getLogger(NetPlayer.class.getName());
-    private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
 
     @Override
     public void register(ServerSocket serverSocket) throws IOException {
-        clientSocket = serverSocket.accept();
+        final Socket clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out.println("hi. wait.");

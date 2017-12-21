@@ -9,12 +9,11 @@ import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
     private Logger logger = Logger.getLogger(ShipSocketServer.class.getName());
-    private final int portNumber = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
-    private ServerSocket serverSocket;
     private Player currentPlayer;
     private boolean isGameOver;
+    private static final int PORT_NUMBER = 8081;
 
     ShipSocketServer(String ip) {
         this.ip = ip;
@@ -22,7 +21,8 @@ class ShipSocketServer implements ShipServer {
 
     @Override
     public void initialize() throws IOException {
-        serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip));
+
+        final ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
 
         logger.info(String.format("Server %s is here", ip));
 
@@ -41,7 +41,7 @@ class ShipSocketServer implements ShipServer {
         logger.info(String.format("First's ships:%s", firstShips));
 
         String secondShips = second.provideShips();
-        logger.info(String.format("Second's ships:" + secondShips));
+        logger.info(String.format("Second's ships: %s", secondShips));
 
         first.inform(secondShips);
 
@@ -55,7 +55,7 @@ class ShipSocketServer implements ShipServer {
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        logger.info(String.format("%d:%s", players.indexOf(currentPlayer), move));
+        logger.info(String.valueOf(players.indexOf(currentPlayer)) + ":" + move);
         if(move.equals("Q"))
             isGameOver = true;
         changeCurrentPlayer();

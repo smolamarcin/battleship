@@ -11,19 +11,19 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
+import java.util.logging.Logger;
 
 
 /**
  *
  */
 class Board extends Parent {
+    private Logger logger = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    List<Ship> allShips = new ArrayList<>();
+    private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy, VBox rows) {
@@ -63,7 +63,7 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        out.println(positions);
+        logger.info(positions.toString());
         return false;
     }
 
@@ -189,11 +189,11 @@ class Board extends Parent {
         return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
 
-    public String getAllpositions() {
+    String getAllpositions() {
         return positions.toString();
     }
 
-    public boolean areAllShipsSunk() {
+    boolean areAllShipsSunk() {
         for (Ship ship : allShips)
             if(ship.isAlive())
                 return false;
