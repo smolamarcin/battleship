@@ -1,13 +1,15 @@
 package com.epam.solid.nie.config;
 
-public enum ConfigurationE {
+public enum Config {
 
-    CONFIGURATION {
+    FILE {
         @Override
         public String getName(){
-            return "configuration";
+            return CONFIGURATION_NAME;
         }
     };
+
+    public static final String CONFIGURATION_NAME = "configuration";
 
     public abstract String getName();
 }
