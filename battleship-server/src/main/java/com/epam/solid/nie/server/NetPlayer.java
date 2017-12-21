@@ -6,9 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 public class NetPlayer implements Player {
-
+    private Logger logger = Logger.getLogger(NetPlayer.class.getName());
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -18,9 +19,8 @@ public class NetPlayer implements Player {
         clientSocket = serverSocket.accept();
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
         out.println("hi. wait.");
-        System.out.println("registered");
+        logger.info("registered");
     }
 
     @Override

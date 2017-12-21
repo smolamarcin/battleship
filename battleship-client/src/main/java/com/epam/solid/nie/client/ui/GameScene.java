@@ -13,10 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 
 public class GameScene extends Application {
+    private Logger logger = Logger.getLogger(GameScene.class.getName());
     private boolean whichPlayer;
-    public static boolean running = false;
+    static boolean running = false;
     private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
@@ -49,7 +52,7 @@ public class GameScene extends Application {
                     return;
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
-                    System.out.println("YOU WIN");
+                    logger.info("YOU WIN");
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
@@ -77,7 +80,7 @@ public class GameScene extends Application {
             } else {
                 running = !cell.shoot();
                 if (checkForWin(playerBoard)) {
-                    System.out.println("YOU LOSE");
+                    logger.info("YOU LOSE");
                     System.exit(0);
                 }
             }
@@ -88,7 +91,7 @@ public class GameScene extends Application {
         return board.areAllShipsSunk();
     }
 
-    public void start() {
+    void start() {
         start(new Stage());
     }
 

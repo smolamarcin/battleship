@@ -5,8 +5,10 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
+    private Logger logger = Logger.getLogger(ShipSocketServer.class.getName());
     private final int portNumber = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
@@ -22,7 +24,7 @@ class ShipSocketServer implements ShipServer {
     public void initialize() throws IOException {
         serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip));
 
-        System.out.println("Server " + ip + " is here");
+        logger.info(String.format("Server %s is here", ip));
 
         Player first = new NetPlayer();
         first.register(serverSocket);
@@ -36,10 +38,10 @@ class ShipSocketServer implements ShipServer {
         first.inform("Game has started. 2");
 
         String firstShips = first.provideShips();
-        System.out.println("First's ships:" + firstShips);
+        logger.info(String.format("First's ships:%s", firstShips));
 
         String secondShips = second.provideShips();
-        System.out.println("Second's ships:" + secondShips);
+        logger.info(String.format("Second's ships:" + secondShips));
 
         first.inform(secondShips);
 
@@ -47,13 +49,13 @@ class ShipSocketServer implements ShipServer {
 
         currentPlayer = first;
 
-        System.out.println("Initialized");
+        logger.info("Initialized");
     }
 
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        System.out.println(players.indexOf(currentPlayer) + ":" + move);
+        logger.info(String.format("%d:%s", players.indexOf(currentPlayer), move));
         if(move.equals("Q"))
             isGameOver = true;
         changeCurrentPlayer();

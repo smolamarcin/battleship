@@ -10,11 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class StartSceneController {
+    private Logger logger = Logger.getLogger(StartSceneController.class.getName());
 
     @FXML
     private Button btn_connect;
+
+    @FXML
+    private TextField field_ip;
 
     @FXML
     void btn_connect_clicked(ActionEvent event) throws IOException {
@@ -25,11 +30,8 @@ public class StartSceneController {
             boolean whichPlayer = socketServer.connect(ip);
             new GameScene(socketServer, whichPlayer).start();
         } else {
-            System.out.println("Wrong ip.");
+            logger.info("Wrong ip.");
         }
     }
-
-    @FXML
-    private TextField field_ip;
 
 }
