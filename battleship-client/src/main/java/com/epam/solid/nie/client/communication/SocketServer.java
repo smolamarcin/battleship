@@ -49,8 +49,8 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public void sendOnly(String result) {
-        server.sendOnly(result);
+    public void sendGameOverToOpponent() {
+        server.sendGameOverToOpponent();
     }
 
     private void receiveAllMovesWithoutSending() {
