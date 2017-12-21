@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SocketClient implements ShipClient {
@@ -23,13 +24,15 @@ public class SocketClient implements ShipClient {
 
         int portNumber = 8081;
         Socket socket = new Socket(ip, portNumber);
-        try{
+        try {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String fromServer;
             while (!(fromServer = in.readLine()).equals("Provide ships")) {
-                logger.info(String.format("Server: %s", fromServer));
+                if (logger.isLoggable(Level.INFO)) {
+                    logger.info(String.format("Server: %s", fromServer));
+                }
                 if (fromServer.equals("Game has started. 1"))
                     result = true;
             }

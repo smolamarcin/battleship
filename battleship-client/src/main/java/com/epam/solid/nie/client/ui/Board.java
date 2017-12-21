@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -63,7 +64,9 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        logger.info(positions.toString());
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(positions.toString());
+        }
         return false;
     }
 
