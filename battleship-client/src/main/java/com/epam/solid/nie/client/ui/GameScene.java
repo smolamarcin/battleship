@@ -49,8 +49,12 @@ public class GameScene extends Application {
                     return;
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
+<<<<<<< HEAD
                     System.out.println("YOU WIN");
                     socketServer.sendGameOverToOpponent();
+=======
+                    logger.info("YOU WIN");
+>>>>>>> parent of 40afa3c... Merge remote-tracking branch 'origin/master' into development-demo2
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
