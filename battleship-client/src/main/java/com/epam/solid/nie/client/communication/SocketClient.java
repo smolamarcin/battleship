@@ -5,14 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SocketClient implements ShipClient {
+    private Logger logger = Logger.getLogger(SocketClient.class.getName());
     private String ip;
-    private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    private int portNumber = 8081;
 
     SocketClient(String ip) {
         this.ip = ip;
@@ -22,17 +23,25 @@ public class SocketClient implements ShipClient {
     public boolean run() throws IOException {
         boolean result = false;
 
-        socket = new Socket(ip, portNumber);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        int portNumber = 8081;
+        Socket socket = new Socket(ip, portNumber);
+        try {
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-        String fromServer;
-        while (!(fromServer = in.readLine()).equals("Provide ships")) {
-            System.out.println("Server: " + fromServer);
-            if (fromServer.equals("Game has started. 1"))
-                result = true;
+            String fromServer;
+            while (!(fromServer = in.readLine()).equals("Provide ships")) {
+                if (logger.isLoggable(Level.INFO)) {
+                    logger.info(String.format("Server: %s", fromServer));
+                }
+                if (fromServer.equals("Game has started. 1"))
+                    result = true;
+            }
+
+        } finally {
+            socket.close();
         }
-        return result;
+                return result;
     }
 
     @Override

@@ -13,13 +13,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 
 public class GameScene extends Application {
+    private Logger logger = Logger.getLogger(GameScene.class.getName());
     private boolean whichPlayer;
-    public static boolean running = false;
-    private Board enemyBoard, playerBoard;
+    static boolean running = false;
+    private Board enemyBoard;
+    private Board playerBoard;
     private SocketServer socketServer;
-    private ShipPlacer shipPlacer;
 
     GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
@@ -33,7 +36,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        final ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -51,6 +54,7 @@ public class GameScene extends Application {
                 if (checkForWin(enemyBoard)) {
                     System.out.println("YOU WIN");
                     socketServer.sendGameOverToOpponent();
+                    logger.info("YOU WIN");
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
@@ -78,7 +82,7 @@ public class GameScene extends Application {
             } else {
                 running = !cell.shoot();
                 if (checkForWin(playerBoard)) {
-                    System.out.println("YOU LOSE");
+                    logger.info("YOU LOSE");
                     System.exit(0);
                 }
             }
@@ -89,7 +93,7 @@ public class GameScene extends Application {
         return board.areAllShipsSunk();
     }
 
-    public void start() {
+    void start() {
         start(new Stage());
     }
 

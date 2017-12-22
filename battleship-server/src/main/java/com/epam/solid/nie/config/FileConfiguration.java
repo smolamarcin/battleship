@@ -7,12 +7,11 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class FileConfiguration implements Configuration {
-
     private EnumMap<ConfigProperty, String> map = new EnumMap(ConfigProperty.class);
 
     public Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(Configuration.CONFIGURATION);
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(Config.FILE.getName());
             Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));
         }
         return map;
