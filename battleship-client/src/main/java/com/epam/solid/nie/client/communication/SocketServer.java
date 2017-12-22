@@ -5,12 +5,14 @@ import com.epam.solid.nie.client.ui.Cell;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Logger;
 
 
 /**
  * SocketServer implementation to communicate with server side
  */
 public class SocketServer implements Server {
+    private Logger logger = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
     private String allMoves = "";
     private Queue<Cell> cells = new LinkedList<>();
@@ -21,18 +23,18 @@ public class SocketServer implements Server {
         try {
             return server.run();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
         return false;
     }
 
     @Override
     public void send(String allShips) {
-        System.out.println(allShips);
+        logger.info(allShips);
         try {
             server.send(allShips);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
     }
 
@@ -52,8 +54,8 @@ public class SocketServer implements Server {
         allMoves = "";
         String moves = server.getEnemyShips();
         String[] movesArr = moves.split(",;");
-        for (int i = 0; i < movesArr.length; i++) {
-            String[] coordinates = movesArr[i].split(",");
+        for (String aMovesArr : movesArr) {
+            String[] coordinates = aMovesArr.split(",");
             cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
         }
     }
