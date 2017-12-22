@@ -1,13 +1,13 @@
 package com.epam.solid.nie.config.language;
 
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class CommunicateProviderImpl implements CommunicateProvider {
-    private Map<Communicate, String> communicates = new EnumMap<>(Communicate.class);
+    private Map<Communicate, String> communicates = new HashMap<>();
 
     public CommunicateProviderImpl populate(Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
@@ -24,7 +24,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
         return communicates.get(communicate);
     }
 
-    public boolean isMapEmpty() {
+    public boolean isMapEmpty(){
         return communicates.isEmpty();
     }
 }
