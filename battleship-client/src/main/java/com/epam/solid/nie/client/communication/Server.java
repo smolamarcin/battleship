@@ -2,9 +2,6 @@ package com.epam.solid.nie.client.communication;
 
 import com.epam.solid.nie.client.ui.Cell;
 
-/**
- *
- */
 public interface Server {
     boolean connect(String ip);
     void send(String allShips);
@@ -12,4 +9,5 @@ public interface Server {
     Cell receiveEnemyMove();
     String receiveAllShips();
     Cell receiveFirstMove();
+    void sendGameOverToOpponent();
 }

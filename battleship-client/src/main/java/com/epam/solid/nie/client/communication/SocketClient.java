@@ -19,6 +19,7 @@ public class SocketClient implements ShipClient {
         this.ip = ip;
     }
 
+    @Override
     public boolean run() throws IOException {
         boolean result = false;
 
@@ -49,7 +50,13 @@ public class SocketClient implements ShipClient {
         enemyShips = in.readLine();
     }
 
+    @Override
     public String getEnemyShips() {
         return enemyShips;
+    }
+
+    @Override
+    public void sendGameOverToOpponent() {
+        out.println("Q");
     }
 }

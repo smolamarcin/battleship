@@ -52,6 +52,8 @@ public class GameScene extends Application {
                     return;
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
+                    System.out.println("YOU WIN");
+                    socketServer.sendGameOverToOpponent();
                     logger.info("YOU WIN");
                     System.exit(0);
                 }

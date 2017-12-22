@@ -50,9 +50,18 @@ public class SocketServer implements Server {
         return cells.poll();
     }
 
+    @Override
+    public void sendGameOverToOpponent() {
+        server.sendGameOverToOpponent();
+    }
+
     private void receiveAllMovesWithoutSending() {
         allMoves = "";
         String moves = server.getEnemyShips();
+        if(moves.equals("Q")) {
+            System.out.println("YOU LOSE");
+            System.exit(0);
+        }
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
             String[] coordinates = aMovesArr.split(",");
