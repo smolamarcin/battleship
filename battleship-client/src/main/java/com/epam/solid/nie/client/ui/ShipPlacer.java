@@ -68,8 +68,8 @@ class ShipPlacer {
             List<Point2D> point2DOfShip = new ArrayList<>();
             String[] coords = shipStr.split(",");
             for (int i = 0; i < coords.length - 1; i += 2) {
-                int x = Integer.parseInt(coords[i]);
-                int y = Integer.parseInt(coords[i + 1]);
+                int x = Integer.valueOf(coords[i]);
+                int y = Integer.valueOf(coords[i + 1]);
                 point2DOfShip.add(Point2D.of(x, y));
             }
             shipCreator = createShip(coords);

@@ -24,6 +24,7 @@ class Ship extends Parent {
     }
 
     boolean isAlive() {
+        //return !(battleShip.getShipProperties().isEmpty());
         return health!=0;
     }
 

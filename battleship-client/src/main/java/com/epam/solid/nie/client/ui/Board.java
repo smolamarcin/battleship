@@ -11,20 +11,19 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static java.lang.System.out;
 
 
 /**
  *
  */
 class Board extends Parent {
-    private Logger logger = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    private List<Ship> allShips = new ArrayList<>();
+    List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy, VBox rows) {
@@ -64,9 +63,7 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        if (logger.isLoggable(Level.INFO)) {
-            logger.info(positions.toString());
-        }
+        out.println(positions);
         return false;
     }
 
@@ -146,31 +143,21 @@ class Board extends Parent {
         int y = cell.getCellY();
 
         if (ship.getBattleShip() instanceof VerticalShip) {
-            if (handleVerticalShip(length, x, y)) return false;
+            for (int i = y; i < y + length; i++) {
+                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
+                    return false;
+                }
+                if (canPlaceShip(i, x)) return false;
+            }
         } else {
-            if (handleHorizontalShip(length, x, y)) return false;
+            for (int i = x; i < x + length; i++) {
+                if (!isInScope(i, y) || getCell(i, y).isOccupied())
+                    return false;
+
+                if (canPlaceShip(y, i)) return false;
+            }
         }
         return true;
-    }
-
-    private boolean handleHorizontalShip(int length, int x, int y) {
-        for (int i = x; i < x + length; i++) {
-            if (!isInScope(i, y) || getCell(i, y).isOccupied())
-                return true;
-
-            if (canPlaceShip(y, i)) return true;
-        }
-        return false;
-    }
-
-    private boolean handleVerticalShip(int length, int x, int y) {
-        for (int i = y; i < y + length; i++) {
-            if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
-                return true;
-            }
-            if (canPlaceShip(i, x)) return true;
-        }
-        return false;
     }
 
     private boolean canPlaceShip(int y, int i) {
@@ -192,11 +179,11 @@ class Board extends Parent {
         return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
     }
 
-    String getAllpositions() {
+    public String getAllpositions() {
         return positions.toString();
     }
 
-    boolean areAllShipsSunk() {
+    public boolean areAllShipsSunk() {
         for (Ship ship : allShips)
             if(ship.isAlive())
                 return false;

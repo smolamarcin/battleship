@@ -13,16 +13,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.logging.Logger;
-
 
 public class GameScene extends Application {
-    private Logger logger = Logger.getLogger(GameScene.class.getName());
     private boolean whichPlayer;
-    static boolean running = false;
-    private Board enemyBoard;
-    private Board playerBoard;
+    public static boolean running = false;
+    private Board enemyBoard, playerBoard;
     private SocketServer socketServer;
+    private ShipPlacer shipPlacer;
 
     GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
@@ -36,7 +33,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        final ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -53,8 +50,6 @@ public class GameScene extends Application {
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
                     System.out.println("YOU WIN");
-                    socketServer.sendGameOverToOpponent();
-                    logger.info("YOU WIN");
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
@@ -82,7 +77,7 @@ public class GameScene extends Application {
             } else {
                 running = !cell.shoot();
                 if (checkForWin(playerBoard)) {
-                    logger.info("YOU LOSE");
+                    System.out.println("YOU LOSE");
                     System.exit(0);
                 }
             }
@@ -93,7 +88,7 @@ public class GameScene extends Application {
         return board.areAllShipsSunk();
     }
 
-    void start() {
+    public void start() {
         start(new Stage());
     }
 
