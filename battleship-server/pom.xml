@@ -11,7 +11,6 @@
 
     <modelVersion>${modelVersion}</modelVersion>
     <artifactId>battleship-server</artifactId>
-    <version>${projectVersion}</version>
     <packaging>jar</packaging>
 
     <build>
@@ -31,7 +30,6 @@
         <dependency>
             <groupId>com.epam.solid.nie</groupId>
             <artifactId>common</artifactId>
-            <version>${projectVersion}</version>
         </dependency>
     </dependencies>
 
@@ -40,6 +38,8 @@
         - it uses maven compiler plugin to compile the sources of module
         - it inherits mostly constants from parent pom
     </description>
+
+    <url>${project.distributionManagement.site.url}/${project.artifactId}</url>
 
 
 </project>
