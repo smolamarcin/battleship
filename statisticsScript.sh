@@ -1,10 +1,7 @@
 #! /bin/bash
 set -e
 #
-echo Hello Tomasz. Its our demo. Please enter a directory name:
-read foldername
-git clone https://github.com/smolamarcin/battleship $foldername
-cd "$foldername"
+
 echo Invoking mvn clean install command
 mvn clean install;
 echo Invoking mvn test
