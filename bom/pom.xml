@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <artifactId>battleship-bom</artifactId>
+    <groupId>com.epam.solid.nie</groupId>
+    <version>${projectVersion}</version>
+    <modelVersion>${modelVersion}</modelVersion>
+    <name>BattleShip-BOM</name>
+
+    <properties>
+        <modelVersion>4.0.0</modelVersion>
+        <projectVersion>1.5.0</projectVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <shadeVersion>3.1.0</shadeVersion>
+        <mavenCompilerPluginVersion>3.6.1</mavenCompilerPluginVersion>
+        <mavenCleanPluginVersion>3.0.0</mavenCleanPluginVersion>
+        <mavenDeployPluginVersion>2.8.2</mavenDeployPluginVersion>
+        <mavenInstallPluginVersion>2.5.2</mavenInstallPluginVersion>
+        <mavenJarPluginVersion>3.0.2</mavenJarPluginVersion>
+        <mavenEnforcerPluginVersion>1.4.1</mavenEnforcerPluginVersion>
+        <mavenSurefirePluginVersion>2.20</mavenSurefirePluginVersion>
+        <mavenProjectInfoReportsPluginVersion>2.9</mavenProjectInfoReportsPluginVersion>
+        <mavenResourcesPluginVersion>3.0.2</mavenResourcesPluginVersion>
+        <mavenSitePluginVersion>3.6</mavenSitePluginVersion>
+        <execMavenPluginVersion>1.6.0</execMavenPluginVersion>
+        <jacocoMavenPluginVersion>0.7.9</jacocoMavenPluginVersion>
+        <sonarMavenPlugin>3.3.0.603</sonarMavenPlugin>
+        <mavenCheckstylePluginVersion>2.17</mavenCheckstylePluginVersion>
+        <findbugsMavenPluginVersion>3.0.5</findbugsMavenPluginVersion>
+        <lombokVersion>1.12.4</lombokVersion>
+        <testngVersion>6.13.1</testngVersion>
+        <mockitoAllVersion>1.10.19</mockitoAllVersion>
+        <javaVersion>1.8</javaVersion>
+    </properties>
+
+
+</project>
