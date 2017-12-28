@@ -37,5 +37,9 @@
         <javaVersion>1.8</javaVersion>
     </properties>
 
+    <description>
+        It's a bom POM:
+        - it has all properties constants representing versions
+    </description>
 
 </project>

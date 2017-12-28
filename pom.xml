@@ -189,4 +189,9 @@
         </dependencies>
     </dependencyManagement>
 
+    <description>
+        It's a root POM:
+        - it has dependency and plug-in management configured
+    </description>
+
 </project>

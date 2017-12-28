@@ -46,4 +46,12 @@
         </plugins>
     </build>
 
+    <description>
+        It's a common POM:
+        - it uses maven compiler plugin to compile the sources of module
+        - it uses shade plugin for build fat jar
+        - it inherits mostly constants from parent pom
+        This module is used by client module. It provides common functionality.
+    </description>
+
 </project>

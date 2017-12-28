@@ -60,4 +60,11 @@
         </dependency>
     </dependencies>
 
+    <description>
+        It's a client POM:
+        - it uses maven compiler plugin to compile the sources of module
+        - it uses shade plugin for build fat jar
+        - it inherits mostly constants from parent pom
+    </description>
+
 </project>

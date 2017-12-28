@@ -35,4 +35,11 @@
         </dependency>
     </dependencies>
 
+    <description>
+        It's a server POM:
+        - it uses maven compiler plugin to compile the sources of module
+        - it inherits mostly constants from parent pom
+    </description>
+
+
 </project>
