@@ -1,4 +1,4 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/smolamarcin/battleship.svg?columns=all)](https://waffle.io/smolamarcin/battleship)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/smolamarcin/battleship.svg?columns=all)](https://waffle.io/smolamarcin/battleship) 
 In order to run server you need to use script runServer.sh (./runServer.sh).
 In order to run client there has to be currently running server of battleship game and then run runClient.sh script.
 
