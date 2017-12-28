@@ -2,10 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.epam.solid.nie</groupId>
+
+    <parent>
+        <groupId>com.epam.solid.nie</groupId>
+        <artifactId>battleship-bom</artifactId>
+        <version>1.5.0</version>
+    </parent>
+
+    <modelVersion>${modelVersion}</modelVersion>
     <artifactId>battleship</artifactId>
-    <version>1.0.1</version>
+    <version>${projectVersion}</version>
     <packaging>pom</packaging>
     <name>battleship</name>
 
@@ -13,12 +19,8 @@
         <module>battleship-server</module>
         <module>battleship-client</module>
         <module>common</module>
+        <module>bom</module>
     </modules>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <shadeVersion>3.1.0</shadeVersion>
-    </properties>
 
     <build>
         <pluginManagement>
@@ -26,37 +28,37 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>${mavenCompilerPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>${mavenCleanPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>2.8.2</version>
+                    <version>${mavenDeployPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.5.2</version>
+                    <version>${mavenInstallPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>${mavenJarPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>1.4.1</version>
+                    <version>${mavenEnforcerPluginVersion}</version>
                     <executions>
                         <execution>
                             <id>enforce-maven</id>
@@ -68,7 +70,7 @@
                     <configuration>
                         <rules>
                             <requireJavaVersion>
-                                <version>1.8</version>
+                                <version>${javaVersion}</version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -77,7 +79,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.20</version>
+                    <version>${mavenSurefirePluginVersion}</version>
                     <configuration>
                         <includes>
                             <include>**/*Test.java</include>
@@ -88,7 +90,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>2.9</version>
+                    <version>${mavenProjectInfoReportsPluginVersion}</version>
                     <configuration>
                         <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                     </configuration>
@@ -97,24 +99,24 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>${mavenResourcesPluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.6</version>
+                    <version>${mavenSitePluginVersion}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>1.6.0</version>
+                    <version>${execMavenPluginVersion}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.7.9</version>
+                    <version>${jacocoMavenPluginVersion}</version>
                     <executions>
                         <execution>
                             <id>jacoco-initialize</id>
@@ -136,13 +138,13 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.3.0.603</version>
+                    <version>${sonarMavenPlugin}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>2.17</version>
+                    <version>${mavenCheckstylePluginVersion}</version>
                     <configuration>
                         <linkXRef>false</linkXRef>
                     </configuration>
@@ -151,36 +153,40 @@
             </plugins>
         </pluginManagement>
     </build>
+
     <reporting>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.5</version>
+                <version>${findbugsMavenPluginVersion}</version>
             </plugin>
         </plugins>
     </reporting>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.12.4</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombokVersion}</version>
+                <scope>runtime</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.13.1</version>
-            <scope>test</scope>
-        </dependency>
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testngVersion}</version>
+                <scope>test</scope>
+            </dependency>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockitoAllVersion}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>
