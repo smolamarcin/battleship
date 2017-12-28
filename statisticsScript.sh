@@ -6,10 +6,8 @@ echo Invoking mvn clean install command
 mvn clean install;
 echo Invoking mvn test
 mvn test;
-
 #checkstyle
 mvn checkstyle:checkstyle;
-
 #find number of lines in java files
 echo Number of lines in java files
 find . -name '*.java' | xargs wc -l
