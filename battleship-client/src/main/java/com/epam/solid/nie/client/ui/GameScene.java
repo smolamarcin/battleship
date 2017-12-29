@@ -7,8 +7,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -49,7 +51,13 @@ public class GameScene extends Application {
                     return;
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
-                    System.out.println("YOU WIN");
+                    Label label=new Label("YOU WIN");
+                    StackPane secondaryLayout = new StackPane();
+                    secondaryLayout.getChildren().add(label);
+                    Scene secondScene = new Scene(secondaryLayout,200,100);
+                    Stage secondStage=new Stage();
+                    secondStage.setScene(secondScene);
+                    secondStage.show();
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
@@ -77,7 +85,13 @@ public class GameScene extends Application {
             } else {
                 running = !cell.shoot();
                 if (checkForWin(playerBoard)) {
-                    System.out.println("YOU LOSE");
+                    Label label=new Label("YOU LOSE");
+                    StackPane secondaryLayout = new StackPane();
+                    secondaryLayout.getChildren().add(label);
+                    Scene secondScene = new Scene(secondaryLayout,200,100);
+                    Stage secondStage=new Stage();
+                    secondStage.setScene(secondScene);
+                    secondStage.show();
                     System.exit(0);
                 }
             }
