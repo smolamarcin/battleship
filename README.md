@@ -1,15 +1,17 @@
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/smolamarcin/battleship.svg?columns=all)](https://waffle.io/smolamarcin/battleship) <br />
 ## Running server
-    In order to run server you need to use script runServer.sh (./runServer.sh).
+    To start the server, run a script named runServer.sh. 
+    To run script you should type in console ./runServer.sh
 ## Running client
-    In order to run client there has to be currently running server of battleship game and then run runClient.sh script.
+    The server should be switched on before starting the client.
+    To start the client, run a script named runClient.sh. 
+    To run script you should type in console ./runClient.sh
 ## Tools necessary to build
     Stable internet connection
     Maven (version 3.3.9 is obligatory) 
     JDK 1.8.0_152
-    Unix system 
     
-## Game descritpion
+## Game description
     Battleship (also Battleships or Sea Battle) is a guessing game for two players. 
     It is played on ruled grids (paper or board) on which the players' fleets of ships 
     (including battleships) are marked. 
