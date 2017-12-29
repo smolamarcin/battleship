@@ -25,7 +25,7 @@
     The locations of the fleet are concealed from the other player. 
     
     Players alternate turns calling "shots" at the other player's ships, and the objective 
-    of the game is to destroy the opposing player's fleet.
+    of the game is to destroy the opponent's fleet.
 ## Gameplay
     In the initial screen you should enter the address (IP in version 4)
      you want to connect to.
