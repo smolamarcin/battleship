@@ -2,13 +2,13 @@
 ## Running server
     To start the server, run the script named runServer.sh. 
     
-    To run the script you should type in the console ./runServer.sh
+    To run the script you should type './runServer.sh' in the console 
 ## Running client
     The server should be switched on before starting the client.
     
     To start the client, run the script named runClient.sh. 
     
-    To run script you should type in the console ./runClient.sh
+    To run script you should type './runClient.sh' in the console
 ## Tools necessary to build
     Stable internet connection
     
