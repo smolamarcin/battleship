@@ -1,8 +1,11 @@
 #!/bin/bash
 
+cd bom
+mvn clean install;
+cd ..
 mvn clean install;
 cd "battleship-server";
 echo Please, enter your IPv4 
 read ip
-java -jar target/battleship-server-1.0.1.jar $ip
+java -jar target/battleship-server*.jar $ip
 

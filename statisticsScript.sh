@@ -3,6 +3,9 @@ set -e
 #
 
 echo Invoking mvn clean install command
+cd bom
+mvn clean install;
+cd ..
 mvn clean install;
 echo Invoking mvn test
 mvn test;
