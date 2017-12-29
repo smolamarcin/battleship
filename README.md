@@ -27,10 +27,10 @@
     Players alternate turns calling "shots" at the other player's ships, and the objective 
     of the game is to destroy the opponent's fleet.
 ## Gameplay
-    In the initial screen you should enter the address (IP in version 4)
+    In the initial screen you should enter the address (IPv4)
      you want to connect to.
    
-    At the beginning of the game, you must set your ships in following order: 
+    At the beginning of the game, you are supposed to set your ships in following order: 
     one 4-mast ship, two 3-mast ships, three 2-mast ships, four 1-mast ship.
     
     You can choose orientation of your ship.
