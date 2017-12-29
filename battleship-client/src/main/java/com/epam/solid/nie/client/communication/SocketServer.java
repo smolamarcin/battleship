@@ -48,12 +48,21 @@ public class SocketServer implements Server {
         return cells.poll();
     }
 
+    @Override
+    public void sendGameOverToOpponent() {
+        server.sendGameOverToOpponent();
+    }
+
     private void receiveAllMovesWithoutSending() {
         allMoves = "";
         String moves = server.getEnemyShips();
+        if (moves.equals("Q")) {
+            System.out.println("YOU LOSE");
+            System.exit(0);
+        }
         String[] movesArr = moves.split(",;");
-        for (int i = 0; i < movesArr.length; i++) {
-            String[] coordinates = movesArr[i].split(",");
+        for (String aMovesArr : movesArr) {
+            String[] coordinates = aMovesArr.split(",");
             cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
         }
     }
