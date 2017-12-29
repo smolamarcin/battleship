@@ -16,7 +16,7 @@
     <name>battleship</name>
 
     <modules>
-        <module>battleship-server</module>
+        <module>bafdsfdsttleship-server</module>
         <module>battleship-client</module>
         <module>common</module>
     </modules>
