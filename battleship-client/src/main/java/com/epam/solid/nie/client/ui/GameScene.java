@@ -85,7 +85,6 @@ public class GameScene extends Application {
                 cell1 = socketServer.receiveEnemyMove();
             else
                 running = !cell.shoot();
-            }
         }
     }
 
