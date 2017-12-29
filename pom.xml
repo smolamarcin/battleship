@@ -7,6 +7,7 @@
         <groupId>com.epam.solid.nie</groupId>
         <artifactId>battleship-bom</artifactId>
         <version>1.5.0</version>
+        <relativePath>../battleship/bom/pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -18,7 +19,6 @@
         <module>battleship-server</module>
         <module>battleship-client</module>
         <module>common</module>
-        <module>bom</module>
     </modules>
 
     <build>
@@ -166,10 +166,18 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>com.epam.solid.nie</groupId>
+                <artifactId>battleship-bom</artifactId>
+                <version>1.5.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombokVersion}</version>
-                <scope>runtime</scope>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>

@@ -7,11 +7,12 @@
         <groupId>com.epam.solid.nie</groupId>
         <artifactId>battleship</artifactId>
         <version>1.5.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <modelVersion>${modelVersion}</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>battleship-client</artifactId>
-    <packaging>jar</packaging>
+    <version>${projectVersion}</version>
 
     <build>
         <plugins>
@@ -56,6 +57,27 @@
             <groupId>com.epam.solid.nie</groupId>
             <artifactId>common</artifactId>
             <version>${projectVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testngVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockitoAllVersion}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombokVersion}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -5,12 +5,12 @@
 
     <artifactId>battleship-bom</artifactId>
     <groupId>com.epam.solid.nie</groupId>
-    <version>${projectVersion}</version>
-    <modelVersion>${modelVersion}</modelVersion>
+    <version>1.5.0</version>
+    <modelVersion>4.0.0</modelVersion>
     <name>BattleShip-BOM</name>
+    <packaging>pom</packaging>
 
     <properties>
-        <modelVersion>4.0.0</modelVersion>
         <projectVersion>1.5.0</projectVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
