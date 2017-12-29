@@ -7,12 +7,11 @@
         <groupId>com.epam.solid.nie</groupId>
         <artifactId>battleship</artifactId>
         <version>1.5.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <modelVersion>${modelVersion}</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>battleship-server</artifactId>
-    <version>${projectVersion}</version>
-    <packaging>jar</packaging>
 
     <build>
         <plugins>
@@ -24,6 +23,19 @@
                     <target>${javaVersion}</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.epam.solid.nie.server.server.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -33,6 +45,25 @@
             <artifactId>common</artifactId>
             <version>${projectVersion}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
     </dependencies>
+
+    <description>
+        It's a server POM:
+        - it uses maven compiler plugin to compile the sources of module
+        - it inherits mostly constants from parent pom
+    </description>
+
+    <url>${project.distributionManagement.site.url}/${project.artifactId}</url>
+
 
 </project>

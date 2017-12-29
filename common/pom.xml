@@ -6,10 +6,12 @@
         <groupId>com.epam.solid.nie</groupId>
         <artifactId>battleship</artifactId>
         <version>1.5.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <modelVersion>${modelVersion}</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>common</artifactId>
+
 
     <build>
         <plugins>
@@ -45,5 +47,30 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <description>
+        It's a common POM:
+        - it uses maven compiler plugin to compile the sources of module
+        - it uses shade plugin for build fat jar
+        - it inherits mostly constants from parent pom
+        This module is used by client module. It provides common functionality.
+    </description>
 
 </project>
