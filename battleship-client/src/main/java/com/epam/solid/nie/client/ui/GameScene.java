@@ -50,6 +50,7 @@ public class GameScene extends Application {
                 running = cell.shoot();
                 if (checkForWin(enemyBoard)) {
                     System.out.println("YOU WIN");
+                    socketServer.sendGameOverToOpponent();
                     System.exit(0);
                 }
                 socketServer.sendPlayerMove(cell.toString());
@@ -72,15 +73,10 @@ public class GameScene extends Application {
             int x = cell1.getCellX();
             int y = cell1.getCellY();
             Cell cell = playerBoard.getCell(x, y);
-            if (cell.wasShot) {
+            if (cell.wasShot)
                 cell1 = socketServer.receiveEnemyMove();
-            } else {
+            else
                 running = !cell.shoot();
-                if (checkForWin(playerBoard)) {
-                    System.out.println("YOU LOSE");
-                    System.exit(0);
-                }
-            }
         }
     }
 
