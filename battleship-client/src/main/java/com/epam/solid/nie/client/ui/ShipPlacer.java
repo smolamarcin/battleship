@@ -21,7 +21,7 @@ class ShipPlacer {
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
-    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4, 3, 3, 2, 2, 2, 1, 1, 1, 1));
+    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;

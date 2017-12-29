@@ -2,7 +2,10 @@ package com.epam.solid.nie.client.communication;
 
 import com.epam.solid.nie.utils.Point2D;
 import com.epam.solid.nie.client.ui.Cell;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -61,14 +64,17 @@ public class SocketServer implements Server {
         allMoves = "";
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
-            Label label = new Label("YOU LOSE");
             StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(label);
+            Button button=new Button();
+            button.setText("YOU LOSE");
+            button.setOnAction((EventHandler<ActionEvent>) e -> System.exit(0));
+            secondaryLayout.getChildren().add(button);
             Scene secondScene = new Scene(secondaryLayout, 200, 100);
             Stage secondStage = new Stage();
             secondStage.setScene(secondScene);
+
+
             secondStage.show();
-            System.exit(0);
         }
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
