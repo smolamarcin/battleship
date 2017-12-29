@@ -2,13 +2,13 @@
 ## Running server
     To start the server, run the script named runServer.sh. 
     
-    To run script you should type in console ./runServer.sh
+    To run the script you should type in the console ./runServer.sh
 ## Running client
     The server should be switched on before starting the client.
     
     To start the client, run the script named runClient.sh. 
     
-    To run script you should type in console ./runClient.sh
+    To run script you should type in the console ./runClient.sh
 ## Tools necessary to build
     Stable internet connection
     
@@ -19,7 +19,7 @@
 ## Game description
     Battleship (also Battleships or Sea Battle) is a guessing game for two players. 
     
-    It is played on ruled grids (paper or board) on which the players' fleets of ships 
+    The game takes place on ruled grids (paper or board) on which the players' fleets of ships 
     (including battleships) are marked. 
     
     The locations of the fleet are concealed from the other player. 
@@ -30,10 +30,10 @@
     In the initial screen you should enter the address (IPv4)
      you want to connect to.
    
-    At the beginning of the game, you are supposed to set your ships in following order: 
+    At the beginning of the game, you are supposed to set your ships in the following order: 
     one 4-mast ship, two 3-mast ships, three 2-mast ships, four 1-mast ship.
     
-    You can choose orientation of your ship.
+    You can choose the orientation of your ship.
     
     Right mouse button will place your ship vertically.
    
