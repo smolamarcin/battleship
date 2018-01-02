@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface Configuration {
     /**
-     * configuration fddile name
+     * configuration file name
      */
     String CONFIGURATION = "configuration";
 
