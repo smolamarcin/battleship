@@ -10,7 +10,7 @@ import com.epam.solid.nie.client.ui.Cell;
  */
 public interface Server {
     /**
-     * returns true if connection was successful.
+     * Returns true if connection was successful.
      *
      * @param ip as String
      * @return true if the connection attempt was successful.
@@ -18,35 +18,23 @@ public interface Server {
     boolean connect(String ip);
 
     /**
-     * send a list of ships between clients
+     * Send a list of ships between clients
      *
      * @param allShips
      */
     void send(String allShips);
 
     /**
-     * se
+     * Send single move of a player.
      *
      * @param move as String
      */
     void sendPlayerMove(String move);
 
-    /**
-     *
-     * @return
-     */
     Cell receiveEnemyMove();
 
-    /**
-     *
-     * @return
-     */
     String receiveAllShips();
 
-    /**
-     *
-     * @return
-     */
     Cell receiveFirstMove();
 
     /**

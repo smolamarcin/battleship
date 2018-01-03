@@ -61,6 +61,10 @@ public class Cell extends Rectangle {
         return ship != null;
     }
 
+    /**
+     *
+     * @return String representation of the object
+     */
     @Override
     public String toString() {
         return point2D.getX() + "," + point2D.getY() + ",";
