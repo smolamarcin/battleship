@@ -3,12 +3,12 @@ package com.epam.solid.nie.state;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test
+@Test(groups = {"unit"})
 public class StateTest {
 
     private GameState state = new GameState();
 
-    public void should_changeToEndState(){
+    public void should_changeToEndState() {
         //given
         State endState = new EndState();
 
@@ -19,7 +19,7 @@ public class StateTest {
         Assert.assertTrue(state.getState().equals(endState));
     }
 
-    public void should_changeToStartState(){
+    public void should_changeToStartState() {
         //given
         State playState = new PlayState();
 
@@ -30,7 +30,7 @@ public class StateTest {
         Assert.assertTrue(state.getState().equals(playState));
     }
 
-    public void should_changeToConfigState(){
+    public void should_changeToConfigState() {
         //given
         State configState = new ConfigState();
 
