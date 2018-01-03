@@ -8,11 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
 public class StartSceneController {
-
+    @FXML
+    private ImageView logo;
     @FXML
     private Button btn_connect;
 
