@@ -6,7 +6,7 @@ import lombok.ToString;
 public class EndffStffate implements State {
 
 
-    @Overridefsdfgdfgdfgdfg
+    @Overridefsdfgdfgdsdffgdfg
     public void procffessdfgdfgs(GameState gameState) {
         gameState.setState(this);
     }
