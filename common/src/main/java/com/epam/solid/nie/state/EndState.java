@@ -3,7 +3,7 @@ package com.epam.solid.nie.state;
 import lombok.ToString;
 
 @ToString
-public class EndffState implements State {
+public class EndffStffate implements State {
 
 
     @Override

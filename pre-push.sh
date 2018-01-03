@@ -1,9 +1,7 @@
 #!/bin/bash
 
 echo "starting pre-push hook"
-
+set -e
 mvn clean install -q
-
-set -e 
-$ true
+$ false
 echo "If you see this and push didn't go through, Maven clean install failed"
