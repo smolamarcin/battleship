@@ -19,7 +19,7 @@ public class SocketClient implements ShipClient {
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    private int portNumber = 8081;
+    private static final int PORT_NUMBER = 8081;
 
     SocketClient(String ip) {
         this.ip = ip;
@@ -29,7 +29,7 @@ public class SocketClient implements ShipClient {
     public boolean run() throws IOException {
         boolean result = false;
 
-        socket = new Socket(ip, portNumber);
+        socket = new Socket(ip, PORT_NUMBER);
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
