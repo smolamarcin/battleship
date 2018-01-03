@@ -97,7 +97,7 @@ class Board extends Parent {
      *
      * @param ship
      * @param cell
-     * @return true if placing the  ship was completed successfully
+     * @return true if placing the ship was completed successfully
      */
     private boolean placeShip(Ship ship, Cell cell) {
         if (ship.getBattleShip() instanceof VerticalShip) {
