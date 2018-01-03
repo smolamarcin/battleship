@@ -11,14 +11,15 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  *
  */
 class Board extends Parent {
+    private static final Logger LOGGER = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
@@ -46,7 +47,7 @@ class Board extends Parent {
     private void fillHorizontal(EventHandler<? super MouseEvent> handler, int y) {
         HBox row = new HBox();
         for (int x = 0; x < MAX_HEIGHT; x++) {
-            Point2D point2D = Point2D.of(x,y);
+            Point2D point2D = Point2D.of(x, y);
             createCellInRow(handler, row, point2D);
         }
         rows.getChildren().add(row);
@@ -63,7 +64,8 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        out.println(positions);
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(positions.toString());
         return false;
     }
 
@@ -185,7 +187,7 @@ class Board extends Parent {
 
     public boolean areAllShipsSunk() {
         for (Ship ship : allShips)
-            if(ship.isAlive())
+            if (ship.isAlive())
                 return false;
         return true;
     }
