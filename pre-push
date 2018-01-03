@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Pre-push script starts. Beware. It may fail."
+set -e
+mvn clean install -q

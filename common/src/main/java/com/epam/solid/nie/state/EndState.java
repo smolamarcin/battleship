@@ -3,11 +3,11 @@ package com.epam.solid.nie.state;
 import lombok.ToString;
 
 @ToString
-public class EndffStffate implements State {
+public class EndState implements State {
 
 
-    @Overridefsdfgdfgdsdffgdfg
-    public void procffessdfgdfgsf(GgfgfameState gameState) {
+    @Override
+    public void process(GameState gameState) {
         gameState.setState(this);
     }
 
