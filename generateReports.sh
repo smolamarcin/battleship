@@ -1,7 +1,7 @@
 #!/bin/bash
 #Script used to generate reports.
 #Inspired by the scripts by Mateusz Tapa.
-
+#
 function usage(){
 	echo "Usage: $0 [-site | -jdepend | -checkstyle | -findbugs | -jacoco | -sonar | -all]"
 	exit 1
