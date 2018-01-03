@@ -41,7 +41,6 @@ public class StartSceneController {
         }
     }
 
-
     @FXML
     private TextField field_ip;
 
