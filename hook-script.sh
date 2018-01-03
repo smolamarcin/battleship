@@ -2,10 +2,10 @@
 
 echo Creating pre-push hook.
 set -e
-cp pre-push.sh .git/hooks
+cp pre-push .git/hooks
 
 cd .git/hooks
 rm pre-push.sample
 
-chmod 770 pre-push.sh
+chmod 770 pre-push
 echo Hook created.
