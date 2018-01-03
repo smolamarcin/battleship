@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-@Test(groups = {"unit test"})
+@Test(groups = {"unit"})
 public class FileConfigurationTest {
 
     public void shouldProvideConfig() {

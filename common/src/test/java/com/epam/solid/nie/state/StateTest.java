@@ -3,7 +3,7 @@ package com.epam.solid.nie.state;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test(groups = {"unit test"})
+@Test(groups = {"unit"})
 public class StateTest {
 
     private GameState state = new GameState();

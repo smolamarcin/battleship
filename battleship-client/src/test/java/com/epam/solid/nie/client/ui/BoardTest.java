@@ -17,7 +17,7 @@ import java.util.Collections;
 /**
  *
  */
-@Test(groups = {"unit test"})
+@Test(groups = {"unit"})
 public class BoardTest implements TestHelper {
 
     public void shouldPlaceShip_whenThereAreNoShips() {

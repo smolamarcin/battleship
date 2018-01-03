@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by marek on 13.12.2017.
  */
-@Test(groups = {"unit test"})
+@Test(groups = {"unit"})
 public class ShipFactoryTest {
 
 

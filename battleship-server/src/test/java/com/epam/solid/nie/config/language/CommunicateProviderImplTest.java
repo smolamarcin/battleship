@@ -15,7 +15,7 @@ public class CommunicateProviderImplTest {
         };
     }
 
-    @Test(dataProvider = "languages", groups = {"unit test"})
+    @Test(dataProvider = "languages", groups = {"unit"})
     public void populateShould_FillCommunicatesMap(Language language) {
         communicateProvider.populate(language);
         assertFalse(communicateProvider.isMapEmpty());
