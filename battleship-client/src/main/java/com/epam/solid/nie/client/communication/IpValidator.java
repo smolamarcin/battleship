@@ -2,8 +2,11 @@ package com.epam.solid.nie.client.communication;
 
 
 /**
- *
+ * Implementation of Validator interface.
+ * Checks whether the given IP is in the correct format.
+ * @version 1.0.1
  */
+
 public class IpValidator implements Validator {
     @Override
     public boolean validate(String ip) {
