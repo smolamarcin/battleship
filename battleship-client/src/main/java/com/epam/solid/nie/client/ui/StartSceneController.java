@@ -6,9 +6,13 @@ import com.epam.solid.nie.client.communication.Validator;
 import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -27,9 +31,16 @@ public class StartSceneController {
             boolean whichPlayer = socketServer.connect(ip);
             new GameScene(socketServer, whichPlayer).start();
         } else {
-            System.out.println("Wrong ip.");
+            Label label=new Label("Wrong IP");
+            StackPane secondaryLayout = new StackPane();
+            secondaryLayout.getChildren().add(label);
+            Scene secondScene = new Scene(secondaryLayout,200,100);
+            Stage secondStage=new Stage();
+            secondStage.setScene(secondScene);
+            secondStage.show();
         }
     }
+
 
     @FXML
     private TextField field_ip;
