@@ -7,7 +7,7 @@ public class EndffStffate implements State {
 
 
     @Overridefsdfgdfgdsdffgdfg
-    public void procffessdfgdfgs(GgfgfameState gameState) {
+    public void procffessdfgdfgsf(GgfgfameState gameState) {
         gameState.setState(this);
     }
 
