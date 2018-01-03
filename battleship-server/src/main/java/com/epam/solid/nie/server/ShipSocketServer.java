@@ -5,8 +5,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
+    private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
     private final int portNumber = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
@@ -22,7 +25,8 @@ class ShipSocketServer implements ShipServer {
     public void initialize() throws IOException {
         serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip));
 
-        System.out.println("Server " + ip + " is here");
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("Server " + ip + " is here");
 
         Player first = new NetPlayer();
         first.register(serverSocket);
@@ -36,25 +40,25 @@ class ShipSocketServer implements ShipServer {
         first.inform("Game has started. 2");
 
         String firstShips = first.provideShips();
-        System.out.println("First's ships:" + firstShips);
-
         String secondShips = second.provideShips();
-        System.out.println("Second's ships:" + secondShips);
+
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
 
         first.inform(secondShips);
-
         second.inform(firstShips);
 
         currentPlayer = first;
 
-        System.out.println("Initialized");
+        LOGGER.info("Initialized");
     }
 
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        System.out.println(players.indexOf(currentPlayer) + ":" + move);
-        if(move.equals("Q"))
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(players.indexOf(currentPlayer) + ":" + move);
+        if (move.equals("Q"))
             isGameOver = true;
         changeCurrentPlayer();
         currentPlayer.inform(move);

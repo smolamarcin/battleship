@@ -3,13 +3,11 @@ package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -79,11 +77,11 @@ public class GameScene extends Application {
 
     private void displayYouWinWindow() {
         StackPane secondaryLayout = new StackPane();
-        Button button=new Button();
+        Button button = new Button();
         button.setText("YOU WIN");
         button.setOnAction(e -> System.exit(0));
         secondaryLayout.getChildren().add(button);
-        Scene secondScene = new Scene(secondaryLayout,200,100);
+        Scene secondScene = new Scene(secondaryLayout, 200, 100);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         secondStage.show();

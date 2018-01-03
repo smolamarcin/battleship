@@ -1,23 +1,26 @@
 package com.epam.solid.nie.client.communication;
 
-import com.epam.solid.nie.utils.Point2D;
 import com.epam.solid.nie.client.ui.Cell;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.epam.solid.nie.utils.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.logging.Logger;
 
 
 /**
- * SocketServer implementation to communicate with server side
+ * SocketServer implementation to communicate with the server.
+ *
+ *
+ * @since 1.0.1
  */
 public class SocketServer implements Server {
+    private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
     private String allMoves = "";
     private Queue<Cell> cells = new LinkedList<>();
@@ -28,18 +31,18 @@ public class SocketServer implements Server {
         try {
             return server.run();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return false;
     }
 
     @Override
     public void send(String allShips) {
-        System.out.println(allShips);
+        LOGGER.info(allShips);
         try {
             server.send(allShips);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
     }
 
