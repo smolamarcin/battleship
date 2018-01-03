@@ -12,7 +12,7 @@ cd $(git rev-parse --show-toplevel)
 	if [[ ! $(find . -name 'checkstyle.html') ]]; then
 	mvn site checkstyle:checkstyle
 	fi
-	xargs -a reports/findbugs.txt firefox -new-tab "$line"
+	xargs -a reports/checkstyle.txt firefox -new-tab "$line"
 }
 
 case $1 in
@@ -20,7 +20,7 @@ case $1 in
 #	"-jdepend") jdepend;;
 	"-checkstyle") checkstyle;;
 #	"-findbugs") findbugs;;
-#	"-jacoco") jacoco;;
+#	"-jacoco") jacoco;;git s
 #	"-sonar") sonar;;
 #	"-all") all;;
 *) usage
