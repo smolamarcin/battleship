@@ -6,12 +6,21 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Implementation of ShipClient interface.
+ * Allows you to send and receive information from the server.
+ *
+ * @since 1.0.1
+ */
 public class SocketClient implements ShipClient {
     private String ip;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
+    /**
+     * Default port.
+     */
     private int portNumber = 8081;
 
     SocketClient(String ip) {

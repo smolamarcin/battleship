@@ -15,7 +15,10 @@ import java.util.*;
 
 
 /**
- * SocketServer implementation to communicate with server side
+ * SocketServer implementation to communicate with the server.
+ *
+ *
+ * @since 1.0.1
  */
 public class SocketServer implements Server {
     private ShipClient server;
