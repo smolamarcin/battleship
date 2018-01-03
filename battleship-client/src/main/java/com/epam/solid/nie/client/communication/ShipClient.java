@@ -36,7 +36,7 @@ interface ShipClient {
 
     /**
      * Sends the opponent a message about the end of the game.
-     * If the opponent got such a message it means that he lost the game.
+     * If the opponent got such a message it means that he has lost the game.
      */
     void sendGameOverToOpponent();
 }
