@@ -29,7 +29,7 @@ public class StartSceneController {
             boolean whichPlayer = socketServer.connect(ip);
             new GameScene(socketServer, whichPlayer).start();
         } else {
-            Label label=new Label("Wrong ip");
+            Label label=new Label("Wrong IP");
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(label);
             Scene secondScene = new Scene(secondaryLayout,200,100);

@@ -89,13 +89,13 @@ public class GameScene extends Application {
         secondStage.show();
     }
 
-    private void makeEnemyMove(Cell cell1) {
+    private void makeEnemyMove(Cell cell) {
         while (!running) {
-            int x = cell1.getCellX();
-            int y = cell1.getCellY();
-            Cell cell = playerBoard.getCell(x, y);
+            int x = cell.getCellX();
+            int y = cell.getCellY();
+            cell = playerBoard.getCell(x, y);
             if (cell.wasShot)
-                cell1 = socketServer.receiveEnemyMove();
+                cell = socketServer.receiveEnemyMove();
             else
                 running = !cell.shoot();
         }
