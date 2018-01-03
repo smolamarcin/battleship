@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  */
 class Board extends Parent {
-    private static Logger logger = Logger.getLogger(Board.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
@@ -64,8 +64,8 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        if (logger.isLoggable(Level.INFO))
-            logger.info(positions.toString());
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(positions.toString());
         return false;
     }
 

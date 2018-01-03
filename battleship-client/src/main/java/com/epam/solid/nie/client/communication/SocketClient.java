@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SocketClient implements ShipClient {
-    private static Logger logger = Logger.getLogger(SocketClient.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private String ip;
     private Socket socket;
     private PrintWriter out;
@@ -31,8 +31,8 @@ public class SocketClient implements ShipClient {
 
         String fromServer;
         while (!(fromServer = in.readLine()).equals("Provide ships")) {
-            if (logger.isLoggable(Level.INFO))
-                logger.info("Server: " + fromServer);
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info("Server: " + fromServer);
             if (fromServer.equals("Game has started. 1"))
                 result = true;
         }

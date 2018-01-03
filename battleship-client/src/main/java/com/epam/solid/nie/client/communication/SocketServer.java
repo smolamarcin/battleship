@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * SocketServer implementation to communicate with server side
  */
 public class SocketServer implements Server {
-    private static Logger logger = Logger.getLogger(SocketServer.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
     private String allMoves = "";
     private Queue<Cell> cells = new LinkedList<>();
@@ -28,18 +28,18 @@ public class SocketServer implements Server {
         try {
             return server.run();
         } catch (IOException e) {
-            logger.warning(e.getMessage());
+            LOGGER.warning(e.getMessage());
         }
         return false;
     }
 
     @Override
     public void send(String allShips) {
-        logger.info(allShips);
+        LOGGER.info(allShips);
         try {
             server.send(allShips);
         } catch (IOException e) {
-            logger.warning(e.getMessage());
+            LOGGER.warning(e.getMessage());
         }
     }
 

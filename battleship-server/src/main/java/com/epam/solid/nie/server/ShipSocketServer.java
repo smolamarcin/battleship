@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
-    private static Logger logger = Logger.getLogger(ShipSocketServer.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
     private final int portNumber = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
@@ -25,8 +25,8 @@ class ShipSocketServer implements ShipServer {
     public void initialize() throws IOException {
         serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip));
 
-        if (logger.isLoggable(Level.INFO))
-            logger.info("Server " + ip + " is here");
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("Server " + ip + " is here");
 
         Player first = new NetPlayer();
         first.register(serverSocket);
@@ -42,22 +42,22 @@ class ShipSocketServer implements ShipServer {
         String firstShips = first.provideShips();
         String secondShips = second.provideShips();
 
-        if (logger.isLoggable(Level.INFO))
-            logger.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
 
         first.inform(secondShips);
         second.inform(firstShips);
 
         currentPlayer = first;
 
-        logger.info("Initialized");
+        LOGGER.info("Initialized");
     }
 
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        if (logger.isLoggable(Level.INFO))
-            logger.info(players.indexOf(currentPlayer) + ":" + move);
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(players.indexOf(currentPlayer) + ":" + move);
         if (move.equals("Q"))
             isGameOver = true;
         changeCurrentPlayer();
