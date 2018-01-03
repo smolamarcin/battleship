@@ -7,7 +7,7 @@ public class EndffStffate implements State {
 
 
     @Override
-    public void procffess(GameState gameState) {
+    public void procffessdfgdfgs(GameState gameState) {
         gameState.setState(this);
     }
 
