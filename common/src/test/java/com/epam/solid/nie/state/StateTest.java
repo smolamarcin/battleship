@@ -1,6 +1,5 @@
 package com.epam.solid.nie.state;
 
-import com.epam.solid.nie.state.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
