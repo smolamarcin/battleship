@@ -217,19 +217,13 @@ class Board extends Parent {
         int y = cell.getCellY();
 
         if (ship.getBattleShip() instanceof VerticalShip) {
-            for (int i = y; i < y + length; i++) {
-                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
+            for (int i = y; i < y + length; i++)
+                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
                     return false;
-                }
-                if (canPlaceShip(i, x)) return false;
-            }
         } else {
-            for (int i = x; i < x + length; i++) {
-                if (!isInScope(i, y) || getCell(i, y).isOccupied())
+            for (int i = x; i < x + length; i++)
+                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(y, i))
                     return false;
-
-                if (canPlaceShip(y, i)) return false;
-            }
         }
         return true;
     }
