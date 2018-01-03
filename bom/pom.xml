@@ -35,6 +35,7 @@
         <testngVersion>6.13.1</testngVersion>
         <mockitoAllVersion>1.10.19</mockitoAllVersion>
         <javaVersion>1.8</javaVersion>
+        <surefireVersion>2.20.1</surefireVersion>
     </properties>
 
     <description>
