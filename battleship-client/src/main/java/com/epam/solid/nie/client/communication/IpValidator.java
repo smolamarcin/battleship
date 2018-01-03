@@ -10,7 +10,7 @@ package com.epam.solid.nie.client.communication;
 
 public class IpValidator implements Validator {
     /**
-     * Determines whether the given ip is in the correct format and does not contain invalid characters.
+     * Determines whether the given IP is in the correct format and does not contain invalid characters.
      * Works for IPv4.
      *
      * @param ip
