@@ -7,7 +7,7 @@ public class EndState implements State {
 
 
     @Override
-    public void process(GameState gameState) {
+    public void procffess(GameState gameState) {
         gameState.setState(this);
     }
 

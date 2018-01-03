@@ -2,9 +2,8 @@
 
 echo "starting pre-push hook"
 
-mvn clean install
+mvn clean install -q
 
-if [ $? -ne 0 ]; then
-    "Error during maven clean install. Push won't be possible."
-    exit 1
-fi
+set -e 
+$ false
+echo "If you see this and push didn't go through, Maven clean install failed"
