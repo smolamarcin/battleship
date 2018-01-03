@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SocketClient implements ShipClient {
+    private static Logger logger = Logger.getLogger(SocketClient.class.getName());
     private String ip;
     private Socket socket;
     private PrintWriter out;
@@ -28,7 +31,8 @@ public class SocketClient implements ShipClient {
 
         String fromServer;
         while (!(fromServer = in.readLine()).equals("Provide ships")) {
-            System.out.println("Server: " + fromServer);
+            if (logger.isLoggable(Level.INFO))
+                logger.info("Server: " + fromServer);
             if (fromServer.equals("Game has started. 1"))
                 result = true;
         }
