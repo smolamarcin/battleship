@@ -31,7 +31,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.epam.solid.nie.server.server.Main</mainClass>
+                            <mainClass>com.epam.solid.nie.server.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
