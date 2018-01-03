@@ -204,7 +204,7 @@ class Board extends Parent {
         return neighbors.toArray(new Cell[0]);
     }
 
-    /** Specifies whether it is possible to set the specific ship on a specific cell.
+    /** Determines whether you can place the ship on a specific cell.
      *
      * @param ship - represents single instance of Ship
      * @param cell - represents single Cell of the board, the cell on which we want to place the ship
@@ -276,7 +276,7 @@ class Board extends Parent {
         return positions.toString();
     }
 
-    /** Returns information if all ships have been sunk.
+    /** Returns information whether all ships have been sunk.
      *
      * @return true - if all ships have been sunk
      */
