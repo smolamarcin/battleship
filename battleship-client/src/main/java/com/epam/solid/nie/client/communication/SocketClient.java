@@ -18,9 +18,6 @@ public class SocketClient implements ShipClient {
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    /**
-     * Default port.
-     */
     private int portNumber = 8081;
 
     SocketClient(String ip) {
