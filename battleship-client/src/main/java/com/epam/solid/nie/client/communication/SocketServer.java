@@ -65,15 +65,13 @@ public class SocketServer implements Server {
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             StackPane secondaryLayout = new StackPane();
-            Button button=new Button();
+            Button button = new Button();
             button.setText("YOU LOSE");
-            button.setOnAction((EventHandler<ActionEvent>) e -> System.exit(0));
+            button.setOnAction(e -> System.exit(0));
             secondaryLayout.getChildren().add(button);
             Scene secondScene = new Scene(secondaryLayout, 200, 100);
             Stage secondStage = new Stage();
             secondStage.setScene(secondScene);
-
-
             secondStage.show();
         }
         String[] movesArr = moves.split(",;");
