@@ -13,7 +13,7 @@ interface ShipClient {
      * The server must be previously started.
      *
      * @return true - if game was started succesfully
-     *         false - if the game has not started (eg sf the server has not been started)
+     *         false - if the game has not started (eg if the server has not been started)
      * @throws IOException
      */
     boolean run() throws IOException;
