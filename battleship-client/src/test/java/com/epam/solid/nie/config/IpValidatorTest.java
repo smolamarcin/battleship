@@ -21,7 +21,7 @@ public class IpValidatorTest {
         };
     }
 
-    @Test(dataProvider = "properIPs")
+    @Test(dataProvider = "properIPs", groups = {"unit test"})
     public void should_beValid_when_properIp(String ip) {
         IpValidator val = new IpValidator();
         assertTrue(val.validate(ip));
@@ -44,7 +44,7 @@ public class IpValidatorTest {
         };
     }
 
-    @Test(dataProvider = "improperIPs")
+    @Test(dataProvider = "improperIPs", groups = {"unit test"})
     public void should_beInvalid_when_improperIp(String ip) {
         IpValidator val = new IpValidator();
         assertFalse(val.validate(ip));
