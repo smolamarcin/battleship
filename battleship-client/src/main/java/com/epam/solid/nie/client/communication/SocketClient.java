@@ -8,6 +8,12 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementation of ShipClient interface.
+ * Allows you to send and receive information from the server.
+ *
+ * @since 1.0.1
+ */
 public class SocketClient implements ShipClient {
     private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private String ip;
