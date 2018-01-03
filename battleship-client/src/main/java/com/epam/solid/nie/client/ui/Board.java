@@ -79,8 +79,8 @@ class Board extends Parent {
     /**
      * Determines if you can put a ship in a given place.
      *
-     * @param ship
-     * @param cell
+     * @param ship - represents single instance of Ship
+     * @param cell - represents single Cell of the board
      * @return true if the position of the ship is correct.
      */
     boolean isShipPositionValid(Ship ship, Cell cell) {
@@ -95,8 +95,8 @@ class Board extends Parent {
     /**
      * The method puts the ship in the given place.
      *
-     * @param ship
-     * @param cell
+     * @param ship - represents single instance of Ship
+     * @param cell - represents single Cell of the board
      * @return true if placing the ship was completed successfully
      */
     private boolean placeShip(Ship ship, Cell cell) {
@@ -111,9 +111,9 @@ class Board extends Parent {
 
     /** Places the ship on the board in a horizontal position.
      *
-     * @param ship
-     * @param x
-     * @param y
+     * @param ship - represents single instance of Ship
+     * @param x - the horizontal coordinate of the field on which the ship will be placed
+     * @param y - the vertical coordinate of the field on which the ship will be placed
      */
     private void placeShipHorizontally(Ship ship, int x, int y) {
         for (int i = x; i < x + ship.getRemainingHealth(); i++) {
@@ -126,9 +126,9 @@ class Board extends Parent {
 
     /** Places the ship on the board in a vertical position.
      *
-     * @param ship
-     * @param x
-     * @param y
+     * @param ship - represents single instance of Ship
+     * @param x - the horizontal coordinate of the field on which the ship will be placed
+     * @param y - the vertical coordinate of the field on which the ship will be placed
      */
     private void placeShipVertically(Ship ship, int x, int y) {
         for (int i = y; i < y + ship.getRemainingHealth(); i++) {
@@ -142,7 +142,7 @@ class Board extends Parent {
     /** Indicates the cell as occupied by the ship.
      *  The cell color changes to white with a green border.
      *
-     * @param cell
+     * @param cell - represents single Cell of the board
      */
     private void markFieldAsOccupiedByShip(Cell cell) {
         cell.setFill(Color.WHITE);
@@ -152,7 +152,7 @@ class Board extends Parent {
 
     /** Adds the coordinates of a single cell to the list of positions.
      *
-     * @param cell
+     * @param cell - represents single Cell of the board
      */
     private StringBuilder savePositionPieceOfShip(Cell cell) {
         return positions.append(cell.toString());
@@ -167,9 +167,9 @@ class Board extends Parent {
 
     /** Returns a cell with given coordinates.
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x - the horizontal coordinate of the cell
+     * @param y - the vertical coordinate of the cell
+     * @return cell with the desired coordinates
      */
     Cell getCell(int x, int y) {
         return (Cell) ((HBox) rows.getChildren().get(y)).getChildren().get(x);
@@ -177,8 +177,8 @@ class Board extends Parent {
 
     /** Returns an array of cells that are neighbours of the specified cell.
      *
-     * @param x
-     * @param y
+     * @param x - the horizontal coordinate of the cell whose neighbors we want to find
+     * @param y - the vertical coordinate of the cell whose neighbors we want to find
      * @return array of neighbours cells
      */
     private Cell[] getNeighbors(int x, int y) {
@@ -206,8 +206,8 @@ class Board extends Parent {
 
     /** Specifies whether it is possible to set the specific ship on a specific cell.
      *
-     * @param ship
-     * @param cell
+     * @param ship - represents single instance of Ship
+     * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
     boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getRemainingHealth();
@@ -251,8 +251,8 @@ class Board extends Parent {
 
     /** Determines if the point is in the range of the board.
      *
-     * @param point
-     * @return
+     * @param point - contains coordinates (x - horizontal, y - vertical)
+     * @return true - if point is in the board scope
      */
     private boolean isInScope(Point2D point) {
         return isInScope(point.getX(), point.getY());
@@ -260,8 +260,8 @@ class Board extends Parent {
 
     /** Determines if the coordinates are in the range of the board.
      *
-     * @param x
-     * @param y
+     * @param x - the horizontal coordinate of the cell
+     * @param y - the vertical coordinate of the cell
      * @return
      */
     private boolean isInScope(double x, double y) {
@@ -270,7 +270,7 @@ class Board extends Parent {
 
     /** Returns the positions of all ships on the board.
      *
-     * @return
+     * @return position of all ships as a String
      */
     public String getAllpositions() {
         return positions.toString();
@@ -278,7 +278,7 @@ class Board extends Parent {
 
     /** Returns information if all ships have been sunk.
      *
-     * @return
+     * @return true - if all ships have been sunk
      */
     public boolean areAllShipsSunk() {
         for (Ship ship : allShips)
