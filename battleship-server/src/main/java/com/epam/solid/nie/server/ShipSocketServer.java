@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
     private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
-    private final int portNumber = 8081;
+    private static final int PORT_NUMBER = 8081;
     private final String ip;
     private List<Player> players = new ArrayList<>();
     private ServerSocket serverSocket;
@@ -23,7 +23,7 @@ class ShipSocketServer implements ShipServer {
 
     @Override
     public void initialize() throws IOException {
-        serverSocket = new ServerSocket(portNumber, 0, InetAddress.getByName(ip));
+        serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
 
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info("Server " + ip + " is here");
