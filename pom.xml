@@ -133,20 +133,10 @@
                     </executions>
                 </plugin>
 
-
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>${sonarMavenPlugin}</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${mavenCheckstylePluginVersion}</version>
-                    <configuration>
-                        <linkXRef>false</linkXRef>
-                    </configuration>
                 </plugin>
 
             </plugins>
@@ -160,6 +150,27 @@
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${findbugsMavenPluginVersion}</version>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${mavenCheckstylePluginVersion}</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <!--to work with mvn site checkstyle needs jxr plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.3</version>
+            </plugin>
+
         </plugins>
     </reporting>
 
