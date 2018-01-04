@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /**
- * It provides relevant communicates to the game.
+ * It provides relevant messages to the game.
  */
 public class CommunicateProviderImpl implements CommunicateProvider {
     private Map<Communicate, String> communicates = new HashMap<>();
