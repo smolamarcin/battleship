@@ -1,0 +1,3 @@
+battleship-client/target/site/jdepend-report.html
+battleship-server/target/site/jdepend-report.html
+common/target/site/jdepend-report.html
