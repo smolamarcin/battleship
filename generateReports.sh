@@ -41,11 +41,6 @@ function jacoco(){
     xargs -a reports/jacoco.txt firefox -new-tab "$line"
 }
 
-function site(){
-    set -e
-    goToRootDirectory;
-    xargs -a reports/site.txt firefox -new-tab "$line"
-}
 
 function jdepend(){
     set -e
@@ -55,6 +50,7 @@ function jdepend(){
     goToRootDirectory
     cd battleship-server
     mvn jdepend:generate
+    goToRootDirectory
     cd common
     mvn jdepend:generate
     xargs -a reports/site.txt firefox -new-tab "$line"
