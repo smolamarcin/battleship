@@ -1,8 +1,11 @@
 package com.epam.solid.nie.ships;
 
 /**
- * Created by marek on 13.12.2017.
+ * Represents type of the ship.
  */
 public interface BattleShip extends BattleShipProperties, ShipHealth {
+    /**
+     * @return type of the ship
+     */
     BattleShipType getBattleShipType();
 }
