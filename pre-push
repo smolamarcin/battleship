@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "Pre-push script starts. Beware. It may fail."
 set -e
+echo "Pre-push script starts. Maven clean install was launched. Beware. It may fail."
 mvn clean install -q
