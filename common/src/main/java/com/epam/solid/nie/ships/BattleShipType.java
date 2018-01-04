@@ -27,6 +27,11 @@ enum BattleShipType {
         }
     }
 
+    /**
+     * Based on the size of the ship (number of masts), it returns a specific type of ship.
+     * @param size
+     * @return specific type of ship
+     */
     public static BattleShipType valueOf(int size) {
         return map.get(size);
     }

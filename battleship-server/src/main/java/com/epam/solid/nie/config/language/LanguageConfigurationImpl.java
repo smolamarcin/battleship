@@ -4,10 +4,13 @@ import com.epam.solid.nie.config.FileConfiguration;
 
 import java.util.ResourceBundle;
 
-public class LanguageConfigurationImpl implements LanguageConfiguration {
+class LanguageConfigurationImpl implements LanguageConfiguration {
 
     private static final String LANGUAGE = "LANGUAGE";
 
+    /**
+     * Returns the appropriate language that is loaded from the configuration file.
+     */
     @Override
     public Language provide() {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(FileConfiguration.CONFIGURATION);
