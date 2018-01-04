@@ -103,7 +103,7 @@ public class GameScene extends Application {
         return board.areAllShipsSunk();
     }
 
-    public void start() {
+    void start() {
         start(new Stage());
     }
 
