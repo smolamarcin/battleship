@@ -80,7 +80,7 @@ public class SocketServer implements Server {
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
             String[] coordinates = aMovesArr.split(",");
-            cells.add(new Cell(Point2D.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]))));
+            cells.add(new Cell(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))));
         }
     }
 

@@ -20,28 +20,28 @@ public class StartSceneController {
     @FXML
     private ImageView logo;
     @FXML
-    private Button btn_connect;
+    private Button btnConnect;
 
     @FXML
-    void btn_connect_clicked(ActionEvent event) throws IOException {
+    void btnConnectClicked(ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
-        String ip = field_ip.getText();
+        String ip = fieldIp.getText();
         if (ipValidator.validate(ip)) {
             SocketServer socketServer = new SocketServer();
             boolean whichPlayer = socketServer.connect(ip);
             new GameScene(socketServer, whichPlayer).start();
         } else {
-            Label label=new Label("Wrong IP");
+            Label label = new Label("Wrong IP");
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(label);
-            Scene secondScene = new Scene(secondaryLayout,200,100);
-            Stage secondStage=new Stage();
+            Scene secondScene = new Scene(secondaryLayout, 200, 100);
+            Stage secondStage = new Stage();
             secondStage.setScene(secondScene);
             secondStage.show();
         }
     }
 
     @FXML
-    private TextField field_ip;
+    private TextField fieldIp;
 
 }
