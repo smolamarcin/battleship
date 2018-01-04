@@ -11,8 +11,8 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -24,11 +24,12 @@ import static java.lang.System.out;
  * @since 1.0.1
  */
 class Board extends Parent {
+    private static final Logger LOGGER = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    List<Ship> allShips = new ArrayList<>();
+    private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy, VBox rows) {
@@ -88,7 +89,8 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        out.println(positions);
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(positions.toString());
         return false;
     }
 
@@ -154,15 +156,15 @@ class Board extends Parent {
      *
      * @param cell - represents single Cell of the board
      */
-    private StringBuilder savePositionPieceOfShip(Cell cell) {
-        return positions.append(cell.toString());
+    private void savePositionPieceOfShip(Cell cell) {
+        positions.append(cell.toString());
     }
 
     /** Marks the end of the ship on the list.
      *  The pipe is a convention that has been established in the team.
      */
-    private StringBuilder markEndOfShip() {
-        return positions.append("|");
+    private void markEndOfShip() {
+        positions.append("|");
     }
 
     /** Returns a cell with given coordinates.
@@ -209,25 +211,19 @@ class Board extends Parent {
      * @param ship - represents single instance of Ship
      * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
-    boolean canPlaceShip(Ship ship, Cell cell) {
+    private boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getRemainingHealth();
         int x = cell.getCellX();
         int y = cell.getCellY();
 
         if (ship.getBattleShip() instanceof VerticalShip) {
-            for (int i = y; i < y + length; i++) {
-                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
+            for (int i = y; i < y + length; i++)
+                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
                     return false;
-                }
-                if (canPlaceShip(i, x)) return false;
-            }
         } else {
-            for (int i = x; i < x + length; i++) {
-                if (!isInScope(i, y) || getCell(i, y).isOccupied())
+            for (int i = x; i < x + length; i++)
+                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(y, i))
                     return false;
-
-                if (canPlaceShip(y, i)) return false;
-            }
         }
         return true;
     }
@@ -272,7 +268,7 @@ class Board extends Parent {
      *
      * @return position of all ships as a String
      */
-    public String getAllpositions() {
+    String getAllPositions() {
         return positions.toString();
     }
 
@@ -280,7 +276,7 @@ class Board extends Parent {
      *
      * @return true - if all ships have been sunk
      */
-    public boolean areAllShipsSunk() {
+    boolean areAllShipsSunk() {
         for (Ship ship : allShips)
             if (ship.isAlive())
                 return false;

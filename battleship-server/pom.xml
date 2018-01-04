@@ -31,9 +31,18 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.epam.solid.nie.server.server.Main</mainClass>
+                            <mainClass>com.epam.solid.nie.server.Main</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefireVersion}</version>
+                <configuration>
+                    <groups>unit</groups>
                 </configuration>
             </plugin>
         </plugins>

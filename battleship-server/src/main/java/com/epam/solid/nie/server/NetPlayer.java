@@ -1,26 +1,24 @@
-package com.epam.solid.nie.server.server;
+package com.epam.solid.nie.server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 public class NetPlayer implements Player {
-
-    private Socket clientSocket;
+    private static final Logger LOGGER = Logger.getLogger(NetPlayer.class.getName());
     private PrintWriter out;
     private BufferedReader in;
 
     @Override
     public void register(ServerSocket serverSocket) throws IOException {
-        clientSocket = serverSocket.accept();
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        Socket clientSocket = serverSocket.accept();
+        out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
+        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
 
         out.println("hi. wait.");
-        System.out.println("registered");
+        LOGGER.info("registered");
     }
 
     @Override

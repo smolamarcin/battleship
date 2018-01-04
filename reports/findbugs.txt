@@ -1,0 +1,3 @@
+battleship-client/target/site/findbugs.html
+battleship-server/target/site/findbugs.html
+common/target/site/findbugs.html

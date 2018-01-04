@@ -1,4 +1,4 @@
-package com.epam.solid.nie.server.server;
+package com.epam.solid.nie.server;
 
 import java.io.IOException;
 

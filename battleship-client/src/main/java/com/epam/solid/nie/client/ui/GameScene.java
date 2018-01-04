@@ -3,13 +3,11 @@ package com.epam.solid.nie.client.ui;
 
 import com.epam.solid.nie.client.communication.SocketServer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -20,10 +18,10 @@ import javafx.stage.Stage;
 
 public class GameScene extends Application {
     private boolean whichPlayer;
-    public static boolean running = false;
-    private Board enemyBoard, playerBoard;
+    static boolean running = false;
+    private Board enemyBoard;
+    private Board playerBoard;
     private SocketServer socketServer;
-    private ShipPlacer shipPlacer;
 
     GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
@@ -37,7 +35,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -79,11 +77,11 @@ public class GameScene extends Application {
 
     private void displayYouWinWindow() {
         StackPane secondaryLayout = new StackPane();
-        Button button=new Button();
+        Button button = new Button();
         button.setText("YOU WIN");
         button.setOnAction(e -> System.exit(0));
         secondaryLayout.getChildren().add(button);
-        Scene secondScene = new Scene(secondaryLayout,200,100);
+        Scene secondScene = new Scene(secondaryLayout, 200, 100);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         secondStage.show();
@@ -105,7 +103,7 @@ public class GameScene extends Application {
         return board.areAllShipsSunk();
     }
 
-    public void start() {
+    void start() {
         start(new Stage());
     }
 

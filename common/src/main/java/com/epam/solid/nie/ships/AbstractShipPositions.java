@@ -9,7 +9,7 @@ import java.util.List;
  * Created by marek on 13.12.2017.
  */
 abstract class AbstractShipPositions {
-    private List<Point2D> positions = new ArrayList<Point2D>();
+    private List<Point2D> positions = new ArrayList<>();
 
     List<Point2D> getPositions() {
         return positions;

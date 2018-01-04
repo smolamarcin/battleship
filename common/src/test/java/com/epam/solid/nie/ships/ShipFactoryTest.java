@@ -11,36 +11,36 @@ import java.util.List;
 /**
  * Created by marek on 13.12.2017.
  */
-@Test
+@Test(groups = {"unit"})
 public class ShipFactoryTest {
 
 
-    public void should_createHorizontalShip(){
+    public void should_createHorizontalShip() {
         //given
         ShipFactory factory = new HorizontalShipFactory();
 
         //when
-        BattleShip ship = factory.createShip(new ArrayList<Point2D>());
+        BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
         verifyType(ship, null, HorizontalShip.class);
     }
 
-    public void should_CreateVerticalShip(){
+    public void should_CreateVerticalShip() {
         //given
         ShipFactory factory = new VerticalShipFactory();
 
         //when
-        BattleShip ship = factory.createShip(new ArrayList<Point2D>());
+        BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
         verifyType(ship, null, VerticalShip.class);
     }
 
-    public void should_CreateVerticalShip_WithPositions(){
+    public void should_CreateVerticalShip_WithPositions() {
         //given
         ShipFactory factory = new VerticalShipFactory();
-        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,1), Point2D.of(2,2));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0, 0), Point2D.of(1, 1), Point2D.of(2, 2));
 
         //when
         BattleShip ship = factory.createShip(positions);
@@ -51,10 +51,10 @@ public class ShipFactoryTest {
         Assert.assertEquals(positions, shipProperties);
     }
 
-    public void should_CreateHorizontalShip_WithPositions(){
+    public void should_CreateHorizontalShip_WithPositions() {
         //given
         ShipFactory factory = new HorizontalShipFactory();
-        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,0), Point2D.of(2,0), Point2D.of(3,0));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0, 0), Point2D.of(1, 0), Point2D.of(2, 0), Point2D.of(3, 0));
 
         //when
         BattleShip ship = factory.createShip(positions);
@@ -65,10 +65,10 @@ public class ShipFactoryTest {
         Assert.assertEquals(positions, shipProperties);
     }
 
-    public void should_CreateHorizontalShip_WithPositions_andCheckHealth(){
+    public void should_CreateHorizontalShip_WithPositions_andCheckHealth() {
         //given
         ShipFactory factory = new HorizontalShipFactory();
-        List<Point2D> positions = Arrays.asList(Point2D.of(0,0), Point2D.of(1,0), Point2D.of(2,0), Point2D.of(3,0));
+        List<Point2D> positions = Arrays.asList(Point2D.of(0, 0), Point2D.of(1, 0), Point2D.of(2, 0), Point2D.of(3, 0));
 
         //when
         BattleShip ship = factory.createShip(positions);
@@ -79,7 +79,8 @@ public class ShipFactoryTest {
         Assert.assertEquals(positions.size(), shipsRemainingHealth);
 
     }
-    private void verifyType(BattleShip battleShip, BattleShipType battleShipType, Class<?> clazz){
+
+    private void verifyType(BattleShip battleShip, BattleShipType battleShipType, Class<?> clazz) {
         Assert.assertTrue(clazz.isInstance(battleShip));
         Assert.assertEquals(battleShipType, battleShip.getBattleShipType());
     }
