@@ -2,38 +2,35 @@
 #Script used to generate reports.
 #Inspired by the scripts by Mateusz Tapa.
 
-case $1 in
-	"-all") all;;
-*) usage
-esac
 
 function all(){
-    mvn clean;
-    mvn install site;
-    findbugs;
-    checkstyle;
-    jacoco;
-    sonar;
-    site;
-    jdepend;
+    set -e
+    mvn clean
+    mvn install site
+    findbugs
+    checkstyle
+    jacoco
+    sonar
+    site
+    jdepend
 }
 
 function checkstyle(){
-    goToRootDirectory;
+    goToRootDirectory
 	xargs -a reports/checkstyle.txt firefox -new-tab "$line"
 }
 
 function findbugs(){
-    goToRootDirectory;
+    goToRootDirectory
     xargs -a reports/findbugs.txt firefox -new-tab "$line"
 }
 
 function sonar(){
-    goToRootDirectory;
+    goToRootDirectory
     mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
     -Dsonar.host.url=https://sonarcloud.io \
     -Dsonar.organization=smolamarcin-github \
-    -Dsonar.login=a7d3b9bd4e1f813bfb10fcf74162522ed2161273;
+    -Dsonar.login=a7d3b9bd4e1f813bfb10fcf74162522ed2161273
     xargs -a reports/sonar.txt firefox -new-tab "$line"
 }
 
@@ -49,7 +46,7 @@ function site(){
 }
 
 function jdepend(){
-    goToRootDirectory;
+    goToRootDirectory
     cd battleship-client
     mvn jdepend:generate
     goToRootDirectory
@@ -66,6 +63,12 @@ function usage(){
 }
 
 function goToRootDirectory(){
-    cd $(git rev-parse --show-toplevel);
+    cd $(git rev-parse --show-toplevel)
 }
 
+case $1 in
+	"-all") all;;
+	"-sonar") sonar;;
+
+*) usage
+esac
