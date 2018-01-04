@@ -1,7 +1,7 @@
 package com.epam.solid.nie.config;
 
 /**
- * Variables corresponding to variables in the game.
+ * Variables corresponding to the constants in the game.
  * They specify the server parameters to which we connect, language in the game
  * output type and number of rounds in the game.
  */
