@@ -15,7 +15,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
     /**
      * Fills the map with messages in the appropriate language.
      * @param language
-     * @return
+     * @return actual instance enriched of messages in given languages
      */
     public CommunicateProviderImpl populate(Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
