@@ -36,6 +36,7 @@
         <mockitoAllVersion>1.10.19</mockitoAllVersion>
         <javaVersion>1.8</javaVersion>
         <surefireVersion>2.20.1</surefireVersion>
+        <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
     </properties>
 
     <description>
