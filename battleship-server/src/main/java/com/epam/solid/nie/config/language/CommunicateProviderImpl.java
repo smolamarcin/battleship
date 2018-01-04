@@ -31,7 +31,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
     /**
      * Retrieves the message in the appropriate language from the map.
      * @param communicate
-     * @return specified communicate from the map
+     * @return specified message from the map
      */
     public String getCommunicate(Communicate communicate) {
         return communicates.get(communicate);
