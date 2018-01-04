@@ -4,7 +4,6 @@
 
 
 function all(){
-    set -e
     mvn clean
     mvn install site
     findbugs
@@ -26,6 +25,7 @@ function findbugs(){
 }
 
 function sonar(){
+    set -e
     goToRootDirectory
     mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
     -Dsonar.host.url=https://sonarcloud.io \
@@ -35,17 +35,20 @@ function sonar(){
 }
 
 function jacoco(){
+    set -e
     mvn jacoco:report
     goToRootDirectory;
     xargs -a reports/jacoco.txt firefox -new-tab "$line"
 }
 
 function site(){
+    set -e
     goToRootDirectory;
     xargs -a reports/site.txt firefox -new-tab "$line"
 }
 
 function jdepend(){
+    set -e
     goToRootDirectory
     cd battleship-client
     mvn jdepend:generate
@@ -69,6 +72,5 @@ function usage(){
 case $1 in
 	"-all") all;;
 	"-sonar") sonar;;
-
 *) usage
 esac
