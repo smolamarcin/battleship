@@ -11,8 +11,8 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.System.out;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -24,6 +24,7 @@ import static java.lang.System.out;
  * @since 1.0.1
  */
 class Board extends Parent {
+    private static final Logger LOGGER = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
@@ -88,7 +89,8 @@ class Board extends Parent {
             allShips.add(ship);
             return placeShip(ship, cell);
         }
-        out.println(positions);
+        if (LOGGER.isLoggable(Level.INFO))
+            LOGGER.info(positions.toString());
         return false;
     }
 
@@ -215,19 +217,13 @@ class Board extends Parent {
         int y = cell.getCellY();
 
         if (ship.getBattleShip() instanceof VerticalShip) {
-            for (int i = y; i < y + length; i++) {
-                if (!isInScope(x, i) || getCell(x, i).isOccupied()) {
+            for (int i = y; i < y + length; i++)
+                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
                     return false;
-                }
-                if (canPlaceShip(i, x)) return false;
-            }
         } else {
-            for (int i = x; i < x + length; i++) {
-                if (!isInScope(i, y) || getCell(i, y).isOccupied())
+            for (int i = x; i < x + length; i++)
+                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(y, i))
                     return false;
-
-                if (canPlaceShip(y, i)) return false;
-            }
         }
         return true;
     }

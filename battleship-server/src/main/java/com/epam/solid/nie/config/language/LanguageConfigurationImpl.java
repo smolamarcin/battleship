@@ -1,6 +1,6 @@
 package com.epam.solid.nie.config.language;
 
-import com.epam.solid.nie.config.Configuration;
+import com.epam.solid.nie.config.FileConfiguration;
 
 import java.util.ResourceBundle;
 
@@ -14,7 +14,7 @@ class LanguageConfigurationImpl implements LanguageConfiguration {
      */
     @Override
     public Language provide() {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(Configuration.CONFIGURATION);
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(FileConfiguration.CONFIGURATION);
         return Language.valueOf(resourceBundle.getString(LANGUAGE));
     }
 }

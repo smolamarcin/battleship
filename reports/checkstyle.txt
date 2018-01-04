@@ -1,0 +1,3 @@
+battleship-client/target/site/checkstyle.html
+battleship-server/target/site/checkstyle.html
+common/target/site/checkstyle.html

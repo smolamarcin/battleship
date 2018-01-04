@@ -1,10 +1,10 @@
 package com.epam.solid.nie.client.communication;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of ShipClient interface.
@@ -13,12 +13,13 @@ import java.net.Socket;
  * @since 1.0.1
  */
 public class SocketClient implements ShipClient {
+    private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private String ip;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    private int portNumber = 8081;
+    private static final int PORT_NUMBER = 8081;
 
     SocketClient(String ip) {
         this.ip = ip;
@@ -28,13 +29,14 @@ public class SocketClient implements ShipClient {
     public boolean run() throws IOException {
         boolean result = false;
 
-        socket = new Socket(ip, portNumber);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        socket = new Socket(ip, PORT_NUMBER);
+        out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
         String fromServer;
-        while (!(fromServer = in.readLine()).equals("Provide ships")) {
-            System.out.println("Server: " + fromServer);
+        while (!("Provide ships").equals(fromServer = in.readLine())) {
+            if (LOGGER.isLoggable(Level.INFO))
+                LOGGER.info("Server: " + fromServer);
             if (fromServer.equals("Game has started. 1"))
                 result = true;
         }

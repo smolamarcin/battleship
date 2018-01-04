@@ -10,8 +10,8 @@ import java.util.stream.Stream;
  * Reads configuration from the file.
  */
 public class FileConfiguration implements Configuration {
-
-    private EnumMap<ConfigProperty, String> map = new EnumMap(ConfigProperty.class);
+    public static final String CONFIGURATION = "configuration";
+    private EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
 
     /**
      * Return the config map which is used in the game.
@@ -20,7 +20,7 @@ public class FileConfiguration implements Configuration {
      */
     public Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(Configuration.CONFIGURATION);
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(CONFIGURATION);
             Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));
         }
         return map;

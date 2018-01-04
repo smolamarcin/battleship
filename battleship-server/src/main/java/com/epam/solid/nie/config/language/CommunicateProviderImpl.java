@@ -1,7 +1,6 @@
 package com.epam.solid.nie.config.language;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -10,7 +9,7 @@ import java.util.stream.Stream;
  * It provides relevant communicates to the game.
  */
 public class CommunicateProviderImpl implements CommunicateProvider {
-    private Map<Communicate, String> communicates = new HashMap<>();
+    private EnumMap<Communicate, String> communicates = new EnumMap<>(Communicate.class);
 
     /**
      * Fills the map with messages in the appropriate language.

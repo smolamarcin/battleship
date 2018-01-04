@@ -22,7 +22,7 @@
         <mavenInstallPluginVersion>2.5.2</mavenInstallPluginVersion>
         <mavenJarPluginVersion>3.0.2</mavenJarPluginVersion>
         <mavenEnforcerPluginVersion>1.4.1</mavenEnforcerPluginVersion>
-        <mavenSurefirePluginVersion>2.20</mavenSurefirePluginVersion>
+        <mavenSurefirePluginVersion>2.20.1</mavenSurefirePluginVersion>
         <mavenProjectInfoReportsPluginVersion>2.9</mavenProjectInfoReportsPluginVersion>
         <mavenResourcesPluginVersion>3.0.2</mavenResourcesPluginVersion>
         <mavenSitePluginVersion>3.6</mavenSitePluginVersion>
@@ -31,10 +31,11 @@
         <sonarMavenPlugin>3.3.0.603</sonarMavenPlugin>
         <mavenCheckstylePluginVersion>2.17</mavenCheckstylePluginVersion>
         <findbugsMavenPluginVersion>3.0.5</findbugsMavenPluginVersion>
-        <lombokVersion>1.12.4</lombokVersion>
+        <lombokVersion>1.16.18</lombokVersion>
         <testngVersion>6.13.1</testngVersion>
         <mockitoAllVersion>1.10.19</mockitoAllVersion>
         <javaVersion>1.8</javaVersion>
+        <surefireVersion>2.20.1</surefireVersion>
     </properties>
 
     <description>
