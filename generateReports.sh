@@ -3,7 +3,9 @@
 #Inspired by the scripts by Mateusz Tapa.
 
 
+
 function all(){
+    echo "Generating all reports. "
     mvn clean
     mvn install site
     findbugs
@@ -60,13 +62,4 @@ function goToRootDirectory(){
     cd $(git rev-parse --show-toplevel)
 }
 
-function usage(){
-	echo "Usage: $0 [-all]"
-	exit 1
-}
-
-case $1 in
-	"-all") all;;
-	"-sonar") sonar;;
-*) usage
-esac
+all
