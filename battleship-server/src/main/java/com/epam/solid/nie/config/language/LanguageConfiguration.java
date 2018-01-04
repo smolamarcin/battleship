@@ -1,5 +1,9 @@
 package com.epam.solid.nie.config.language;
 
-public interface LanguageConfiguration {
+/**
+ * Implementation should provide actions responsible
+ * for provide specific language to the game.
+ */
+interface LanguageConfiguration {
     Language provide();
 }

@@ -6,9 +6,17 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+/**
+ * It provides relevant communicates to the game.
+ */
 public class CommunicateProviderImpl implements CommunicateProvider {
     private Map<Communicate, String> communicates = new HashMap<>();
 
+    /**
+     * Fills the map with messages in the appropriate language.
+     * @param language
+     * @return
+     */
     public CommunicateProviderImpl populate(Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
         Stream.of(Communicate.values()).forEach(consume(resourceBundle));
@@ -20,10 +28,19 @@ public class CommunicateProviderImpl implements CommunicateProvider {
                 .name()));
     }
 
+    /**
+     * Retrieves the message in the appropriate language from the map.
+     * @param communicate
+     * @return specified communicate from the map
+     */
     public String getCommunicate(Communicate communicate) {
         return communicates.get(communicate);
     }
 
+    /**
+     * Determines whether the map is empty.
+     * @return true if the map is empty
+     */
     public boolean isMapEmpty(){
         return communicates.isEmpty();
     }

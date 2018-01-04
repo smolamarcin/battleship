@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created by marek on 13.12.2017.
+ * Represents a point in two-dimensional space.
+ * Contains horizontal and vertical coordinates.
  */
 @Getter
 @RequiredArgsConstructor(staticName="of")
