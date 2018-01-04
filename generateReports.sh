@@ -12,7 +12,6 @@ function all(){
     checkstyle
     jacoco
     sonar
-    site
     jdepend
 }
 
