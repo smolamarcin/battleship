@@ -57,13 +57,13 @@ function jdepend(){
     xargs -a reports/site.txt firefox -new-tab "$line"
 }
 
+function goToRootDirectory(){
+    cd $(git rev-parse --show-toplevel)
+}
+
 function usage(){
 	echo "Usage: $0 [-all]"
 	exit 1
-}
-
-function goToRootDirectory(){
-    cd $(git rev-parse --show-toplevel)
 }
 
 case $1 in
