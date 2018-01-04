@@ -54,7 +54,7 @@ function jdepend(){
     goToRootDirectory
     cd common
     mvn jdepend:generate
-    xargs -a reports/site.txt firefox -new-tab "$line"
+    xargs -a reports/jdepend.txt firefox -new-tab "$line"
 }
 
 function goToRootDirectory(){
