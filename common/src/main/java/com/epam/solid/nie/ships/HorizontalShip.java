@@ -38,7 +38,7 @@ public class HorizontalShip extends AbstractShipPositions implements BattleShip 
     }
 
     /**
-     * Returns the number of masts that have not yet been shot based on a fields occupied by the ship.
+     * Returns the number of masts that have not yet been shot.
      * @param positions - list of fields occupied by the ship
      * @return remaining ship masts
      */
