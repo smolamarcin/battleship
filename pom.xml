@@ -21,6 +21,8 @@
         <module>common</module>
     </modules>
 
+    <url>http://www.epam.com/solid.nie</url>
+
     <build>
         <pluginManagement>
             <plugins>
