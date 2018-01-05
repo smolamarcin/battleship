@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Created by marek on 13.12.2017.
  */
-public class VerticalShip extends AbstractShipPositions implements BattleShip {
+public final class VerticalShip extends AbstractShipPositions implements BattleShip {
 
     private BattleShipType battleShipType;
 
-    VerticalShip(List<Point2D> positions) {
+    VerticalShip(final List<Point2D> positions) {
         setPositions(positions);
     }
 
@@ -39,7 +39,7 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
         return getPositions();
     }
 
-    public int getShipsRemainingHealth(List<Point2D> positions) {
+    public int getShipsRemainingHealth(final List<Point2D> positions) {
         return positions.size();
     }
 }

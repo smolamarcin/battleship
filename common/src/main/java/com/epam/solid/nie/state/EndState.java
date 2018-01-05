@@ -13,7 +13,7 @@ public class EndState implements State {
      * @param gameState
      */
     @Override
-    public void process(GameState gameState) {
+    public void process(final GameState gameState) {
         gameState.setState(this);
     }
 

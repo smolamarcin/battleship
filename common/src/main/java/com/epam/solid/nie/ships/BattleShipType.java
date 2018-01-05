@@ -32,7 +32,7 @@ enum BattleShipType {
      * @param size
      * @return specific type of ship
      */
-    public static BattleShipType valueOf(int size) {
+    public static BattleShipType valueOf(final int size) {
         return map.get(size);
     }
 

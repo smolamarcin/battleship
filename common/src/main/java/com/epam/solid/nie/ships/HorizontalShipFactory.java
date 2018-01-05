@@ -10,10 +10,10 @@ import java.util.List;
 public class HorizontalShipFactory implements ShipFactory {
     /**
      * Create an instance of horizontal ship based on a list of points
-     * @param positions
+     * @param positions as List of single points
      * @return new instance of the Horizontal ship
      */
-    public BattleShip createShip(List<Point2D> positions) {
+    public BattleShip createShip(final List<Point2D> positions) {
         return new HorizontalShip(positions).addType();
     }
 }
