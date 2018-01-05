@@ -9,6 +9,10 @@ package com.epam.solid.nie.client.communication;
  */
 
 public class IpValidator implements Validator {
+    //todo: better naming, ASK DOMINIK!
+    private static final int IP_V4_SIZE = 4;
+    private static final int MAX_SIZE = 256;
+
     /**
      * Determines whether the given IP is in the correct format
      * and does not contain invalid characters.
@@ -19,13 +23,13 @@ public class IpValidator implements Validator {
      */
 
     @Override
-    public boolean validate(String ip) {
+    public boolean validate(final String ip) {
         String[] splitted = ip.split("\\.");
-        if (splitted.length != 4) {
+        if (splitted.length != IP_V4_SIZE) {
             return false;
         }
         for (String s : splitted) {
-            if (!(s.matches("[1-9]\\d*") && Integer.parseInt(s) < 256)) {
+            if (!(s.matches("[1-9]\\d*") && Integer.parseInt(s) < MAX_SIZE)) {
                 return false;
             }
         }

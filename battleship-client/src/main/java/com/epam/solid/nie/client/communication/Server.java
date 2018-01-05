@@ -18,9 +18,9 @@ public interface Server {
     boolean connect(String ip);
 
     /**
-     * Send a list of ships between clients
+     * Send a list of ships between clients.
      *
-     * @param allShips
+     * @param allShips as String
      */
     void send(String allShips);
 
@@ -38,7 +38,7 @@ public interface Server {
     Cell receiveFirstMove();
 
     /**
-     * Sends a message about the defeat to the opponent
+     * Sends a message about the defeat to the opponent.
      */
     void sendGameOverToOpponent();
 }

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0.1
  */
-public class SocketClient implements ShipClient {
+public final class SocketClient implements ShipClient {
     private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private String ip;
     private Socket socket;
@@ -21,7 +21,7 @@ public class SocketClient implements ShipClient {
     private String enemyShips;
     private static final int PORT_NUMBER = 8081;
 
-    SocketClient(String ip) {
+    SocketClient(final String ip) {
         this.ip = ip;
     }
 
@@ -33,18 +33,20 @@ public class SocketClient implements ShipClient {
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
-        String fromServer;
-        while (!("Provide ships").equals(fromServer = in.readLine())) {
-            if (LOGGER.isLoggable(Level.INFO))
+        String fromServer = in.readLine();
+        while (!("Provide ships").equals(fromServer)) {
+            if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.info("Server: " + fromServer);
-            if (fromServer.equals("Game has started. 1"))
+            }
+            if (fromServer.equals("Game has started. 1")) {
                 result = true;
+            }
         }
         return result;
     }
 
     @Override
-    public void send(String allShips) throws IOException {
+    public void send(final String allShips) throws IOException {
         out.println(allShips);
         enemyShips = in.readLine();
     }
