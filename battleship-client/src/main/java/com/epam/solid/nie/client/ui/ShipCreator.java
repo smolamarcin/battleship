@@ -17,12 +17,12 @@ class ShipCreator {
 
     private final ShipFactory shipFactory;
 
-    Ship createShip(List<Cell> cells) {
+    Ship createShip(final List<Cell> cells) {
         List<Point2D> positions = cells.stream().map(cellToPoint2D()).collect(Collectors.toList());
         return new Ship(createBattleShip(positions));
     }
 
-    BattleShip createBattleShip(List<Point2D> points) {
+    BattleShip createBattleShip(final List<Point2D> points) {
         return shipFactory.createShip(points);
     }
 

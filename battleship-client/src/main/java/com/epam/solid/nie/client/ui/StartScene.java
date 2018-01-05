@@ -10,17 +10,21 @@ import javafx.stage.Stage;
 /**
  *
  */
-public class StartScene extends Application {
+public final class StartScene extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         Parent start = FXMLLoader.load(getClass().getResource("/startScreen.fxml"));
         Scene scene = new Scene(start);
         primaryStage.setResizable(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    //todo:write java doc
 
-    public static void main(String[] args) {
+    /**
+     * @param args input
+     */
+    public static void main(final String[] args) {
         launch(args);
     }
 }

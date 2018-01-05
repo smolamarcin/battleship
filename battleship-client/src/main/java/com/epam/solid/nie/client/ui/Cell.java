@@ -21,9 +21,9 @@ public class Cell extends Rectangle {
     /**
      * Creates a cell with default parameters.
      *
-     * @param point2D
+     * @param point2D represents point on the Board
      */
-    public Cell(Point2D point2D) {
+    public Cell(final Point2D point2D) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
@@ -36,7 +36,7 @@ public class Cell extends Rectangle {
      * @param ship
      * @return
      */
-    Cell addShip(Ship ship) {
+    final Cell addShip(final Ship ship) {
         this.ship = ship;
         return this;
     }
@@ -45,7 +45,7 @@ public class Cell extends Rectangle {
      *  If there was a piece of a ship in the cell, it would return true.
      * @return
      */
-    boolean shoot() {
+    final boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
         if (ship != null) {
@@ -57,7 +57,7 @@ public class Cell extends Rectangle {
         return false;
     }
 
-    boolean isOccupied() {
+    final boolean isOccupied() {
         return ship != null;
     }
 
@@ -70,11 +70,11 @@ public class Cell extends Rectangle {
         return point2D.getX() + "," + point2D.getY() + ",";
     }
 
-    int getCellX() {
+    final int getCellX() {
         return point2D.getX();
     }
 
-    int getCellY() {
+    final int getCellY() {
         return point2D.getY();
     }
 }

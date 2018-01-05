@@ -14,30 +14,39 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+//todo: write java doc
 
-
-public class GameScene extends Application {
+/**
+ * JAVA DOC HERE
+ */
+class GameScene extends Application {
+    //todo: naming!!!!
+    public static final int DEFAULT_WIDTH = 500;
+    public static final int DEFAULT_HEIGHT = 1000;
+    public static final int DEFAULT_SPACING = 50;
+    public static final int DEFAULT_SCENE_WIDTH = 200;
+    public static final int DEFAULT_SCENE_HEIGHT = 100;
     private boolean whichPlayer;
     static boolean running = false;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
 
-    GameScene(SocketServer socketServer, boolean whichPlayer) {
+    GameScene(final SocketServer socketServer, final boolean whichPlayer) {
         this.socketServer = socketServer;
         this.whichPlayer = whichPlayer;
     }
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
-        root.setPrefSize(500, 1000);
+        root.setPrefSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
         ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
         return root;
@@ -47,17 +56,19 @@ public class GameScene extends Application {
         return event -> {
             Cell cell = (Cell) event.getSource();
             if (whichPlayer) {
-                if (!running || cell.wasShot)
+                if (!running || cell.wasShot) {
                     return;
+                }
                 handlePlayersMove(cell);
             }
-            if (!running)
+            if (!running) {
                 handleEnemyMove();
+            }
             whichPlayer = true;
         };
     }
 
-    private void handlePlayersMove(Cell cell) {
+    private void handlePlayersMove(final Cell cell) {
         running = cell.shoot();
         if (checkForWin(enemyBoard)) {
             displayYouWinWindow();
@@ -68,10 +79,11 @@ public class GameScene extends Application {
 
     private void handleEnemyMove() {
         Cell enemyMove;
-        if (!whichPlayer)
+        if (!whichPlayer) {
             enemyMove = socketServer.receiveFirstMove();
-        else
+        } else {
             enemyMove = socketServer.receiveEnemyMove();
+        }
         makeEnemyMove(enemyMove);
     }
 
@@ -81,7 +93,7 @@ public class GameScene extends Application {
         button.setText("YOU WIN");
         button.setOnAction(e -> System.exit(0));
         secondaryLayout.getChildren().add(button);
-        Scene secondScene = new Scene(secondaryLayout, 200, 100);
+        Scene secondScene = new Scene(secondaryLayout, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         secondStage.show();
@@ -92,14 +104,15 @@ public class GameScene extends Application {
             int x = cell.getCellX();
             int y = cell.getCellY();
             cell = playerBoard.getCell(x, y);
-            if (cell.wasShot)
+            if (cell.wasShot) {
                 cell = socketServer.receiveEnemyMove();
-            else
+            } else {
                 running = !cell.shoot();
+            }
         }
     }
 
-    private boolean checkForWin(Board board) {
+    private boolean checkForWin(final Board board) {
         return board.areAllShipsSunk();
     }
 
@@ -108,7 +121,7 @@ public class GameScene extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         Scene scene = new Scene(createContent());
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(scene);
