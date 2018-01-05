@@ -11,12 +11,16 @@ import java.util.logging.Logger;
 class ShipSocketServer implements ShipServer {
     private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
     private static final int PORT_NUMBER = 8081;
+    private final Player first;
+    private final Player second;
     private final String ip;
     private List<Player> players = new ArrayList<>();
     private Player currentPlayer;
     private boolean isGameOver;
 
-    ShipSocketServer(String ip) {
+    ShipSocketServer(Player first, Player second, String ip) {
+        this.first = first;
+        this.second = second;
         this.ip = ip;
     }
 
@@ -27,16 +31,14 @@ class ShipSocketServer implements ShipServer {
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info("Server " + ip + " is here");
 
-        Player first = new NetPlayer();
         first.register(serverSocket);
         players.add(first);
 
-        Player second = new NetPlayer();
         second.register(serverSocket);
         players.add(second);
 
-        second.inform("Game has started. 1");
-        first.inform("Game has started. 2");
+        first.inform("Game has started. 1");
+        second.inform("Game has started. 2");
 
         String firstShips = first.provideShips();
         String secondShips = second.provideShips();
