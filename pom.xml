@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.epam.solid.nie</groupId>
+        <groupId>com.academy.solid.nie</groupId>
         <artifactId>battleship-bom</artifactId>
         <version>1.5.0</version>
         <relativePath>../battleship/bom/pom.xml</relativePath>
@@ -21,7 +21,7 @@
         <module>common</module>
     </modules>
 
-    <url>http://www.epam.com/solid.nie</url>
+    <url>http://www.academy.com/solid.nie</url>
 
     <build>
         <pluginManagement>
@@ -198,7 +198,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.epam.solid.nie</groupId>
+                <groupId>com.academy.solid.nie</groupId>
                 <artifactId>battleship-bom</artifactId>
                 <version>1.5.0</version>
                 <type>pom</type>
