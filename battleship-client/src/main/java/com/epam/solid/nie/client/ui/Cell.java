@@ -42,7 +42,7 @@ public class Cell extends Rectangle {
     }
 
     /** Changes the cell color and marks it as a hit.
-     *  If there was3.4.0.905 a piece of a ship in the cell, it would return true.
+     *  If there was a piece of a ship in the cell, it would return true.
      * @return
      */
     boolean shoot() {

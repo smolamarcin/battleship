@@ -16,7 +16,7 @@ public class FileConfiguration implements Configuration {
     /**
      * Return the config map which is used in the game.
      * The map is filled based on the configuration file.
-     * @return
+     * @return map with config parameters
      */
     public Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {

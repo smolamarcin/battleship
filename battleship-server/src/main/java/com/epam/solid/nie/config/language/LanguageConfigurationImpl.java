@@ -10,7 +10,6 @@ class LanguageConfigurationImpl implements LanguageConfiguration {
 
     /**
      * Returns the appropriate language that is loaded from the configuration file.
-     * @return
      */
     @Override
     public Language provide() {

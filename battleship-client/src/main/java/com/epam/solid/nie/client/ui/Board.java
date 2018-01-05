@@ -29,7 +29,7 @@ class Board extends Parent {
     private static final int MAX_WIDTH = 10;
     private VBox rows = new VBox();
     private boolean enemy;
-    List<Ship> allShips = new ArrayList<>();
+    private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
 
     Board(boolean enemy, VBox rows) {
@@ -156,15 +156,15 @@ class Board extends Parent {
      *
      * @param cell - represents single Cell of the board
      */
-    private StringBuilder savePositionPieceOfShip(Cell cell) {
-        return positions.append(cell.toString());
+    private void savePositionPieceOfShip(Cell cell) {
+        positions.append(cell.toString());
     }
 
     /** Marks the end of the ship on the list.
      *  The pipe is a convention that has been established in the team.
      */
-    private StringBuilder markEndOfShip() {
-        return positions.append("|");
+    private void markEndOfShip() {
+        positions.append("|");
     }
 
     /** Returns a cell with given coordinates.
@@ -211,7 +211,7 @@ class Board extends Parent {
      * @param ship - represents single instance of Ship
      * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
-    boolean canPlaceShip(Ship ship, Cell cell) {
+    private boolean canPlaceShip(Ship ship, Cell cell) {
         int length = ship.getRemainingHealth();
         int x = cell.getCellX();
         int y = cell.getCellY();
@@ -268,7 +268,7 @@ class Board extends Parent {
      *
      * @return position of all ships as a String
      */
-    public String getAllpositions() {
+    String getAllPositions() {
         return positions.toString();
     }
 
@@ -276,7 +276,7 @@ class Board extends Parent {
      *
      * @return true - if all ships have been sunk
      */
-    public boolean areAllShipsSunk() {
+    boolean areAllShipsSunk() {
         for (Ship ship : allShips)
             if (ship.isAlive())
                 return false;

@@ -23,7 +23,7 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
     /**
      * Returns what type of ship is there (number of masts)
      *
-     * @return
+     * @return battle ship type
      */
     public BattleShipType getBattleShipType() {
         return battleShipType;
@@ -33,7 +33,7 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
      * Returns the list of fields (represents by points, which contains coordinates)
      * that are occupied by the ship.
      *
-     * @return
+     * @return positions (as a list of points) occupied by the ship
      */
     public List<Point2D> getShipProperties() {
         return getPositions();

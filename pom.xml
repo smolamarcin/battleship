@@ -21,6 +21,8 @@
         <module>common</module>
     </modules>
 
+    <url>http://www.epam.com/solid.nie</url>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -161,13 +163,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${mavenCheckstylePluginVersion}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>checkstyle</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
+                <configuration>
+                    <configLocation>${checkstyle.config.location}</configLocation>
+                    <failsOnError>true</failsOnError>
+                    <failOnViolation>false</failOnViolation>
+                </configuration>
             </plugin>
 
             <!--to work with mvn site checkstyle needs jxr plugin-->
