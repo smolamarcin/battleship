@@ -19,6 +19,9 @@ public class ShipSocketServerTest {
     private ServerThread serverThread;
     private ClientThread firstClientThread;
     private ClientThread secondClientThread;
+    private String initialMessageForFirstPlayer = "Game has started. 1";
+    private String initialMessageForSecondPlayer = "Game has started. 2";
+    private int millis = 100;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -31,26 +34,28 @@ public class ShipSocketServerTest {
 
     public void afterConnectionSecondPlayerShouldBeRegistered() throws IOException {
         //given
-        when(second.provideShips()).thenReturn("0,1,;");
-        when(first.provideShips()).thenReturn("0,0,;");
+        String shipsOfFirstPlayer = "0,1,;";
+        when(second.provideShips()).thenReturn(shipsOfFirstPlayer);
+        String shipsOfSecondPlayer = "0,0,;";
+        when(first.provideShips()).thenReturn(shipsOfSecondPlayer);
         //when
         serverThread.start();
         firstClientThread.start();
         secondClientThread.start();
         try {
-            Thread.sleep(100);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //then
         verify(first, times(1)).register(any(ServerSocket.class));
         verify(second, times(1)).register(any(ServerSocket.class));
-        verify(first, times(1)).inform("Game has started. 1");
-        verify(second, times(1)).inform("Game has started. 2");
+        verify(first, times(1)).inform(initialMessageForFirstPlayer);
+        verify(second, times(1)).inform(initialMessageForSecondPlayer);
         verify(first, times(1)).provideShips();
         verify(second, times(1)).provideShips();
 
-        verify(first, times(1)).inform("0,1,;");
-        verify(second, times(1)).inform("0,0,;");
+        verify(first, times(1)).inform(shipsOfFirstPlayer);
+        verify(second, times(1)).inform(shipsOfSecondPlayer);
     }
 }
