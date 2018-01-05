@@ -15,15 +15,26 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
         setPositions(positions);
     }
 
-    VerticalShip addType(){
+    VerticalShip addType() {
         this.battleShipType = BattleShipType.valueOf(getShipsRemainingHealth(getPositions()));
         return this;
     }
 
+    /**
+     * Returns what type of ship is there (number of masts)
+     *
+     * @return battle ship type
+     */
     public BattleShipType getBattleShipType() {
         return battleShipType;
     }
 
+    /**
+     * Returns the list of fields (represents by points, which contains coordinates)
+     * that are occupied by the ship.
+     *
+     * @return positions (as a list of points) occupied by the ship
+     */
     public List<Point2D> getShipProperties() {
         return getPositions();
     }

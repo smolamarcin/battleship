@@ -38,7 +38,7 @@ class ShipPlacer {
             if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
-                    socketServer.send(playerBoard.getAllpositions());
+                    socketServer.send(playerBoard.getAllPositions());
                     running = placeShipsOfEnemy(socketServer.receiveAllShips());
                 }
             }
