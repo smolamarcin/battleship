@@ -73,6 +73,15 @@
                             <requireJavaVersion>
                                 <version>${javaVersion}</version>
                             </requireJavaVersion>
+                            <requireMavenVersion>
+                                <version>${mavenVersion}</version>
+                            </requireMavenVersion>
+                            <dependencyConvergence>
+                                <uniqueVersions>true</uniqueVersions>
+                            </dependencyConvergence>
+                            <requireOS>
+                                <family>${requiredSystem}</family>
+                            </requireOS>
                         </rules>
                     </configuration>
                 </plugin>
