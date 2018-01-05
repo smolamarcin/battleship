@@ -26,7 +26,7 @@ public class FileConfiguration implements Configuration {
         return map;
     }
 
-    private Consumer<ConfigProperty> consume(ResourceBundle resourceBundle) {
+    private Consumer<ConfigProperty> consume(final ResourceBundle resourceBundle) {
         return element -> map.put(element, resourceBundle.getString(element.name()));
     }
 }
