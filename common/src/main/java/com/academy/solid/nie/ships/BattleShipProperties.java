@@ -8,5 +8,5 @@ import java.util.List;
  * Created by marek on 13.12.2017.
  */
 interface BattleShipProperties {
-    List<Point2D> getShipProperties();
+    List<Point2D> getPositions();
 }

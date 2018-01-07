@@ -44,7 +44,7 @@ public class ShipFactoryTest {
 
         //when
         BattleShip ship = factory.createShip(positions);
-        List<Point2D> shipProperties = ship.getShipProperties();
+        List<Point2D> shipProperties = ship.getPositions();
 
         //then
         verifyType(ship, VerticalShip.class);
@@ -58,7 +58,7 @@ public class ShipFactoryTest {
 
         //when
         BattleShip ship = factory.createShip(positions);
-        List<Point2D> shipProperties = ship.getShipProperties();
+        List<Point2D> shipProperties = ship.getPositions();
 
         //then
         verifyType(ship, HorizontalShip.class);
@@ -72,7 +72,7 @@ public class ShipFactoryTest {
 
         //when
         BattleShip ship = factory.createShip(positions);
-        int shipsRemainingHealth = ship.getShipProperties().size();
+        int shipsRemainingHealth = ship.getPositions().size();
 
         //then
         verifyType(ship, HorizontalShip.class);

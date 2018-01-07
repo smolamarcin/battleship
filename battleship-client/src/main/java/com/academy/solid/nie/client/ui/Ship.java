@@ -2,8 +2,6 @@ package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.ships.BattleShip;
 import com.academy.solid.nie.utils.Point2D;
-import javafx.scene.Parent;
-import lombok.Getter;
 
 /**
  *
@@ -18,7 +16,7 @@ class Ship {
     }
 
     void hit(Point2D point2D) {
-        battleShip.getShipProperties().remove(point2D);
+        battleShip.getPositions().remove(point2D);
         health--;
     }
 
@@ -27,7 +25,7 @@ class Ship {
     }
 
     int getRemainingHealth() {
-        return battleShip.getShipProperties().size();
+        return battleShip.getPositions().size();
     }
 
     BattleShip getBattleShip() {
