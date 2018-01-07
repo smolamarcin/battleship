@@ -45,7 +45,7 @@ class ShipPlacer {
         };
     }
 
-    boolean areAllShipPlaced() {
+    boolean areAllShipsPlaced() {
         return areAllShipsPlaced;
     }
 

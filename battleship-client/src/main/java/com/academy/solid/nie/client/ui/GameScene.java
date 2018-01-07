@@ -20,7 +20,7 @@ import java.util.Queue;
 
 
 public class GameScene extends Application {
-    private boolean running = true;
+    private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
@@ -48,16 +48,18 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!running || !shipPlacer.areAllShipPlaced() || cell.wasShot)
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot)
                 return;
             handlePlayersMove(cell);
-            if (!running)
+            if (!isMyTurn) {
                 handleEnemyMove();
+                isMyTurn = true;
+            }
         };
     }
 
     private void handlePlayersMove(Cell cell) {
-        running = cell.shoot();
+        isMyTurn = cell.shoot();
         if (checkForWin(enemyBoard)) {
             displayYouWinWindow();
             socketServer.sendGameOverToOpponent();
@@ -83,11 +85,11 @@ public class GameScene extends Application {
     }
 
     private void makeEnemyMove(Queue<Point2D> points) {
-        for (Point2D point:points) {
+        for (Point2D point : points) {
             int x = point.getX();
             int y = point.getY();
             Cell cellOnBoard = playerBoard.getCell(x, y);
-            running = !cellOnBoard.shoot();
+            cellOnBoard.shoot();
         }
     }
 
