@@ -18,10 +18,11 @@ import javafx.stage.Stage;
 
 public class GameScene extends Application {
     private boolean whichPlayer;
-    static boolean running = false;
+    private boolean running = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private ShipPlacer shipPlacer;
 
     GameScene(SocketServer socketServer, boolean whichPlayer) {
         this.socketServer = socketServer;
@@ -35,7 +36,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -47,7 +48,7 @@ public class GameScene extends Application {
         return event -> {
             Cell cell = (Cell) event.getSource();
             if (whichPlayer) {
-                if (!running || cell.wasShot)
+                if (!running || !shipPlacer.areAllShipPlaced() || cell.wasShot)
                     return;
                 handlePlayersMove(cell);
             }

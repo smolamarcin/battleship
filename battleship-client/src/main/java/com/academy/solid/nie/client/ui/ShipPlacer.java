@@ -19,6 +19,7 @@ class ShipPlacer {
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4, 3, 3, 2, 2, 2, 1, 1, 1, 1));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
@@ -29,7 +30,7 @@ class ShipPlacer {
 
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
-            if (GameScene.running)
+            if (areAllShipsPlaced)
                 return;
             Cell cell = (Cell) event.getSource();
             shipOrientation(event);
@@ -37,10 +38,15 @@ class ShipPlacer {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.send(playerBoard.getAllPositions());
-                    GameScene.running = placeShipsOfEnemy(socketServer.receiveAllShips());
+                    placeShipsOfEnemy(socketServer.receiveAllShips());
+                    areAllShipsPlaced = true;
                 }
             }
         };
+    }
+
+    boolean areAllShipPlaced() {
+        return areAllShipsPlaced;
     }
 
     private void shipOrientation(MouseEvent event) {
@@ -60,7 +66,7 @@ class ShipPlacer {
         return cells;
     }
 
-    boolean placeShipsOfEnemy(String shipsString) {
+    void placeShipsOfEnemy(String shipsString) {
         String[] ships = shipsString.split(",\\|");
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
@@ -74,7 +80,6 @@ class ShipPlacer {
             Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
         }
-        return true;
     }
 
     ShipCreator createShip(String[] coords) {

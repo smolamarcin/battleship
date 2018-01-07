@@ -22,7 +22,7 @@ public class IpValidator implements Validator {
         if (splitted.length != 4)
             return false;
         for (String s : splitted)
-            if (!(s.matches("[1-9]\\d*") && Integer.parseInt(s) < 256))
+            if (!(s.matches("[0-9]\\d*") && Integer.parseInt(s) < 256))
                 return false;
         return true;
     }
