@@ -1,6 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.ships.VerticalShip;
+import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -102,7 +102,7 @@ class Board extends Parent {
      * @return true if placing the ship was completed successfully
      */
     private boolean placeShip(Ship ship, Cell cell) {
-        if (ship.getBattleShip() instanceof VerticalShip) {
+        if (ship.getBattleShip().getType() == Type.VERTICAL) {
             placeShipVertically(ship, cell.getCellX(), cell.getCellY());
         } else {
             placeShipHorizontally(ship, cell.getCellX(), cell.getCellY());
@@ -216,7 +216,7 @@ class Board extends Parent {
         int x = cell.getCellX();
         int y = cell.getCellY();
 
-        if (ship.getBattleShip() instanceof VerticalShip) {
+        if (ship.getBattleShip().getType() == Type.VERTICAL) {
             for (int i = y; i < y + length; i++)
                 if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
                     return false;

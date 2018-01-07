@@ -14,6 +14,6 @@ public class HorizontalShipFactory implements ShipFactory {
      * @return new instance of the Horizontal ship
      */
     public BattleShip createShip(List<Point2D> positions) {
-        return new HorizontalShip(positions);
+        return new BattleShip(positions, Type.HORIZONTAL);
     }
 }

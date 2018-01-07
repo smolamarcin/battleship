@@ -1,12 +1,13 @@
 package com.academy.solid.nie.ships;
 
 import com.academy.solid.nie.utils.Point2D;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.testng.Assert.*;
 
 /**
  * Created by marek on 13.12.2017.
@@ -23,7 +24,7 @@ public class ShipFactoryTest {
         BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
-        verifyType(ship, HorizontalShip.class);
+        assertEquals(ship.getType(), Type.HORIZONTAL);
     }
 
     public void should_CreateVerticalShip() {
@@ -34,7 +35,7 @@ public class ShipFactoryTest {
         BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
-        verifyType(ship, VerticalShip.class);
+        assertEquals(ship.getType(), Type.VERTICAL);
     }
 
     public void should_CreateVerticalShip_WithPositions() {
@@ -47,8 +48,8 @@ public class ShipFactoryTest {
         List<Point2D> shipProperties = ship.getPositions();
 
         //then
-        verifyType(ship, VerticalShip.class);
-        Assert.assertEquals(positions, shipProperties);
+        assertEquals(ship.getType(), Type.VERTICAL);
+        assertEquals(positions, shipProperties);
     }
 
     public void should_CreateHorizontalShip_WithPositions() {
@@ -61,8 +62,8 @@ public class ShipFactoryTest {
         List<Point2D> shipProperties = ship.getPositions();
 
         //then
-        verifyType(ship, HorizontalShip.class);
-        Assert.assertEquals(positions, shipProperties);
+        assertEquals(ship.getType(), Type.HORIZONTAL);
+        assertEquals(positions, shipProperties);
     }
 
     public void should_CreateHorizontalShip_WithPositions_andCheckHealth() {
@@ -75,12 +76,12 @@ public class ShipFactoryTest {
         int shipsRemainingHealth = ship.getPositions().size();
 
         //then
-        verifyType(ship, HorizontalShip.class);
-        Assert.assertEquals(positions.size(), shipsRemainingHealth);
+        assertEquals(ship.getType(), Type.HORIZONTAL);
+        assertEquals(positions.size(), shipsRemainingHealth);
 
     }
 
     private void verifyType(BattleShip battleShip, Class<?> clazz) {
-        Assert.assertTrue(clazz.isInstance(battleShip));
+        assertTrue(clazz.isInstance(battleShip));
     }
 }
