@@ -1,8 +1,7 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.ships.HorizontalShipFactory;
-import com.academy.solid.nie.ships.VerticalShipFactory;
+import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
@@ -51,9 +50,9 @@ class ShipPlacer {
 
     private void shipOrientation(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            shipCreator = new ShipCreator(new VerticalShipFactory());
+            shipCreator = new ShipCreator(Type.VERTICAL);
         } else {
-            shipCreator = new ShipCreator(new HorizontalShipFactory());
+            shipCreator = new ShipCreator(Type.HORIZONTAL);
         }
     }
 
@@ -84,8 +83,8 @@ class ShipPlacer {
 
     ShipCreator createShip(String[] coords) {
         if (coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2])))
-            return new ShipCreator(new VerticalShipFactory());
+            return new ShipCreator(Type.VERTICAL);
         else
-            return new ShipCreator(new HorizontalShipFactory());
+            return new ShipCreator(Type.HORIZONTAL);
     }
 }

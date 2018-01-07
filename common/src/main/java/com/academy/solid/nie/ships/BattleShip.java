@@ -12,7 +12,7 @@ public class BattleShip {
     private List<Point2D> positions = new ArrayList<>();
     private Type type;
 
-    BattleShip(List<Point2D> positions, Type type) {
+    public BattleShip(List<Point2D> positions, Type type) {
         this.positions = positions;
         this.type = type;
     }

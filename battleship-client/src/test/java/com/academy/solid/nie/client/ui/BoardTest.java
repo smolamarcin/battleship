@@ -1,8 +1,7 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.ships.BattleShip;
-import com.academy.solid.nie.ships.HorizontalShipFactory;
-import com.academy.solid.nie.ships.ShipFactory;
+import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -24,8 +23,7 @@ public class BoardTest implements TestHelper {
         //given
         VBox rows = new VBox();
         Board board = new Board(false, rows);
-        ShipFactory factory = new HorizontalShipFactory();
-        BattleShip battleShip = factory.createShip(Collections.singletonList(Point2D.of(0, 0)));
+        BattleShip battleShip = new BattleShip(Collections.singletonList(Point2D.of(0, 0)), Type.HORIZONTAL);
         Ship ship = new Ship(battleShip);
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
@@ -46,8 +44,8 @@ public class BoardTest implements TestHelper {
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
-        ShipFactory factory = new HorizontalShipFactory();
-        BattleShip battleShip = factory.createShip(Collections.singletonList(Point2D.of(1, 6)));
+        BattleShip battleShip = new BattleShip(Collections.singletonList(Point2D.of(1, 6)), Type.HORIZONTAL);
+
         Ship ship = new Ship(battleShip);
 
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
