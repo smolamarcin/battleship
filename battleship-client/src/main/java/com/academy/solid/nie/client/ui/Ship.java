@@ -1,22 +1,31 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.ships.BattleShip;
+import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
 class Ship {
     private int health;
-    private BattleShip battleShip;
+    private List<Point2D> positions = new ArrayList<>();
+    private Type type;
 
-    Ship(BattleShip battleShip) {
-        this.battleShip = battleShip;
+    public Ship(List<Point2D> positions, Type type) {
+        this.positions = positions;
+        this.type = type;
         this.health = getRemainingHealth();
     }
 
+    public Type getType() {
+        return type;
+    }
+
     void hit(Point2D point2D) {
-        battleShip.getPositions().remove(point2D);
+        positions.remove(point2D);
         health--;
     }
 
@@ -25,10 +34,6 @@ class Ship {
     }
 
     int getRemainingHealth() {
-        return battleShip.getPositions().size();
-    }
-
-    BattleShip getBattleShip() {
-        return battleShip;
+        return positions.size();
     }
 }

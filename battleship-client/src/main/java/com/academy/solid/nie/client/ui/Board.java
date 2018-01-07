@@ -102,7 +102,7 @@ class Board extends Parent {
      * @return true if placing the ship was completed successfully
      */
     private boolean placeShip(Ship ship, Cell cell) {
-        if (ship.getBattleShip().getType() == Type.VERTICAL) {
+        if (ship.getType() == Type.VERTICAL) {
             placeShipVertically(ship, cell.getCellX(), cell.getCellY());
         } else {
             placeShipHorizontally(ship, cell.getCellX(), cell.getCellY());
@@ -216,7 +216,7 @@ class Board extends Parent {
         int x = cell.getCellX();
         int y = cell.getCellY();
 
-        if (ship.getBattleShip().getType() == Type.VERTICAL) {
+        if (ship.getType() == Type.VERTICAL) {
             for (int i = y; i < y + length; i++)
                 if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(x, i))
                     return false;
