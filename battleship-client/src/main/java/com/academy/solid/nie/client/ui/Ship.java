@@ -14,13 +14,13 @@ class Ship {
     private List<Point2D> positions = new ArrayList<>();
     private Type type;
 
-    public Ship(List<Point2D> positions, Type type) {
+    Ship(List<Point2D> positions, Type type) {
         this.positions = positions;
         this.type = type;
-        this.health = getRemainingHealth();
+        this.health = getLength();
     }
 
-    public Type getType() {
+    Type getType() {
         return type;
     }
 
@@ -33,7 +33,7 @@ class Ship {
         return health != 0;
     }
 
-    int getRemainingHealth() {
+    int getLength() {
         return positions.size();
     }
 }

@@ -118,7 +118,7 @@ class Board extends Parent {
      * @param y - the vertical coordinate of the field on which the ship will be placed
      */
     private void placeShipHorizontally(Ship ship, int x, int y) {
-        for (int i = x; i < x + ship.getRemainingHealth(); i++) {
+        for (int i = x; i < x + ship.getLength(); i++) {
             Cell cell = getCell(i, y).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
@@ -133,7 +133,7 @@ class Board extends Parent {
      * @param y - the vertical coordinate of the field on which the ship will be placed
      */
     private void placeShipVertically(Ship ship, int x, int y) {
-        for (int i = y; i < y + ship.getRemainingHealth(); i++) {
+        for (int i = y; i < y + ship.getLength(); i++) {
             Cell cell = getCell(x, i).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
@@ -212,7 +212,7 @@ class Board extends Parent {
      * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
     private boolean canPlaceShip(Ship ship, Cell cell) {
-        int length = ship.getRemainingHealth();
+        int length = ship.getLength();
         int x = cell.getCellX();
         int y = cell.getCellY();
 
