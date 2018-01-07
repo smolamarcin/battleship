@@ -21,13 +21,4 @@ public class HorizontalShip extends AbstractShipPositions implements BattleShip 
     public List<Point2D> getShipProperties() {
         return getPositions();
     }
-
-    /**
-     * Returns the number of masts that have not yet been shot.
-     * @param positions - list of fields occupied by the ship
-     * @return remaining ship masts
-     */
-    public int getShipsRemainingHealth(List<Point2D> positions) {
-        return positions.size();
-    }
 }

@@ -22,8 +22,4 @@ public class VerticalShip extends AbstractShipPositions implements BattleShip {
     public List<Point2D> getShipProperties() {
         return getPositions();
     }
-
-    public int getShipsRemainingHealth(List<Point2D> positions) {
-        return positions.size();
-    }
 }

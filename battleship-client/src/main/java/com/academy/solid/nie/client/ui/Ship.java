@@ -27,7 +27,7 @@ class Ship {
     }
 
     int getRemainingHealth() {
-        return battleShip.getShipsRemainingHealth(battleShip.getShipProperties());
+        return battleShip.getShipProperties().size();
     }
 
     BattleShip getBattleShip() {

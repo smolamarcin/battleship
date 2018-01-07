@@ -72,7 +72,7 @@ public class ShipFactoryTest {
 
         //when
         BattleShip ship = factory.createShip(positions);
-        int shipsRemainingHealth = ship.getShipsRemainingHealth(ship.getShipProperties());
+        int shipsRemainingHealth = ship.getShipProperties().size();
 
         //then
         verifyType(ship, HorizontalShip.class);
