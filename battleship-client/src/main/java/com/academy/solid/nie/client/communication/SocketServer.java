@@ -55,9 +55,9 @@ public class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
-    private Queue<Cell> receiveAllMovesWithoutSending() {
+    private Queue<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
-        Queue<Cell> cells = new LinkedList<>();
+        Queue<Point2D> cells = new LinkedList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             StackPane secondaryLayout = new StackPane();
@@ -73,7 +73,7 @@ public class SocketServer implements Server {
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
             String[] coordinates = aMovesArr.split(",");
-            cells.add(new Cell(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))));
+            cells.add(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])));
         }
         return cells;
     }
@@ -84,7 +84,7 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public Queue<Cell> receiveEnemyMoves() {
+    public Queue<Point2D> receiveEnemyMoves() {
         send(allMoves);
         return receiveAllMovesWithoutSending();
     }

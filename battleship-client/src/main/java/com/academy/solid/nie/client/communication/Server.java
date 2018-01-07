@@ -1,6 +1,6 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.ui.Cell;
+import com.academy.solid.nie.utils.Point2D;
 
 import java.util.Queue;
 
@@ -33,7 +33,7 @@ public interface Server {
      */
     void sendPlayerMove(String move);
 
-    Queue<Cell> receiveEnemyMoves();
+    Queue<Point2D> receiveEnemyMoves();
 
     String receiveAllShips();
 

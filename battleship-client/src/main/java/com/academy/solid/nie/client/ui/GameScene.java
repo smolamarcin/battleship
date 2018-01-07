@@ -2,6 +2,7 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -65,7 +66,7 @@ public class GameScene extends Application {
     }
 
     private void handleEnemyMove() {
-        Queue<Cell> enemyMoves = socketServer.receiveEnemyMoves();
+        Queue<Point2D> enemyMoves = socketServer.receiveEnemyMoves();
         makeEnemyMove(enemyMoves);
     }
 
@@ -81,10 +82,10 @@ public class GameScene extends Application {
         secondStage.show();
     }
 
-    private void makeEnemyMove(Queue<Cell> cells) {
-        for (Cell cell:cells) {
-            int x = cell.getCellX();
-            int y = cell.getCellY();
+    private void makeEnemyMove(Queue<Point2D> points) {
+        for (Point2D point:points) {
+            int x = point.getX();
+            int y = point.getY();
             Cell cellOnBoard = playerBoard.getCell(x, y);
             running = !cellOnBoard.shoot();
         }
