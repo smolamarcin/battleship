@@ -2,6 +2,8 @@ package com.academy.solid.nie.client.communication;
 
 import com.academy.solid.nie.client.ui.Cell;
 
+import java.util.Queue;
+
 /**
  * Lists methods for the server.
  * Enables communication between players.
@@ -31,11 +33,9 @@ public interface Server {
      */
     void sendPlayerMove(String move);
 
-    Cell receiveEnemyMove();
+    Queue<Cell> receiveEnemyMoves();
 
     String receiveAllShips();
-
-    Cell receiveFirstMove();
 
     /**
      * Sends a message about the defeat to the opponent

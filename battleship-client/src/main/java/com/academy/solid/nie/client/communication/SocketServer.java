@@ -23,7 +23,6 @@ public class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
     private String allMoves = "";
-    private Queue<Cell> cells = new LinkedList<>();
 
     @Override
     public boolean connect(String ip) {
@@ -52,19 +51,13 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public Cell receiveFirstMove() {
-        if (cells.isEmpty())
-            receiveAllMovesWithoutSending();
-        return cells.poll();
-    }
-
-    @Override
     public void sendGameOverToOpponent() {
         server.sendGameOverToOpponent();
     }
 
-    private void receiveAllMovesWithoutSending() {
+    private Queue<Cell> receiveAllMovesWithoutSending() {
         allMoves = "";
+        Queue<Cell> cells = new LinkedList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             StackPane secondaryLayout = new StackPane();
@@ -82,6 +75,7 @@ public class SocketServer implements Server {
             String[] coordinates = aMovesArr.split(",");
             cells.add(new Cell(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))));
         }
+        return cells;
     }
 
     @Override
@@ -90,14 +84,8 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public Cell receiveEnemyMove() {
-        if (cells.isEmpty())
-            receiveAllMoves();
-        return cells.poll();
-    }
-
-    private void receiveAllMoves() {
+    public Queue<Cell> receiveEnemyMoves() {
         send(allMoves);
-        receiveAllMovesWithoutSending();
+        return receiveAllMovesWithoutSending();
     }
 }

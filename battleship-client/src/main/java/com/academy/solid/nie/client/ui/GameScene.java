@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Queue;
+
 
 public class GameScene extends Application {
     private boolean running = true;
@@ -63,8 +65,8 @@ public class GameScene extends Application {
     }
 
     private void handleEnemyMove() {
-        Cell enemyMove = socketServer.receiveEnemyMove();
-        makeEnemyMove(enemyMove);
+        Queue<Cell> enemyMoves = socketServer.receiveEnemyMoves();
+        makeEnemyMove(enemyMoves);
     }
 
     private void displayYouWinWindow() {
@@ -79,15 +81,12 @@ public class GameScene extends Application {
         secondStage.show();
     }
 
-    private void makeEnemyMove(Cell cell) {
-        while (!running) {
+    private void makeEnemyMove(Queue<Cell> cells) {
+        for (Cell cell:cells) {
             int x = cell.getCellX();
             int y = cell.getCellY();
-            cell = playerBoard.getCell(x, y);
-            if (cell.wasShot)
-                cell = socketServer.receiveEnemyMove();
-            else
-                running = !cell.shoot();
+            Cell cellOnBoard = playerBoard.getCell(x, y);
+            running = !cellOnBoard.shoot();
         }
     }
 
