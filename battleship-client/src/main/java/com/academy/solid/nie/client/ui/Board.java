@@ -218,11 +218,11 @@ class Board extends Parent {
 
         if (ship.getBattleShip().getType() == Type.VERTICAL) {
             for (int i = y; i < y + length; i++)
-                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
+                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(x, i))
                     return false;
         } else {
             for (int i = x; i < x + length; i++)
-                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(y, i))
+                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(i, y))
                     return false;
         }
         return true;
@@ -231,14 +231,11 @@ class Board extends Parent {
     /** Specifies whether it is possible to set the specific ship on a specific cell.
      *  Specifies the ability based on specific coordinates.
      * @param y
-     * @param i
+     * @param x
      * @return
      */
-    private boolean canPlaceShip(int y, int i) {
-        for (Cell neighbor : getNeighbors(i, y)) {
-            if (!isInScope(i, y))
-                return true;
-
+    private boolean canPlaceShip(int x, int y) {
+        for (Cell neighbor : getNeighbors(x, y)) {
             if (neighbor.isOccupied())
                 return true;
         }
