@@ -17,16 +17,14 @@ import javafx.stage.Stage;
 
 
 public class GameScene extends Application {
-    private boolean whichPlayer;
     private boolean running = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer, boolean whichPlayer) {
+    GameScene(SocketServer socketServer, boolean firstPlayer) {
         this.socketServer = socketServer;
-        this.whichPlayer = whichPlayer;
     }
 
     private Parent createContent() {
@@ -47,14 +45,11 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (whichPlayer) {
-                if (!running || !shipPlacer.areAllShipPlaced() || cell.wasShot)
-                    return;
-                handlePlayersMove(cell);
-            }
+            if (!running || !shipPlacer.areAllShipPlaced() || cell.wasShot)
+                return;
+            handlePlayersMove(cell);
             if (!running)
                 handleEnemyMove();
-            whichPlayer = true;
         };
     }
 
@@ -68,11 +63,7 @@ public class GameScene extends Application {
     }
 
     private void handleEnemyMove() {
-        Cell enemyMove;
-        if (!whichPlayer)
-            enemyMove = socketServer.receiveFirstMove();
-        else
-            enemyMove = socketServer.receiveEnemyMove();
+        Cell enemyMove = socketServer.receiveEnemyMove();
         makeEnemyMove(enemyMove);
     }
 
