@@ -1,6 +1,7 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.ships.BattleShip;
 import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
@@ -8,13 +9,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 /**
  *
  */
 class ShipPlacer {
-    private ShipCreator shipCreator;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
@@ -32,8 +34,8 @@ class ShipPlacer {
             if (areAllShipsPlaced)
                 return;
             Cell cell = (Cell) event.getSource();
-            shipOrientation(event);
-            if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
+            Type type = shipOrientation(event);
+            if (playerBoard.isShipPositionValid(new Ship(new BattleShip(producePoints(cell), type)), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.send(playerBoard.getAllPositions());
@@ -44,16 +46,20 @@ class ShipPlacer {
         };
     }
 
+    private List<Point2D> producePoints(Cell cell) {
+        return produceCells(cell).stream().map(cellToPoint2D()).collect(Collectors.toList());
+    }
+
+    private Function<Cell, Point2D> cellToPoint2D() {
+        return c -> Point2D.of(c.getCellX(), c.getCellY());
+    }
+
     boolean areAllShipsPlaced() {
         return areAllShipsPlaced;
     }
 
-    private void shipOrientation(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            shipCreator = new ShipCreator(Type.VERTICAL);
-        } else {
-            shipCreator = new ShipCreator(Type.HORIZONTAL);
-        }
+    private Type shipOrientation(MouseEvent event) {
+        return event.getButton() == MouseButton.PRIMARY ? Type.VERTICAL : Type.HORIZONTAL;
     }
 
     private List<Cell> produceCells(Cell cell) {
@@ -75,16 +81,13 @@ class ShipPlacer {
                 int y = Integer.parseInt(coords[i + 1]);
                 point2DOfShip.add(Point2D.of(x, y));
             }
-            shipCreator = createShip(coords);
-            Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
+            Ship ship = new Ship(new BattleShip(point2DOfShip, createShip(coords)));
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
         }
     }
 
-    ShipCreator createShip(String[] coords) {
-        if (coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2])))
-            return new ShipCreator(Type.VERTICAL);
-        else
-            return new ShipCreator(Type.HORIZONTAL);
+    Type createShip(String[] coords) {
+        return coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2]))
+                ? Type.VERTICAL : Type.HORIZONTAL;
     }
 }
