@@ -9,24 +9,8 @@ import java.util.List;
  */
 public class VerticalShip extends AbstractShipPositions implements BattleShip {
 
-    private BattleShipType battleShipType;
-
     VerticalShip(List<Point2D> positions) {
         setPositions(positions);
-    }
-
-    VerticalShip addType() {
-        this.battleShipType = BattleShipType.valueOf(getShipsRemainingHealth(getPositions()));
-        return this;
-    }
-
-    /**
-     * Returns what type of ship is there (number of masts)
-     *
-     * @return battle ship type
-     */
-    public BattleShipType getBattleShipType() {
-        return battleShipType;
     }
 
     /**

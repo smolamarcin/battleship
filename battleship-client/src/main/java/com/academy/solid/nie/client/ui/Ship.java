@@ -8,8 +8,7 @@ import lombok.Getter;
 /**
  *
  */
-@Getter
-class Ship extends Parent {
+class Ship {
     private int health;
     private BattleShip battleShip;
 
@@ -24,10 +23,14 @@ class Ship extends Parent {
     }
 
     boolean isAlive() {
-        return health!=0;
+        return health != 0;
     }
 
     int getRemainingHealth() {
         return battleShip.getShipsRemainingHealth(battleShip.getShipProperties());
+    }
+
+    BattleShip getBattleShip() {
+        return battleShip;
     }
 }

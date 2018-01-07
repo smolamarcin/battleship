@@ -14,6 +14,6 @@ public class VerticalShipFactory implements ShipFactory {
      * @return new instance of the vertical ship
      */
     public BattleShip createShip(List<Point2D> positions) {
-        return new VerticalShip(positions).addType();
+        return new VerticalShip(positions);
     }
 }

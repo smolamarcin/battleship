@@ -23,7 +23,7 @@ public class ShipFactoryTest {
         BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
-        verifyType(ship, null, HorizontalShip.class);
+        verifyType(ship, HorizontalShip.class);
     }
 
     public void should_CreateVerticalShip() {
@@ -34,7 +34,7 @@ public class ShipFactoryTest {
         BattleShip ship = factory.createShip(new ArrayList<>());
 
         //then
-        verifyType(ship, null, VerticalShip.class);
+        verifyType(ship, VerticalShip.class);
     }
 
     public void should_CreateVerticalShip_WithPositions() {
@@ -47,7 +47,7 @@ public class ShipFactoryTest {
         List<Point2D> shipProperties = ship.getShipProperties();
 
         //then
-        verifyType(ship, BattleShipType.THREE_MASTED, VerticalShip.class);
+        verifyType(ship, VerticalShip.class);
         Assert.assertEquals(positions, shipProperties);
     }
 
@@ -61,7 +61,7 @@ public class ShipFactoryTest {
         List<Point2D> shipProperties = ship.getShipProperties();
 
         //then
-        verifyType(ship, BattleShipType.FOUR_MASTED, HorizontalShip.class);
+        verifyType(ship, HorizontalShip.class);
         Assert.assertEquals(positions, shipProperties);
     }
 
@@ -75,13 +75,12 @@ public class ShipFactoryTest {
         int shipsRemainingHealth = ship.getShipsRemainingHealth(ship.getShipProperties());
 
         //then
-        verifyType(ship, BattleShipType.FOUR_MASTED, HorizontalShip.class);
+        verifyType(ship, HorizontalShip.class);
         Assert.assertEquals(positions.size(), shipsRemainingHealth);
 
     }
 
-    private void verifyType(BattleShip battleShip, BattleShipType battleShipType, Class<?> clazz) {
+    private void verifyType(BattleShip battleShip, Class<?> clazz) {
         Assert.assertTrue(clazz.isInstance(battleShip));
-        Assert.assertEquals(battleShipType, battleShip.getBattleShipType());
     }
 }
