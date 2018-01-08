@@ -21,11 +21,12 @@ public class BoardTest implements TestHelper {
         //given
         VBox rows = new VBox();
         Board board = new Board(false, rows);
-        Ship ship = new Ship(Collections.singletonList(Point2D.of(0, 0)));
+        Point2D point = Point2D.of(0, 0);
+        Ship ship = new Ship(Collections.singletonList(point));
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
-        Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
+        new Cell(point).addShip(ship);
 
         //when
         boolean result = board.isShipPositionValid(ship);
@@ -41,9 +42,11 @@ public class BoardTest implements TestHelper {
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
-        Ship ship = new Ship(Collections.singletonList(Point2D.of(1, 6)));
+        Point2D pointA = Point2D.of(1, 6);
+        Ship ship = new Ship(Collections.singletonList(pointA));
 
-        Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
+        Point2D pointB = Point2D.of(0, 0);
+        new Cell(pointB).addShip(ship);
 
         //when
         board.isShipPositionValid(ship);
@@ -59,15 +62,17 @@ public class BoardTest implements TestHelper {
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         Board board = new Board(false, rows);
         board.initialize(handler);
-        Ship ship = createShipHorizontally(Collections.singletonList(Point2D.of(0, 0)));
-        Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
+        Point2D pointA = Point2D.of(0, 0);
+        Ship ship = createShipHorizontally(Collections.singletonList(pointA));
+        new Cell(pointA).addShip(ship);
 
         //when
         boolean result = board.isShipPositionValid(ship);
         Assert.assertTrue(result);
 
-        Ship ship2 = createShipHorizontally(Collections.singletonList(Point2D.of(0, 1)));
-        cell = new Cell(Point2D.of(0, 1)).addShip(ship2);
+        Point2D pointB = Point2D.of(0, 1);
+        Ship ship2 = createShipHorizontally(Collections.singletonList(pointB));
+        new Cell(pointB).addShip(ship2);
 
         result = board.isShipPositionValid(ship2);
 
