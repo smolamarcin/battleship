@@ -56,13 +56,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <groupId>com.academy.solid.nie</groupId>
+            <artifactId>battleship-bom</artifactId>
+            <type>pom</type>
+            <version>${projectVersion}</version>
+            <scope>import</scope>
         </dependency>
     </dependencies>
 
