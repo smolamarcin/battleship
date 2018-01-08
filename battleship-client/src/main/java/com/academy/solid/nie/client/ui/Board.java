@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -187,7 +188,7 @@ class Board extends Parent {
         {
             int x = point2D.getX();
             int y = point2D.getY();
-            return !isInScope(x, y) || getCell(x, y).isOccupied() || !canPlaceShip(x, y);
+            return !isInScope(x, y) || getCell(x, y).isOccupied() || isThereShipInTheNeighborhood(x, y);
         });
     }
 
@@ -197,12 +198,8 @@ class Board extends Parent {
      * @param x
      * @return
      */
-    private boolean canPlaceShip(int x, int y) {
-        for (Cell neighbor : getNeighbors(x, y)) {
-            if (neighbor.isOccupied())
-                return false;
-        }
-        return true;
+    private boolean isThereShipInTheNeighborhood(int x, int y) {
+        return Arrays.stream(getNeighbors(x, y)).anyMatch(Cell::isOccupied);
     }
 
     /** Determines if the point is in the range of the board.
@@ -237,10 +234,7 @@ class Board extends Parent {
      * @return true - if all ships have been sunk
      */
     boolean areAllShipsSunk() {
-        for (Ship ship : allShips)
-            if (ship.isAlive())
-                return false;
-        return true;
+        return allShips.stream().noneMatch(Ship::isAlive);
     }
 
 }
