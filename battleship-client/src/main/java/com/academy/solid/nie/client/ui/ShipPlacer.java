@@ -34,7 +34,7 @@ class ShipPlacer {
                 return;
             Cell cell = (Cell) event.getSource();
             Type type = shipOrientation(event);
-            if (playerBoard.isShipPositionValid(new Ship(producePoints(cell), type), cell)) {
+            if (playerBoard.isShipPositionValid(makeShip(cell, type), cell)) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.send(playerBoard.getAllPositions());
@@ -45,8 +45,12 @@ class ShipPlacer {
         };
     }
 
-    private List<Point2D> producePoints(Cell cell) {
-        return produceCells(cell).stream().map(cellToPoint2D()).collect(Collectors.toList());
+    private Ship makeShip(Cell cell, Type type) {
+        return new Ship(producePoints(cell, type), type);
+    }
+
+    private List<Point2D> producePoints(Cell cell, Type type) {
+        return produceCells(cell, type);
     }
 
     private Function<Cell, Point2D> cellToPoint2D() {
@@ -61,13 +65,21 @@ class ShipPlacer {
         return event.getButton() == MouseButton.PRIMARY ? Type.VERTICAL : Type.HORIZONTAL;
     }
 
-    private List<Cell> produceCells(Cell cell) {
-        List<Cell> cells = new ArrayList<>();
-        Integer poll = typesOfShips.peek();
-        for (int four = poll; four > 0; four--) {
-            cells.add(cell);
+    private List<Point2D> produceCells(Cell cell, Type type) {
+        List<Point2D> points = new ArrayList<>();
+        Integer peek = typesOfShips.peek();
+        int x = cell.getCellX();
+        int y = cell.getCellY();
+        points.add(Point2D.of(x, y));
+        for (int length = peek - 1; length > 0; length--) {
+            if (type == Type.VERTICAL) {
+                x++;
+            } else {
+                y++;
+            }
+            points.add(Point2D.of(x, y));
         }
-        return cells;
+        return points;
     }
 
     void placeShipsOfEnemy(String shipsString) {
