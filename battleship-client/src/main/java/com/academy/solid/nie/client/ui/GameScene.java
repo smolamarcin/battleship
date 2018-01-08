@@ -48,8 +48,9 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot)
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot) {
                 return;
+            }
             handlePlayersMove(cell);
             if (!isMyTurn) {
                 handleEnemyMove();

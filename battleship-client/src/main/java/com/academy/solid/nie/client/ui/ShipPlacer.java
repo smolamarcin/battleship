@@ -60,11 +60,12 @@ class ShipPlacer {
 
     private List<Point2D> produceCells(Cell cell, Type type) {
         List<Point2D> points = new ArrayList<>();
-        Integer peek = typesOfShips.peek();
+        Integer lengthOfShip = typesOfShips.peek();
         int x = cell.getCellX();
         int y = cell.getCellY();
         points.add(Point2D.of(x, y));
-        for (int length = peek - 1; length > 0; length--) {
+        int lengthOfShipWithoutBeginningPoint = lengthOfShip - 1;
+        for (int length = lengthOfShipWithoutBeginningPoint; length > 0; length--) {
             if (type == Type.VERTICAL) {
                 x++;
             } else {

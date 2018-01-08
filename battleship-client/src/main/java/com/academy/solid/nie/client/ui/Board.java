@@ -106,7 +106,7 @@ class Board extends Parent {
     }
 
     private void placeShip(Ship ship) {
-        for (Point2D point:ship.getPositions()) {
+        for (Point2D point : ship.getPositions()) {
             Cell cell = getCell(point.getX(), point.getY()).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);

@@ -9,6 +9,9 @@ package com.academy.solid.nie.client.communication;
  */
 
 public class IpValidator implements Validator {
+
+    private final String digitsOnly = "[0-9]\\d*";
+
     /**
      * Determines whether the given IP is in the correct format and does not contain invalid characters.
      * Works for IPv4.
@@ -21,9 +24,10 @@ public class IpValidator implements Validator {
         String[] splitted = ip.split("\\.");
         if (splitted.length != 4)
             return false;
-        for (String s : splitted)
-            if (!(s.matches("[0-9]\\d*") && Integer.parseInt(s) < 256))
+        for (String s : splitted) {
+            if (!(s.matches(digitsOnly) && Integer.parseInt(s) < 256))
                 return false;
+        }
         return true;
     }
 }
