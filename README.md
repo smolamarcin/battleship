@@ -1,5 +1,4 @@
-[![Build Status](http://vps447185.ovh.net:8080/buildStatus/icon?job=battleships-solid-nie)](http://vps447185.ovh.net:8080/job/battleships-solid-nie/)
-[![Build Status](http://vps447185.ovh.net:8080/buildStatus/icon?job=battleships-solid-nie)](http://vps447185.ovh.net:8080/job/battleships-solid-nie) <br />
+<a href='http://vps447185.ovh.net:8080/job/battleships-solid-nie/'><img src='http://vps447185.ovh.net:8080/buildStatus/icon?job=battleships-solid-nie'></a>
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/smolamarcin/battleship.svg?columns=all)](https://waffle.io/smolamarcin/battleship) <br />
 ## Running server
     To start the server, run the script named runServer.sh. 
