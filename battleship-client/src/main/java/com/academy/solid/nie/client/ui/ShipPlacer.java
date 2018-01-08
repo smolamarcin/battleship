@@ -8,8 +8,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 /**
@@ -46,15 +44,11 @@ class ShipPlacer {
     }
 
     private Ship makeShip(Cell cell, Type type) {
-        return new Ship(producePoints(cell, type), type);
+        return new Ship(producePoints(cell, type));
     }
 
     private List<Point2D> producePoints(Cell cell, Type type) {
         return produceCells(cell, type);
-    }
-
-    private Function<Cell, Point2D> cellToPoint2D() {
-        return c -> Point2D.of(c.getCellX(), c.getCellY());
     }
 
     boolean areAllShipsPlaced() {
@@ -92,13 +86,9 @@ class ShipPlacer {
                 int y = Integer.parseInt(coords[i + 1]);
                 point2DOfShip.add(Point2D.of(x, y));
             }
-            Ship ship = new Ship(point2DOfShip, createShip(coords));
+            Ship ship = new Ship(point2DOfShip);
             enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
         }
     }
 
-    Type createShip(String[] coords) {
-        return coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2]))
-                ? Type.VERTICAL : Type.HORIZONTAL;
-    }
 }
