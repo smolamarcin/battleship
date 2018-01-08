@@ -1,8 +1,5 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.ships.BattleShip;
-import com.academy.solid.nie.ships.HorizontalShipFactory;
-import com.academy.solid.nie.ships.ShipFactory;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -24,16 +21,14 @@ public class BoardTest implements TestHelper {
         //given
         VBox rows = new VBox();
         Board board = new Board(false, rows);
-        ShipFactory factory = new HorizontalShipFactory();
-        BattleShip battleShip = factory.createShip(Collections.singletonList(Point2D.of(0, 0)));
-        Ship ship = new Ship(battleShip);
+        Ship ship = new Ship(Collections.singletonList(Point2D.of(0, 0)));
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        boolean result = board.isShipPositionValid(ship, cell);
+        boolean result = board.isShipPositionValid(ship);
 
         //then
         Assert.assertTrue(result);
@@ -46,15 +41,13 @@ public class BoardTest implements TestHelper {
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
-        ShipFactory factory = new HorizontalShipFactory();
-        BattleShip battleShip = factory.createShip(Collections.singletonList(Point2D.of(1, 6)));
-        Ship ship = new Ship(battleShip);
+        Ship ship = new Ship(Collections.singletonList(Point2D.of(1, 6)));
 
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        board.isShipPositionValid(ship, cell);
-        boolean result = board.isShipPositionValid(ship, cell);
+        board.isShipPositionValid(ship);
+        boolean result = board.isShipPositionValid(ship);
 
         //then
         Assert.assertFalse(result);
@@ -70,13 +63,13 @@ public class BoardTest implements TestHelper {
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        boolean result = board.isShipPositionValid(ship, cell);
+        boolean result = board.isShipPositionValid(ship);
         Assert.assertTrue(result);
 
         Ship ship2 = createShipHorizontally(Collections.singletonList(Point2D.of(0, 1)));
         cell = new Cell(Point2D.of(0, 1)).addShip(ship2);
 
-        result = board.isShipPositionValid(ship2, cell);
+        result = board.isShipPositionValid(ship2);
 
         //then
         Assert.assertFalse(result);

@@ -2,6 +2,7 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,17 +16,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Queue;
+
 
 public class GameScene extends Application {
-    private boolean whichPlayer;
-    static boolean running = false;
+    private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer, boolean whichPlayer) {
+    GameScene(SocketServer socketServer) {
         this.socketServer = socketServer;
-        this.whichPlayer = whichPlayer;
     }
 
     private Parent createContent() {
@@ -35,7 +37,7 @@ public class GameScene extends Application {
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        ShipPlacer shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
@@ -46,19 +48,19 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (whichPlayer) {
-                if (!running || cell.wasShot)
-                    return;
-                handlePlayersMove(cell);
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot) {
+                return;
             }
-            if (!running)
+            handlePlayersMove(cell);
+            if (!isMyTurn) {
                 handleEnemyMove();
-            whichPlayer = true;
+                isMyTurn = true;
+            }
         };
     }
 
     private void handlePlayersMove(Cell cell) {
-        running = cell.shoot();
+        isMyTurn = cell.shoot();
         if (checkForWin(enemyBoard)) {
             displayYouWinWindow();
             socketServer.sendGameOverToOpponent();
@@ -67,12 +69,8 @@ public class GameScene extends Application {
     }
 
     private void handleEnemyMove() {
-        Cell enemyMove;
-        if (!whichPlayer)
-            enemyMove = socketServer.receiveFirstMove();
-        else
-            enemyMove = socketServer.receiveEnemyMove();
-        makeEnemyMove(enemyMove);
+        Queue<Point2D> enemyMoves = socketServer.receiveEnemyMoves();
+        makeEnemyMove(enemyMoves);
     }
 
     private void displayYouWinWindow() {
@@ -87,15 +85,12 @@ public class GameScene extends Application {
         secondStage.show();
     }
 
-    private void makeEnemyMove(Cell cell) {
-        while (!running) {
-            int x = cell.getCellX();
-            int y = cell.getCellY();
-            cell = playerBoard.getCell(x, y);
-            if (cell.wasShot)
-                cell = socketServer.receiveEnemyMove();
-            else
-                running = !cell.shoot();
+    private void makeEnemyMove(Queue<Point2D> points) {
+        for (Point2D point : points) {
+            int x = point.getX();
+            int y = point.getY();
+            Cell cellOnBoard = playerBoard.getCell(x, y);
+            cellOnBoard.shoot();
         }
     }
 
