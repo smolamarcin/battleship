@@ -28,7 +28,7 @@ public class BoardTest implements TestHelper {
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        boolean result = board.isShipPositionValid(ship, cell);
+        boolean result = board.isShipPositionValid(ship);
 
         //then
         Assert.assertTrue(result);
@@ -46,8 +46,8 @@ public class BoardTest implements TestHelper {
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        board.isShipPositionValid(ship, cell);
-        boolean result = board.isShipPositionValid(ship, cell);
+        board.isShipPositionValid(ship);
+        boolean result = board.isShipPositionValid(ship);
 
         //then
         Assert.assertFalse(result);
@@ -63,13 +63,13 @@ public class BoardTest implements TestHelper {
         Cell cell = new Cell(Point2D.of(0, 0)).addShip(ship);
 
         //when
-        boolean result = board.isShipPositionValid(ship, cell);
+        boolean result = board.isShipPositionValid(ship);
         Assert.assertTrue(result);
 
         Ship ship2 = createShipHorizontally(Collections.singletonList(Point2D.of(0, 1)));
         cell = new Cell(Point2D.of(0, 1)).addShip(ship2);
 
-        result = board.isShipPositionValid(ship2, cell);
+        result = board.isShipPositionValid(ship2);
 
         //then
         Assert.assertFalse(result);

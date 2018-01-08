@@ -1,6 +1,5 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.ui.Cell;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,14 +24,13 @@ public class SocketServer implements Server {
     private String allMoves = "";
 
     @Override
-    public boolean connect(String ip) {
+    public void connect(String ip) {
         server = new SocketClient(ip);
         try {
-            return server.run();
+            server.run();
         } catch (IOException e) {
             LOGGER.warning(e.getMessage());
         }
-        return false;
     }
 
     @Override

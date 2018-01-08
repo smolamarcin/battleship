@@ -28,8 +28,8 @@ public class StartSceneController {
         String ip = fieldIp.getText();
         if (ipValidator.validate(ip)) {
             SocketServer socketServer = new SocketServer();
-            boolean whichPlayer = socketServer.connect(ip);
-            new GameScene(socketServer, whichPlayer).start();
+            socketServer.connect(ip);
+            new GameScene(socketServer).start();
         } else {
             Label label = new Label("Wrong IP");
             StackPane secondaryLayout = new StackPane();

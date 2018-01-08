@@ -1,7 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.ships.Type;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
@@ -32,7 +31,7 @@ class ShipPlacer {
                 return;
             Cell cell = (Cell) event.getSource();
             Type type = shipOrientation(event);
-            if (playerBoard.isShipPositionValid(makeShip(cell, type), cell)) {
+            if (playerBoard.isShipPositionValid(makeShip(cell, type))) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.send(playerBoard.getAllPositions());
@@ -87,7 +86,7 @@ class ShipPlacer {
                 point2DOfShip.add(Point2D.of(x, y));
             }
             Ship ship = new Ship(point2DOfShip);
-            enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
+            enemyBoard.isShipPositionValid(ship);
         }
     }
 

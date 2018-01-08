@@ -80,13 +80,12 @@ class Board extends Parent {
      * Determines if you can put a ship in a given place.
      *
      * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board
      * @return true if the position of the ship is correct.
      */
-    boolean isShipPositionValid(Ship ship, Cell cell) {
-        if (canPlaceShip(ship, cell)) {
+    boolean isShipPositionValid(Ship ship) {
+        if (canPlaceShip(ship)) {
             allShips.add(ship);
-            return placeShip(ship, cell);
+            return placeAndMarkShip(ship);
         }
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info(positions.toString());
@@ -97,10 +96,9 @@ class Board extends Parent {
      * The method puts the ship in the given place.
      *
      * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board
      * @return true if placing the ship was completed successfully
      */
-    private boolean placeShip(Ship ship, Cell cell) {
+    private boolean placeAndMarkShip(Ship ship) {
         placeShip(ship);
         markEndOfShip();
         return true;
@@ -181,11 +179,10 @@ class Board extends Parent {
     }
 
     /** Determines whether you can place the ship on a specific cell.
+     *  @param ship - represents single instance of Ship
      *
-     * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
-    private boolean canPlaceShip(Ship ship, Cell cell) {
+    private boolean canPlaceShip(Ship ship) {
         return ship.getPositions().stream().noneMatch(point2D ->
         {
             int x = point2D.getX();

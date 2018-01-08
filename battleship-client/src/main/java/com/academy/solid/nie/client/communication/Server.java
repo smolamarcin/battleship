@@ -17,7 +17,7 @@ public interface Server {
      * @param ip as String
      * @return true if the connection attempt was successful.
      */
-    boolean connect(String ip);
+    void connect(String ip);
 
     /**
      * Send a list of ships between clients

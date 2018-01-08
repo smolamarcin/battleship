@@ -26,7 +26,7 @@ public class GameScene extends Application {
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer, boolean firstPlayer) {
+    GameScene(SocketServer socketServer) {
         this.socketServer = socketServer;
     }
 
