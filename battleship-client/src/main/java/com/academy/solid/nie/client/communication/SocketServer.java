@@ -71,7 +71,9 @@ public class SocketServer implements Server {
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
             String[] coordinates = aMovesArr.split(",");
-            cells.add(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])));
+            int x = Integer.parseInt(coordinates[0]);
+            int y = Integer.parseInt(coordinates[1]);
+            cells.add(Point2D.of(x, y));
         }
         return cells;
     }
