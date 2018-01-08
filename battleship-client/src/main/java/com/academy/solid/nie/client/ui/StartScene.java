@@ -8,7 +8,8 @@ import javafx.stage.Stage;
 
 
 /**
- *
+ *  Represent starting screen UI.
+ *  The window allows to enter the IP.
  */
 public final class StartScene extends Application {
     @Override
@@ -19,10 +20,9 @@ public final class StartScene extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    //todo:write java doc
 
     /**
-     * @param args input
+     * @param args are used to launch
      */
     public static void main(final String[] args) {
         launch(args);

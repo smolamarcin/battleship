@@ -25,7 +25,7 @@ public class IpValidator implements Validator {
      */
 
     @Override
-    public boolean validate(final String ip) {
+    public boolean validate(String ip) {
         String[] splitted = ip.split("\\.");
         if (splitted.length != NUMBER_OF_OCTETS_IN_IP) {
             return false;

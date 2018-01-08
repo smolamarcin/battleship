@@ -17,18 +17,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Queue;
-//todo: write java doc
 
 /**
- * JAVA DOC HERE
+ *  Class represents Game UI.
  */
 class GameScene extends Application {
-    //todo: naming!!!!
-    public static final int DEFAULT_WIDTH = 500;
-    public static final int DEFAULT_HEIGHT = 1000;
-    public static final int DEFAULT_SPACING = 50;
-    public static final int DEFAULT_SCENE_WIDTH = 200;
-    public static final int DEFAULT_SCENE_HEIGHT = 100;
+    private static final int DEFAULT_ROOT_WIDTH = 500;
+    private static final int DEFAULT_ROOT_HEIGHT = 1000;
+    private static final int DEFAULT_SPACING = 50;
+    private static final int DEFAULT_SCENE_WIDTH = 200;
+    private static final int DEFAULT_SCENE_HEIGHT = 100;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
@@ -41,7 +39,7 @@ class GameScene extends Application {
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
-        root.setPrefSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
@@ -57,7 +55,7 @@ class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot) {
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
                 return;
             }
             handlePlayersMove(cell);

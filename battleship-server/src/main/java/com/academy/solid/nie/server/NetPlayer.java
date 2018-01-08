@@ -6,6 +6,9 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * Class represents single Player in the game.
+ */
 public final class NetPlayer implements Player {
     private static final Logger LOGGER = Logger.getLogger(NetPlayer.class.getName());
     private PrintWriter out;
@@ -22,7 +25,7 @@ public final class NetPlayer implements Player {
     }
 
     @Override
-    public void inform(final String s) throws IOException {
+    public void inform(final String s) {
         out.println(s);
     }
 

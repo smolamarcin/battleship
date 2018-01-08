@@ -10,12 +10,16 @@ import java.util.stream.Stream;
  * Reads configuration from the file.
  */
 public class FileConfiguration implements Configuration {
+    /**
+     * Default configuration file name.
+     */
     public static final String CONFIGURATION = "configuration";
     private EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
 
     /**
      * Return the config map which is used in the game.
      * The map is filled based on the configuration file.
+     *
      * @return map with config parameters
      */
     public Map<ConfigProperty, String> provide() {

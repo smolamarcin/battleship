@@ -32,8 +32,18 @@ public interface Server {
      */
     void sendPlayerMove(String move);
 
+
+    /**
+     * Receive enemy moves.
+     *
+     * @return collection of posiitions
+     */
     Queue<Point2D> receiveEnemyMoves();
 
+    /**
+     * Receive ships.
+     * @return ships positions as string
+     */
     String receiveAllShips();
 
     /**

@@ -19,6 +19,7 @@ import java.io.IOException;
 //todo: write javadoc
 
 /**
+ *  Controller to manage components of the starting window.
  *
  */
 public final class StartSceneController {

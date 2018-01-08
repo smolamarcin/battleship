@@ -11,12 +11,17 @@ import javafx.scene.shape.Rectangle;
  *
  * @since 1.0.1
  */
-public class Cell extends Rectangle {
+public final class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
     private Point2D point2D;
     private Ship ship;
-    boolean wasShot;
+
+    boolean wasShot() {
+        return wasShot;
+    }
+
+    private boolean wasShot;
 
     /**
      * Creates a cell with default parameters.
@@ -30,22 +35,25 @@ public class Cell extends Rectangle {
         setStroke(Color.BLACK);
     }
 
-    /** Adds the ship to the cell.
+    /**
+     * Adds the ship to the cell.
      * It changes the cell properties.
      *
-     * @param ship
+     * @param newShip
      * @return
      */
-    final Cell addShip(final Ship ship) {
-        this.ship = ship;
+    Cell addShip(final Ship newShip) {
+        this.ship = newShip;
         return this;
     }
 
-    /** Changes the cell color and marks it as a hit.
-     *  If there was a piece of a ship in the cell, it would return true.
+    /**
+     * Changes the cell color and marks it as a hit.
+     * If there was a piece of a ship in the cell, it would return true.
+     *
      * @return
      */
-    final boolean shoot() {
+    boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
         if (ship != null) {
@@ -57,12 +65,11 @@ public class Cell extends Rectangle {
         return false;
     }
 
-    final boolean isOccupied() {
+    boolean isOccupied() {
         return ship != null;
     }
 
     /**
-     *
      * @return String representation of the object
      */
     @Override
@@ -70,11 +77,11 @@ public class Cell extends Rectangle {
         return point2D.getX() + "," + point2D.getY() + ",";
     }
 
-    final int getCellX() {
+    int getCellX() {
         return point2D.getX();
     }
 
-    final int getCellY() {
+    int getCellY() {
         return point2D.getY();
     }
 }
