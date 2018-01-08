@@ -33,8 +33,8 @@ public final class SocketClient implements ShipClient {
         out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
-        String fromServer = in.readLine();
-        while (!("Provide ships").equals(fromServer)) {
+        String fromServer;
+        while (!("Provide ships").equals(fromServer = in.readLine())) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.info("Server: " + fromServer);
             }
