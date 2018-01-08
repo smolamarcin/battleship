@@ -1,6 +1,5 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.ships.VerticalShip;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -10,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,13 +81,12 @@ class Board extends Parent {
      * Determines if you can put a ship in a given place.
      *
      * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board
      * @return true if the position of the ship is correct.
      */
-    boolean isShipPositionValid(Ship ship, Cell cell) {
-        if (canPlaceShip(ship, cell)) {
+    boolean isShipPositionValid(Ship ship) {
+        if (canPlaceShip(ship)) {
             allShips.add(ship);
-            return placeShip(ship, cell);
+            return placeAndMarkShip(ship);
         }
         if (LOGGER.isLoggable(Level.INFO))
             LOGGER.info(positions.toString());
@@ -98,43 +97,17 @@ class Board extends Parent {
      * The method puts the ship in the given place.
      *
      * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board
      * @return true if placing the ship was completed successfully
      */
-    private boolean placeShip(Ship ship, Cell cell) {
-        if (ship.getBattleShip() instanceof VerticalShip) {
-            placeShipVertically(ship, cell.getCellX(), cell.getCellY());
-        } else {
-            placeShipHorizontally(ship, cell.getCellX(), cell.getCellY());
-        }
+    private boolean placeAndMarkShip(Ship ship) {
+        placeShip(ship);
         markEndOfShip();
         return true;
     }
 
-    /** Places the ship on the board in a horizontal position.
-     *
-     * @param ship - represents single instance of Ship
-     * @param x - the horizontal coordinate of the field on which the ship will be placed
-     * @param y - the vertical coordinate of the field on which the ship will be placed
-     */
-    private void placeShipHorizontally(Ship ship, int x, int y) {
-        for (int i = x; i < x + ship.getRemainingHealth(); i++) {
-            Cell cell = getCell(i, y).addShip(ship);
-            if (!enemy) {
-                markFieldAsOccupiedByShip(cell);
-            }
-        }
-    }
-
-    /** Places the ship on the board in a vertical position.
-     *
-     * @param ship - represents single instance of Ship
-     * @param x - the horizontal coordinate of the field on which the ship will be placed
-     * @param y - the vertical coordinate of the field on which the ship will be placed
-     */
-    private void placeShipVertically(Ship ship, int x, int y) {
-        for (int i = y; i < y + ship.getRemainingHealth(); i++) {
-            Cell cell = getCell(x, i).addShip(ship);
+    private void placeShip(Ship ship) {
+        for (Point2D point : ship.getPositions()) {
+            Cell cell = getCell(point.getX(), point.getY()).addShip(ship);
             if (!enemy) {
                 markFieldAsOccupiedByShip(cell);
             }
@@ -207,42 +180,26 @@ class Board extends Parent {
     }
 
     /** Determines whether you can place the ship on a specific cell.
+     *  @param ship - represents single instance of Ship
      *
-     * @param ship - represents single instance of Ship
-     * @param cell - represents single Cell of the board, the cell on which we want to place the ship
      */
-    private boolean canPlaceShip(Ship ship, Cell cell) {
-        int length = ship.getRemainingHealth();
-        int x = cell.getCellX();
-        int y = cell.getCellY();
-
-        if (ship.getBattleShip() instanceof VerticalShip) {
-            for (int i = y; i < y + length; i++)
-                if (!isInScope(x, i) || getCell(x, i).isOccupied() || canPlaceShip(i, x))
-                    return false;
-        } else {
-            for (int i = x; i < x + length; i++)
-                if (!isInScope(i, y) || getCell(i, y).isOccupied() || canPlaceShip(y, i))
-                    return false;
-        }
-        return true;
+    private boolean canPlaceShip(Ship ship) {
+        return ship.getPositions().stream().noneMatch(point2D ->
+        {
+            int x = point2D.getX();
+            int y = point2D.getY();
+            return !isInScope(x, y) || getCell(x, y).isOccupied() || isThereShipInTheNeighborhood(x, y);
+        });
     }
 
     /** Specifies whether it is possible to set the specific ship on a specific cell.
      *  Specifies the ability based on specific coordinates.
      * @param y
-     * @param i
+     * @param x
      * @return
      */
-    private boolean canPlaceShip(int y, int i) {
-        for (Cell neighbor : getNeighbors(i, y)) {
-            if (!isInScope(i, y))
-                return true;
-
-            if (neighbor.isOccupied())
-                return true;
-        }
-        return false;
+    private boolean isThereShipInTheNeighborhood(int x, int y) {
+        return Arrays.stream(getNeighbors(x, y)).anyMatch(Cell::isOccupied);
     }
 
     /** Determines if the point is in the range of the board.
@@ -277,10 +234,7 @@ class Board extends Parent {
      * @return true - if all ships have been sunk
      */
     boolean areAllShipsSunk() {
-        for (Ship ship : allShips)
-            if (ship.isAlive())
-                return false;
-        return true;
+        return allShips.stream().noneMatch(Ship::isAlive);
     }
 
 }

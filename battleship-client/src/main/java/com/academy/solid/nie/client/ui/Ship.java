@@ -1,33 +1,37 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.ships.BattleShip;
 import com.academy.solid.nie.utils.Point2D;
-import javafx.scene.Parent;
-import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  */
-@Getter
-class Ship extends Parent {
+class Ship {
     private int health;
-    private BattleShip battleShip;
 
-    Ship(BattleShip battleShip) {
-        this.battleShip = battleShip;
-        this.health = getRemainingHealth();
+    public List<Point2D> getPositions() {
+        return positions;
+    }
+
+    private List<Point2D> positions = new ArrayList<>();
+
+    Ship(List<Point2D> positions) {
+        this.positions = positions;
+        this.health = getLength();
     }
 
     void hit(Point2D point2D) {
-        battleShip.getShipProperties().remove(point2D);
+        positions.remove(point2D);
         health--;
     }
 
     boolean isAlive() {
-        return health!=0;
+        return health != 0;
     }
 
-    int getRemainingHealth() {
-        return battleShip.getShipsRemainingHealth(battleShip.getShipProperties());
+    int getLength() {
+        return positions.size();
     }
 }
