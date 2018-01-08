@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.epam.solid.nie</groupId>
+        <groupId>com.academy.solid.nie</groupId>
         <artifactId>battleship</artifactId>
         <version>1.5.0</version>
         <relativePath>../pom.xml</relativePath>
@@ -39,7 +39,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>com.epam.solid.nie.client.ui.StartScene</Main-Class>
+                                        <Main-Class>com.academy.solid.nie.client.ui.StartScene</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>
@@ -62,7 +62,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.epam.solid.nie</groupId>
+            <groupId>com.academy.solid.nie</groupId>
             <artifactId>common</artifactId>
             <version>${projectVersion}</version>
         </dependency>

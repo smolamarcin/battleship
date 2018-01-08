@@ -1,1 +1,1 @@
-https://sonarcloud.io/dashboard?id=com.epam.solid.nie%3Abattleship
+https://sonarcloud.io/dashboard?id=com.academy.solid.nie%3Abattleship
