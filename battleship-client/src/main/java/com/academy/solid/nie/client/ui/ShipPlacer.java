@@ -7,6 +7,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 
 /**
@@ -81,11 +82,13 @@ class ShipPlacer {
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
             String[] coords = shipStr.split(",");
-            for (int i = 0; i < coords.length - 1; i += 2) {
-                int x = Integer.parseInt(coords[i]);
-                int y = Integer.parseInt(coords[i + 1]);
+
+            IntStream.range(0, coords.length).filter(i -> i % 2 == 0).forEach(index -> {
+                int x = Integer.parseInt(coords[index]);
+                int y = Integer.parseInt(coords[index + 1]);
                 point2DOfShip.add(Point2D.of(x, y));
-            }
+            });
+
             Ship ship = new Ship(point2DOfShip);
             enemyBoard.isShipPositionValid(ship);
         }

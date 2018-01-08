@@ -13,7 +13,7 @@
             <Image url="logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="fieldIp" layoutX="215.0" layoutY="188.0" />
+      <TextField fx:id="fieldIP" layoutX="215.0" layoutY="188.0" />
       <Button fx:id="btnConnect" layoutX="269.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnConnectClicked" text="Connect" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="163.0" text="Please insert IP adress" />
    </children>
