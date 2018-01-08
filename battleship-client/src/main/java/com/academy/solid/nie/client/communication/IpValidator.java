@@ -37,5 +37,4 @@ public class IpValidator implements Validator {
         }
         return true;
     }
-    
 }

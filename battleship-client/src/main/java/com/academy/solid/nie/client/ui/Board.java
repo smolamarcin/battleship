@@ -193,8 +193,7 @@ class Board extends Parent {
      * @param ship - represents single instance of Ship
      */
     private boolean canPlaceShip(final Ship ship) {
-        return ship.getPositions().stream().noneMatch(point2D ->
-        {
+        return ship.getPositions().stream().noneMatch(point2D -> {
             int x = point2D.getX();
             int y = point2D.getY();
             return !isInScope(x, y) || getCell(x, y).isOccupied() || isThereShipInTheNeighborhood(x, y);

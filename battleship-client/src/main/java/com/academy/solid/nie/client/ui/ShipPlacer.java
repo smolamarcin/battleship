@@ -27,8 +27,9 @@ class ShipPlacer {
 
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
-            if (areAllShipsPlaced)
+            if (areAllShipsPlaced) {
                 return;
+            }
             Cell cell = (Cell) event.getSource();
             Type type = shipOrientation(event);
             if (playerBoard.isShipPositionValid(makeShip(cell, type))) {

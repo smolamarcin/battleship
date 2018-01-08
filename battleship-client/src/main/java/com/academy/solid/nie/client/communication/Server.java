@@ -15,7 +15,6 @@ public interface Server {
      * Returns true if connection was successful.
      *
      * @param ip as String
-     * @return true if the connection attempt was successful.
      */
     void connect(String ip);
 
