@@ -70,8 +70,8 @@
         <dependency>
             <groupId>com.academy.solid.nie</groupId>
             <artifactId>battleship-bom</artifactId>
-            <version>1.5.0</version>
             <type>pom</type>
+            <version>${projectVersion}</version>
             <scope>import</scope>
         </dependency>
 
