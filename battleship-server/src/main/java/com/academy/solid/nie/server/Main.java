@@ -22,10 +22,12 @@ public final class Main {
         String arg = args[0];
         String emptyString = "";
         ShipServer shipServer;
+        Player first = new NetPlayer();
+        Player second = new NetPlayer();
         if (args.length > 0) {
-            shipServer = new ShipSocketServer(arg);
+            shipServer = new ShipSocketServer(first, second, arg);
         } else {
-            shipServer = new ShipSocketServer(emptyString);
+            shipServer = new ShipSocketServer(first, second, emptyString);
         }
         shipServer.initialize();
         while (!shipServer.isGameOver()) {
