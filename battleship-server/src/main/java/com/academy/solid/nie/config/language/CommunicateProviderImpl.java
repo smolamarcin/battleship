@@ -16,7 +16,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
      *
      * @param language language
      */
-    public void populate(final Language language) {
+    public final void populate(final Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
         Stream.of(Communicate.values()).forEach(consume(resourceBundle));
     }
@@ -32,7 +32,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
      * @param communicate communicate
      * @return specified message from the map
      */
-    public String getCommunicate(final Communicate communicate) {
+    public final String getCommunicate(final Communicate communicate) {
         return communicates.get(communicate);
     }
 
