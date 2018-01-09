@@ -204,7 +204,7 @@
                 <version>${mavenCheckstylePluginVersion}</version>
                 <configuration>
                     <configLocation>${checkstyle.config.location}</configLocation>
-                    <failsOnError>false</failsOnError>
+                    <failsOnError>true</failsOnError>
                     <failOnViolation>false</failOnViolation>
                 </configuration>
             </plugin>
