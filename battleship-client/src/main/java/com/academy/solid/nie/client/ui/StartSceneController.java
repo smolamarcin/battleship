@@ -22,8 +22,6 @@ import java.io.IOException;
  *
  */
 public final class StartSceneController {
-    private static final int DEFAULT_WIDTH = 200;
-    private static final int DEFAULT_HEIGHT = 100;
     @FXML
     private ImageView logo;
     @FXML
@@ -38,13 +36,7 @@ public final class StartSceneController {
             socketServer.connect(ip);
             new GameScene(socketServer).start();
         } else {
-            Label label = new Label("Wrong IP");
-            StackPane secondaryLayout = new StackPane();
-            secondaryLayout.getChildren().add(label);
-            Scene secondScene = new Scene(secondaryLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-            Stage secondStage = new Stage();
-            secondStage.setScene(secondScene);
-            secondStage.show();
+            new WindowDisplayer("Wrong IP").withButtonWhoExitThisWindow().display();
         }
     }
 
