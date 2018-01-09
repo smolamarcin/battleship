@@ -65,7 +65,7 @@ class GameScene extends Application {
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (enemyBoard.areAllShipsSunk()) {
-            new WindowDisplayer("YOU WIN").withButtonWhoExitSytem().display();
+            new WindowDisplayer("YOU WIN").withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
         socketServer.sendPlayerMove(cell.toString());
