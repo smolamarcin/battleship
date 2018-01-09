@@ -3,8 +3,6 @@ package com.academy.solid.nie.server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +12,6 @@ class ShipSocketServer implements ShipServer {
     private final Player first;
     private final Player second;
     private final String ip;
-    private List<Player> players = new ArrayList<>();
     private Player currentPlayer;
     private boolean isGameOver;
 
@@ -22,63 +19,65 @@ class ShipSocketServer implements ShipServer {
         this.first = first;
         this.second = second;
         this.ip = ip;
+        this.currentPlayer = first;
     }
 
     @Override
-    public void initialize() throws IOException {
+    public void initializeGame() throws IOException {
+        registerPlayers(initializeConnection());
+        informAboutGameBeginning();
+        exchangeShips();
+        LOGGER.info("Initialized");
+    }
+
+    private ServerSocket initializeConnection() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
+        log("Server " + ip + " is here");
+        return serverSocket;
+    }
 
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info("Server " + ip + " is here");
-        }
+    private void registerPlayers(ServerSocket serverSocket) throws IOException {
         first.register(serverSocket);
-        players.add(first);
-
         second.register(serverSocket);
-        players.add(second);
+    }
 
+    private void informAboutGameBeginning() {
         first.inform("Game has started. 1");
         second.inform("Game has started. 2");
+    }
 
+    private void exchangeShips() throws IOException {
         String firstShips = first.provideShips();
         String secondShips = second.provideShips();
-
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
-        }
         first.inform(secondShips);
         second.inform(firstShips);
 
-        currentPlayer = first;
-
-        LOGGER.info("Initialized");
+        log("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
     }
 
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info(players.indexOf(currentPlayer) + ":" + move);
-        }
-        if (move.equals("Q")) {
-            isGameOver = true;
-        }
         changeCurrentPlayer();
         currentPlayer.inform(move);
+
+        log((currentPlayer.equals(first) ? "0" : "1") + ":" + move);
+
+        isGameOver = move.equals("Q");
     }
 
     private void changeCurrentPlayer() {
-        Player first = players.get(0);
-        Player second = players.get(1);
-        if (currentPlayer.equals(first)) {
-            currentPlayer = second;
-        } else {
-            currentPlayer = first;
-        }
+        currentPlayer = currentPlayer.equals(first) ? second : first;
     }
 
     @Override
     public boolean isGameOver() {
         return isGameOver;
+    }
+
+    private void log(String msg) {
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.info(msg);
+        }
     }
 }

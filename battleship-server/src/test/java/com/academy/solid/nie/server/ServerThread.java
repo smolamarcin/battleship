@@ -15,7 +15,7 @@ public class ServerThread extends Thread {
     public void run() {
         ShipServer shipServer = new ShipSocketServer(first, second, ShipSocketServerTest.IP);
         try {
-            shipServer.initialize();
+            shipServer.initializeGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
