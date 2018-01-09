@@ -15,9 +15,9 @@ import java.util.stream.IntStream;
  */
 class ShipPlacer {
     private static final int FOUR_MAST = 4;
-    public static final int THREE_MAST = 3;
-    public static final int DOUBLE_MAST = 2;
-    public static final int SINGLE_MAST = 1;
+    private static final int THREE_MAST = 3;
+    private static final int DOUBLE_MAST = 2;
+    private static final int SINGLE_MAST = 1;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
@@ -53,23 +53,19 @@ class ShipPlacer {
         return new Ship(producePoints(cell, type));
     }
 
-    private List<Point2D> producePoints(Cell cell, Type type) {
-        return produceCells(cell, type);
-    }
-
     boolean areAllShipsPlaced() {
         return areAllShipsPlaced;
     }
 
     private Type shipOrientation(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            return Type.VERTICAL;
-        } else {
             return Type.HORIZONTAL;
+        } else {
+            return Type.VERTICAL;
         }
     }
 
-    private List<Point2D> produceCells(Cell cell, Type type) {
+    private List<Point2D> producePoints(Cell cell, Type type) {
         List<Point2D> points = new ArrayList<>();
         Integer lengthOfShip = typesOfShips.peek();
         int x = cell.getCellX();
@@ -77,7 +73,7 @@ class ShipPlacer {
         points.add(Point2D.of(x, y));
         int lengthOfShipWithoutBeginningPoint = lengthOfShip - 1;
         for (int length = lengthOfShipWithoutBeginningPoint; length > 0; length--) {
-            if (type == Type.VERTICAL) {
+            if (type == Type.HORIZONTAL) {
                 x++;
             } else {
                 y++;
@@ -87,7 +83,7 @@ class ShipPlacer {
         return points;
     }
 
-    void placeShipsOfEnemy(String shipsString) {
+    private void placeShipsOfEnemy(String shipsString) {
         String[] ships = shipsString.split(",\\|");
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
@@ -103,5 +99,4 @@ class ShipPlacer {
             enemyBoard.isShipPositionValid(ship);
         }
     }
-
 }
