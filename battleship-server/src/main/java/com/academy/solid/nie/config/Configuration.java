@@ -8,6 +8,8 @@ import java.util.Map;
 public interface Configuration {
     /**
      * configuration file name
+     *
+     * @return a map with contains config properties
      */
     Map<ConfigProperty, String> provide();
 }

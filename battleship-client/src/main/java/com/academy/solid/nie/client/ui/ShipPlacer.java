@@ -14,11 +14,16 @@ import java.util.stream.IntStream;
  *
  */
 class ShipPlacer {
+    private static final int FOUR_MAST = 4;
+    public static final int THREE_MAST = 3;
+    public static final int DOUBLE_MAST = 2;
+    public static final int SINGLE_MAST = 1;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private boolean areAllShipsPlaced = false;
-    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4, 3, 3, 2, 2, 2, 1, 1, 1, 1));
+    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
+            DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
@@ -28,8 +33,9 @@ class ShipPlacer {
 
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
-            if (areAllShipsPlaced)
+            if (areAllShipsPlaced) {
                 return;
+            }
             Cell cell = (Cell) event.getSource();
             Type type = shipOrientation(event);
             if (playerBoard.isShipPositionValid(makeShip(cell, type))) {
@@ -56,7 +62,11 @@ class ShipPlacer {
     }
 
     private Type shipOrientation(MouseEvent event) {
-        return event.getButton() == MouseButton.PRIMARY ? Type.VERTICAL : Type.HORIZONTAL;
+        if (event.getButton() == MouseButton.PRIMARY) {
+            return Type.VERTICAL;
+        } else {
+            return Type.HORIZONTAL;
+        }
     }
 
     private List<Point2D> produceCells(Cell cell, Type type) {

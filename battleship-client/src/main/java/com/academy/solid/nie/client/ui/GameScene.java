@@ -18,28 +18,35 @@ import javafx.stage.Stage;
 
 import java.util.Queue;
 
-
-public class GameScene extends Application {
+/**
+ *  Class represents Game UI.
+ */
+class GameScene extends Application {
+    private static final int DEFAULT_ROOT_WIDTH = 500;
+    private static final int DEFAULT_ROOT_HEIGHT = 1000;
+    private static final int DEFAULT_SPACING = 50;
+    private static final int DEFAULT_SCENE_WIDTH = 200;
+    private static final int DEFAULT_SCENE_HEIGHT = 100;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
 
-    GameScene(SocketServer socketServer) {
+    GameScene(final SocketServer socketServer) {
         this.socketServer = socketServer;
     }
 
     private Parent createContent() {
         BorderPane root = new BorderPane();
-        root.setPrefSize(500, 1000);
+        root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
         shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
         return root;
@@ -48,7 +55,7 @@ public class GameScene extends Application {
     private EventHandler<MouseEvent> getMove() {
         return event -> {
             Cell cell = (Cell) event.getSource();
-            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot) {
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
                 return;
             }
             handlePlayersMove(cell);
@@ -59,7 +66,7 @@ public class GameScene extends Application {
         };
     }
 
-    private void handlePlayersMove(Cell cell) {
+    private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (checkForWin(enemyBoard)) {
             displayYouWinWindow();
@@ -79,13 +86,13 @@ public class GameScene extends Application {
         button.setText("YOU WIN");
         button.setOnAction(e -> System.exit(0));
         secondaryLayout.getChildren().add(button);
-        Scene secondScene = new Scene(secondaryLayout, 200, 100);
+        Scene secondScene = new Scene(secondaryLayout, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
         Stage secondStage = new Stage();
         secondStage.setScene(secondScene);
         secondStage.show();
     }
 
-    private void makeEnemyMove(Queue<Point2D> points) {
+    private void makeEnemyMove(final Queue<Point2D> points) {
         for (Point2D point : points) {
             int x = point.getX();
             int y = point.getY();
@@ -94,7 +101,7 @@ public class GameScene extends Application {
         }
     }
 
-    private boolean checkForWin(Board board) {
+    private boolean checkForWin(final Board board) {
         return board.areAllShipsSunk();
     }
 
@@ -103,7 +110,7 @@ public class GameScene extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         Scene scene = new Scene(createContent());
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(scene);

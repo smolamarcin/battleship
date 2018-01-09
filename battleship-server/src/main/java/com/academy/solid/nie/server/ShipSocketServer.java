@@ -11,12 +11,16 @@ import java.util.logging.Logger;
 class ShipSocketServer implements ShipServer {
     private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
     private static final int PORT_NUMBER = 8081;
+    private final Player first;
+    private final Player second;
     private final String ip;
     private List<Player> players = new ArrayList<>();
     private Player currentPlayer;
     private boolean isGameOver;
 
-    ShipSocketServer(String ip) {
+    ShipSocketServer(Player first, Player second, String ip) {
+        this.first = first;
+        this.second = second;
         this.ip = ip;
     }
 
@@ -24,26 +28,24 @@ class ShipSocketServer implements ShipServer {
     public void initialize() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
 
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info("Server " + ip + " is here");
-
-        Player first = new NetPlayer();
+        }
         first.register(serverSocket);
         players.add(first);
 
-        Player second = new NetPlayer();
         second.register(serverSocket);
         players.add(second);
 
-        second.inform("Game has started. 1");
-        first.inform("Game has started. 2");
+        first.inform("Game has started. 1");
+        second.inform("Game has started. 2");
 
         String firstShips = first.provideShips();
         String secondShips = second.provideShips();
 
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
-
+        }
         first.inform(secondShips);
         second.inform(firstShips);
 
@@ -55,10 +57,12 @@ class ShipSocketServer implements ShipServer {
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info(players.indexOf(currentPlayer) + ":" + move);
-        if (move.equals("Q"))
+        }
+        if (move.equals("Q")) {
             isGameOver = true;
+        }
         changeCurrentPlayer();
         currentPlayer.inform(move);
     }
@@ -66,7 +70,11 @@ class ShipSocketServer implements ShipServer {
     private void changeCurrentPlayer() {
         Player first = players.get(0);
         Player second = players.get(1);
-        currentPlayer = currentPlayer.equals(first) ? second : first;
+        if (currentPlayer.equals(first)) {
+            currentPlayer = second;
+        } else {
+            currentPlayer = first;
+        }
     }
 
     @Override
