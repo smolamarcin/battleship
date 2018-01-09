@@ -56,13 +56,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>com.academy.solid.nie</groupId>
+            <artifactId>battleship-bom</artifactId>
+            <type>pom</type>
+            <version>${projectVersion}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <groupId>com.academy.solid.nie</groupId>
+            <artifactId>battleship-client</artifactId>
+            <version>1.5.0</version>
         </dependency>
     </dependencies>
 

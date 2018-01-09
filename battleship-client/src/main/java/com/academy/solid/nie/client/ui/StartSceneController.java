@@ -16,14 +16,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class StartSceneController {
+
+/**
+ *  Controller to manage components of the starting window.
+ *
+ */
+public final class StartSceneController {
+    private static final int DEFAULT_WIDTH = 200;
+    private static final int DEFAULT_HEIGHT = 100;
     @FXML
     private ImageView logo;
     @FXML
     private Button btnConnect;
 
     @FXML
-    void btnConnectClicked(ActionEvent event) throws IOException {
+    void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
         String ip = fieldIp.getText();
         if (ipValidator.validate(ip)) {
@@ -34,7 +41,7 @@ public class StartSceneController {
             Label label = new Label("Wrong IP");
             StackPane secondaryLayout = new StackPane();
             secondaryLayout.getChildren().add(label);
-            Scene secondScene = new Scene(secondaryLayout, 200, 100);
+            Scene secondScene = new Scene(secondaryLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
             Stage secondStage = new Stage();
             secondStage.setScene(secondScene);
             secondStage.show();

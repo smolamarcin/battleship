@@ -13,33 +13,35 @@ public class CommunicateProviderImpl implements CommunicateProvider {
 
     /**
      * Fills the map with messages in the appropriate language.
-     * @param language
-     * @return actual instance enriched of messages in given languages
+     *
+     * @param language language
      */
-    public void populate(Language language) {
+    public final void populate(final Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
         Stream.of(Communicate.values()).forEach(consume(resourceBundle));
     }
 
-    private Consumer<Communicate> consume(ResourceBundle resourceBundle) {
+    private Consumer<Communicate> consume(final ResourceBundle resourceBundle) {
         return element -> communicates.put(element, resourceBundle.getString(element
                 .name()));
     }
 
     /**
      * Retrieves the message in the appropriate language from the map.
-     * @param communicate
+     *
+     * @param communicate communicate
      * @return specified message from the map
      */
-    public String getCommunicate(Communicate communicate) {
+    public final String getCommunicate(final Communicate communicate) {
         return communicates.get(communicate);
     }
 
     /**
      * Determines whether the map is empty.
+     *
      * @return true if the map is empty
      */
-    boolean isMapEmpty(){
+    final boolean isMapEmpty() {
         return communicates.isEmpty();
     }
 }

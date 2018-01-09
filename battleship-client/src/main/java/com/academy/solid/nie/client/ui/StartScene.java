@@ -8,11 +8,12 @@ import javafx.stage.Stage;
 
 
 /**
- *
+ *  Represent starting screen UI.
+ *  The window allows to enter the IP.
  */
-public class StartScene extends Application {
+public final class StartScene extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         Parent start = FXMLLoader.load(getClass().getResource("/startScreen.fxml"));
         Scene scene = new Scene(start);
         primaryStage.setResizable(true);
@@ -20,7 +21,10 @@ public class StartScene extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    /**
+     * @param args are used to launch
+     */
+    public static void main(final String[] args) {
         launch(args);
     }
 }
