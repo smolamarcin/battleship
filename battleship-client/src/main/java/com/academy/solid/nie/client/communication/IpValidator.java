@@ -10,7 +10,7 @@ package com.academy.solid.nie.client.communication;
 
 public class IpValidator implements Validator {
 
-    private final String digitsOnly = "[0-9]\\d*";
+    private static final String DIGITS_ONLY = "[0-9]\\d*";
 
     private static final int NUMBER_OF_OCTETS_IN_IP = 4;
     private static final int MAXIMAL_POSSIBLE_NUMBER = 256;
@@ -31,7 +31,7 @@ public class IpValidator implements Validator {
             return false;
         }
         for (String s : splitted) {
-            if (!(s.matches(digitsOnly) && Integer.parseInt(s) < MAXIMAL_POSSIBLE_NUMBER)) {
+            if (!(s.matches(DIGITS_ONLY) && Integer.parseInt(s) < MAXIMAL_POSSIBLE_NUMBER)) {
                 return false;
             }
         }
