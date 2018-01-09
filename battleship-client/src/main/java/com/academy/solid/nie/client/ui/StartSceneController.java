@@ -32,7 +32,7 @@ public final class StartSceneController {
     @FXML
     void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
-        String ip = fieldIp.getText();
+        String ip = fieldIP.getText();
         if (ipValidator.validate(ip)) {
             SocketServer socketServer = new SocketServer();
             socketServer.connect(ip);
@@ -49,6 +49,6 @@ public final class StartSceneController {
     }
 
     @FXML
-    private TextField fieldIp;
+    private TextField fieldIP;
 
 }
