@@ -1,6 +1,5 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.ui.Cell;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,28 +15,27 @@ import java.util.logging.Logger;
 /**
  * SocketServer implementation to communicate with the server.
  *
- *
  * @since 1.0.1
  */
-public class SocketServer implements Server {
+public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
+    private static final int DEFAULT_WIDTH = 200;
+    private static final int DEFAULT_HEIGHT = 100;
     private ShipClient server;
     private String allMoves = "";
-    private Queue<Cell> cells = new LinkedList<>();
 
     @Override
-    public boolean connect(String ip) {
+    public void connect(final String ip) {
         server = new SocketClient(ip);
         try {
-            return server.run();
+            server.run();
         } catch (IOException e) {
             LOGGER.warning(e.getMessage());
         }
-        return false;
     }
 
     @Override
-    public void send(String allShips) {
+    public void send(final String allShips) {
         LOGGER.info(allShips);
         try {
             server.send(allShips);
@@ -52,19 +50,13 @@ public class SocketServer implements Server {
     }
 
     @Override
-    public Cell receiveFirstMove() {
-        if (cells.isEmpty())
-            receiveAllMovesWithoutSending();
-        return cells.poll();
-    }
-
-    @Override
     public void sendGameOverToOpponent() {
         server.sendGameOverToOpponent();
     }
 
-    private void receiveAllMovesWithoutSending() {
+    private Queue<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
+        Queue<Point2D> cells = new LinkedList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             StackPane secondaryLayout = new StackPane();
@@ -72,7 +64,7 @@ public class SocketServer implements Server {
             button.setText("YOU LOSE");
             button.setOnAction(e -> System.exit(0));
             secondaryLayout.getChildren().add(button);
-            Scene secondScene = new Scene(secondaryLayout, 200, 100);
+            Scene secondScene = new Scene(secondaryLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
             Stage secondStage = new Stage();
             secondStage.setScene(secondScene);
             secondStage.show();
@@ -80,24 +72,21 @@ public class SocketServer implements Server {
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {
             String[] coordinates = aMovesArr.split(",");
-            cells.add(new Cell(Point2D.of(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]))));
+            int x = Integer.parseInt(coordinates[0]);
+            int y = Integer.parseInt(coordinates[1]);
+            cells.add(Point2D.of(x, y));
         }
+        return cells;
     }
 
     @Override
-    public void sendPlayerMove(String move) {
+    public void sendPlayerMove(final String move) {
         allMoves += move + ";";
     }
 
     @Override
-    public Cell receiveEnemyMove() {
-        if (cells.isEmpty())
-            receiveAllMoves();
-        return cells.poll();
-    }
-
-    private void receiveAllMoves() {
+    public Queue<Point2D> receiveEnemyMoves() {
         send(allMoves);
-        receiveAllMovesWithoutSending();
+        return receiveAllMovesWithoutSending();
     }
 }

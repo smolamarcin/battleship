@@ -28,9 +28,9 @@ class ShipSocketServer implements ShipServer {
     public void initialize() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
 
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info("Server " + ip + " is here");
-
+        }
         first.register(serverSocket);
         players.add(first);
 
@@ -43,9 +43,9 @@ class ShipSocketServer implements ShipServer {
         String firstShips = first.provideShips();
         String secondShips = second.provideShips();
 
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
-
+        }
         first.inform(secondShips);
         second.inform(firstShips);
 
@@ -57,10 +57,12 @@ class ShipSocketServer implements ShipServer {
     @Override
     public void play() throws IOException {
         String move = currentPlayer.makeMove();
-        if (LOGGER.isLoggable(Level.INFO))
+        if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.info(players.indexOf(currentPlayer) + ":" + move);
-        if (move.equals("Q"))
+        }
+        if (move.equals("Q")) {
             isGameOver = true;
+        }
         changeCurrentPlayer();
         currentPlayer.inform(move);
     }
@@ -68,7 +70,11 @@ class ShipSocketServer implements ShipServer {
     private void changeCurrentPlayer() {
         Player first = players.get(0);
         Player second = players.get(1);
-        currentPlayer = currentPlayer.equals(first) ? second : first;
+        if (currentPlayer.equals(first)) {
+            currentPlayer = second;
+        } else {
+            currentPlayer = first;
+        }
     }
 
     @Override

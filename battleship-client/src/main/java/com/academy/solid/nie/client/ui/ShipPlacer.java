@@ -1,8 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.ships.HorizontalShipFactory;
-import com.academy.solid.nie.ships.VerticalShipFactory;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
@@ -15,11 +13,16 @@ import java.util.*;
  *
  */
 class ShipPlacer {
-    private ShipCreator shipCreator;
+    private static final int FOUR_MAST = 4;
+    public static final int THREE_MAST = 3;
+    public static final int DOUBLE_MAST = 2;
+    public static final int SINGLE_MAST = 1;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
-    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(4, 3, 3, 2, 2, 2, 1, 1, 1, 1));
+    private boolean areAllShipsPlaced = false;
+    private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
+            DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
@@ -29,38 +32,61 @@ class ShipPlacer {
 
     EventHandler<MouseEvent> setUpPlayerShips() {
         return event -> {
-            if (GameScene.running)
+            if (areAllShipsPlaced) {
                 return;
+            }
             Cell cell = (Cell) event.getSource();
-            shipOrientation(event);
-            if (playerBoard.isShipPositionValid(shipCreator.createShip(produceCells(cell)), cell)) {
+            Type type = shipOrientation(event);
+            if (playerBoard.isShipPositionValid(makeShip(cell, type))) {
                 typesOfShips.poll();
                 if (typesOfShips.isEmpty()) {
                     socketServer.send(playerBoard.getAllPositions());
-                    GameScene.running = placeShipsOfEnemy(socketServer.receiveAllShips());
+                    placeShipsOfEnemy(socketServer.receiveAllShips());
+                    areAllShipsPlaced = true;
                 }
             }
         };
     }
 
-    private void shipOrientation(MouseEvent event) {
+    private Ship makeShip(Cell cell, Type type) {
+        return new Ship(producePoints(cell, type));
+    }
+
+    private List<Point2D> producePoints(Cell cell, Type type) {
+        return produceCells(cell, type);
+    }
+
+    boolean areAllShipsPlaced() {
+        return areAllShipsPlaced;
+    }
+
+    private Type shipOrientation(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            shipCreator = new ShipCreator(new VerticalShipFactory());
+            return Type.VERTICAL;
         } else {
-            shipCreator = new ShipCreator(new HorizontalShipFactory());
+            return Type.HORIZONTAL;
         }
     }
 
-    private List<Cell> produceCells(Cell cell) {
-        List<Cell> cells = new ArrayList<>();
-        Integer poll = typesOfShips.peek();
-        for (int four = poll; four > 0; four--) {
-            cells.add(cell);
+    private List<Point2D> produceCells(Cell cell, Type type) {
+        List<Point2D> points = new ArrayList<>();
+        Integer lengthOfShip = typesOfShips.peek();
+        int x = cell.getCellX();
+        int y = cell.getCellY();
+        points.add(Point2D.of(x, y));
+        int lengthOfShipWithoutBeginningPoint = lengthOfShip - 1;
+        for (int length = lengthOfShipWithoutBeginningPoint; length > 0; length--) {
+            if (type == Type.VERTICAL) {
+                x++;
+            } else {
+                y++;
+            }
+            points.add(Point2D.of(x, y));
         }
-        return cells;
+        return points;
     }
 
-    boolean placeShipsOfEnemy(String shipsString) {
+    void placeShipsOfEnemy(String shipsString) {
         String[] ships = shipsString.split(",\\|");
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
@@ -70,17 +96,9 @@ class ShipPlacer {
                 int y = Integer.parseInt(coords[i + 1]);
                 point2DOfShip.add(Point2D.of(x, y));
             }
-            shipCreator = createShip(coords);
-            Ship ship = new Ship(shipCreator.createBattleShip(point2DOfShip));
-            enemyBoard.isShipPositionValid(ship, new Cell(point2DOfShip.get(0)));
+            Ship ship = new Ship(point2DOfShip);
+            enemyBoard.isShipPositionValid(ship);
         }
-        return true;
     }
 
-    ShipCreator createShip(String[] coords) {
-        if (coords.length > 2 && Integer.valueOf(coords[0]).equals(Integer.valueOf(coords[2])))
-            return new ShipCreator(new VerticalShipFactory());
-        else
-            return new ShipCreator(new HorizontalShipFactory());
-    }
 }

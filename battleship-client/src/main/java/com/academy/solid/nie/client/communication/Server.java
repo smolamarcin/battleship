@@ -1,6 +1,8 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.ui.Cell;
+import com.academy.solid.nie.utils.Point2D;
+
+import java.util.Queue;
 
 /**
  * Lists methods for the server.
@@ -13,14 +15,13 @@ public interface Server {
      * Returns true if connection was successful.
      *
      * @param ip as String
-     * @return true if the connection attempt was successful.
      */
-    boolean connect(String ip);
+    void connect(String ip);
 
     /**
-     * Send a list of ships between clients
+     * Send a list of ships between clients.
      *
-     * @param allShips
+     * @param allShips as String
      */
     void send(String allShips);
 
@@ -31,14 +32,22 @@ public interface Server {
      */
     void sendPlayerMove(String move);
 
-    Cell receiveEnemyMove();
-
-    String receiveAllShips();
-
-    Cell receiveFirstMove();
 
     /**
-     * Sends a message about the defeat to the opponent
+     * Receive enemy moves.
+     *
+     * @return collection of posiitions
+     */
+    Queue<Point2D> receiveEnemyMoves();
+
+    /**
+     * Receive ships.
+     * @return ships positions as string
+     */
+    String receiveAllShips();
+
+    /**
+     * Sends a message about the defeat to the opponent.
      */
     void sendGameOverToOpponent();
 }

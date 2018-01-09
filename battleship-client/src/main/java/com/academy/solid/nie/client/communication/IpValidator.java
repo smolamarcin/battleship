@@ -9,21 +9,32 @@ package com.academy.solid.nie.client.communication;
  */
 
 public class IpValidator implements Validator {
+
+    private static final String DIGITS_ONLY = "[0-9]\\d*";
+
+    private static final int NUMBER_OF_OCTETS_IN_IP = 4;
+    private static final int MAXIMAL_POSSIBLE_NUMBER = 256;
+
     /**
-     * Determines whether the given IP is in the correct format and does not contain invalid characters.
+     * Determines whether the given IP is in the correct format
+     * and does not contain invalid characters.
      * Works for IPv4.
      *
      * @param ip
      * @return true if IP is in correct format
      */
+
     @Override
     public boolean validate(String ip) {
         String[] splitted = ip.split("\\.");
-        if (splitted.length != 4)
+        if (splitted.length != NUMBER_OF_OCTETS_IN_IP) {
             return false;
-        for (String s : splitted)
-            if (!(s.matches("[1-9]\\d*") && Integer.parseInt(s) < 256))
+        }
+        for (String s : splitted) {
+            if (!(s.matches(DIGITS_ONLY) && Integer.parseInt(s) < MAXIMAL_POSSIBLE_NUMBER)) {
                 return false;
+            }
+        }
         return true;
     }
 }
