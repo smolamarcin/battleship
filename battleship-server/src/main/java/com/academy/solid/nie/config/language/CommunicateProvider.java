@@ -7,7 +7,7 @@ public interface CommunicateProvider {
     /**
      * Populate given language.
      *
-     * @param language
+     * @param language determines provided language
      */
     void populate(Language language);
 }
