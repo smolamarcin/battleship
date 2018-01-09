@@ -22,7 +22,7 @@ public class FileConfiguration implements Configuration {
      *
      * @return map with config parameters
      */
-    public Map<ConfigProperty, String> provide() {
+    public final Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(CONFIGURATION);
             Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));

@@ -60,7 +60,6 @@
             <artifactId>battleship-bom</artifactId>
             <type>pom</type>
             <version>${projectVersion}</version>
-            <scope>import</scope>
         </dependency>
     </dependencies>
 

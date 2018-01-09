@@ -20,7 +20,7 @@ public class GameState implements State {
      * @param gameState
      */
     @Override
-    public void process(final GameState gameState) {
+    public final void process(final GameState gameState) {
         this.state.process(gameState);
     }
 }
