@@ -3,6 +3,9 @@ package com.academy.solid.nie.state;
 
 import lombok.ToString;
 
+/**
+ * Respresents a state during the gameplay.
+ */
 @ToString
 public class PlayState implements State {
     /**
@@ -10,7 +13,7 @@ public class PlayState implements State {
      * @param gameState
      */
     @Override
-    public void process(GameState gameState) {
+    public void process(final GameState gameState) {
         gameState.setState(this);
     }
 }

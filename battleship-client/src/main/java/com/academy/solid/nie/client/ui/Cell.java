@@ -11,38 +11,46 @@ import javafx.scene.shape.Rectangle;
  *
  * @since 1.0.1
  */
-public class Cell extends Rectangle {
+public final class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
     private Point2D point2D;
     private Ship ship;
-    boolean wasShot;
+
+    boolean wasShot() {
+        return wasShot;
+    }
+
+    private boolean wasShot;
 
     /**
      * Creates a cell with default parameters.
      *
-     * @param point2D
+     * @param point2D represents point on the Board
      */
-    public Cell(Point2D point2D) {
+    public Cell(final Point2D point2D) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
         setStroke(Color.BLACK);
     }
 
-    /** Adds the ship to the cell.
+    /**
+     * Adds the ship to the cell.
      * It changes the cell properties.
      *
-     * @param ship
+     * @param newShip
      * @return
      */
-    Cell addShip(Ship ship) {
-        this.ship = ship;
+    Cell addShip(final Ship newShip) {
+        this.ship = newShip;
         return this;
     }
 
-    /** Changes the cell color and marks it as a hit.
-     *  If there was a piece of a ship in the cell, it would return true.
+    /**
+     * Changes the cell color and marks it as a hit.
+     * If there was a piece of a ship in the cell, it would return true.
+     *
      * @return
      */
     boolean shoot() {
@@ -62,7 +70,6 @@ public class Cell extends Rectangle {
     }
 
     /**
-     *
      * @return String representation of the object
      */
     @Override
