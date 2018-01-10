@@ -2,6 +2,7 @@ package com.academy.solid.nie.client.communication;
 
 import com.academy.solid.nie.utils.Point2D;
 
+import java.io.IOException;
 import java.util.Queue;
 
 /**
@@ -16,7 +17,7 @@ public interface Server {
      *
      * @param ip as String
      */
-    void connect(String ip);
+    void connect(String ip) throws IOException;
 
     /**
      * Send a list of ships between clients.

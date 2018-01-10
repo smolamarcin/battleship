@@ -1,5 +1,7 @@
 package com.academy.solid.nie.client.communication;
 
+import lombok.Builder;
+
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -12,6 +14,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0.1
  */
+@Builder
 public final class SocketClient implements ShipClient {
     private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private String ip;
@@ -21,28 +24,14 @@ public final class SocketClient implements ShipClient {
     private String enemyShips;
     private static final int PORT_NUMBER = 8081;
 
-    SocketClient(final String ip) {
-        this.ip = ip;
-    }
-
     @Override
-    public boolean run() throws IOException {
-        boolean result = false;
-
-        socket = new Socket(ip, PORT_NUMBER);
-        out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-
+    public void run() throws IOException {
         String fromServer;
         while (!("Provide ships").equals(fromServer = in.readLine())) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.info("Server: " + fromServer);
             }
-            if (fromServer.equals("Game has started. 1")) {
-                result = true;
-            }
         }
-        return result;
     }
 
     @Override
