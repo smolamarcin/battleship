@@ -1,10 +1,7 @@
 package com.academy.solid.nie.client.communication;
 
+import com.academy.solid.nie.client.ui.WindowDisplayer;
 import com.academy.solid.nie.utils.Point2D;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -19,8 +16,6 @@ import java.util.logging.Logger;
  */
 public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
-    private static final int DEFAULT_WIDTH = 200;
-    private static final int DEFAULT_HEIGHT = 100;
     private ShipClient server;
     private String allMoves = "";
 
@@ -59,15 +54,7 @@ public final class SocketServer implements Server {
         Queue<Point2D> cells = new LinkedList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
-            StackPane secondaryLayout = new StackPane();
-            Button button = new Button();
-            button.setText("YOU LOSE");
-            button.setOnAction(e -> System.exit(0));
-            secondaryLayout.getChildren().add(button);
-            Scene secondScene = new Scene(secondaryLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-            Stage secondStage = new Stage();
-            secondStage.setScene(secondScene);
-            secondStage.show();
+            new WindowDisplayer("YOU LOSE").withButtonWhoExitSystem().display();
         }
         String[] movesArr = moves.split(",;");
         for (String aMovesArr : movesArr) {

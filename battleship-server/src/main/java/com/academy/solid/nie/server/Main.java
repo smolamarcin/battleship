@@ -29,7 +29,7 @@ public final class Main {
         } else {
             shipServer = new ShipSocketServer(first, second, emptyString);
         }
-        shipServer.initialize();
+        shipServer.initializeGame();
         while (!shipServer.isGameOver()) {
             shipServer.play();
         }

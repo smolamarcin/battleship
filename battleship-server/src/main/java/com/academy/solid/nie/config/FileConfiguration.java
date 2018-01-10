@@ -13,7 +13,7 @@ public class FileConfiguration implements Configuration {
     /**
      * Default configuration file name.
      */
-    public static final String CONFIGURATION = "configuration";
+    public static final String NAME = "configuration";
     private EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
 
     /**
@@ -24,7 +24,7 @@ public class FileConfiguration implements Configuration {
      */
     public final Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(CONFIGURATION);
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(NAME);
             Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));
         }
         return map;

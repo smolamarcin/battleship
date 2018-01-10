@@ -13,7 +13,7 @@ class LanguageConfigurationImpl implements LanguageConfiguration {
      */
     @Override
     public Language provide() {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle(FileConfiguration.CONFIGURATION);
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(FileConfiguration.NAME);
         return Language.valueOf(resourceBundle.getString(LANGUAGE));
     }
 }

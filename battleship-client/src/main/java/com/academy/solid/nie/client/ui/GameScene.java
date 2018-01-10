@@ -8,10 +8,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -25,8 +23,6 @@ class GameScene extends Application {
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
-    private static final int DEFAULT_SCENE_WIDTH = 200;
-    private static final int DEFAULT_SCENE_HEIGHT = 100;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
@@ -40,8 +36,8 @@ class GameScene extends Application {
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
-        enemyBoard = new Board(true);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+        enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
         shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
@@ -68,8 +64,8 @@ class GameScene extends Application {
 
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
-        if (checkForWin(enemyBoard)) {
-            displayYouWinWindow();
+        if (enemyBoard.areAllShipsSunk()) {
+            new WindowDisplayer("YOU WIN").withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
         socketServer.sendPlayerMove(cell.toString());
@@ -80,18 +76,6 @@ class GameScene extends Application {
         makeEnemyMove(enemyMoves);
     }
 
-    private void displayYouWinWindow() {
-        StackPane secondaryLayout = new StackPane();
-        Button button = new Button();
-        button.setText("YOU WIN");
-        button.setOnAction(e -> System.exit(0));
-        secondaryLayout.getChildren().add(button);
-        Scene secondScene = new Scene(secondaryLayout, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
-        Stage secondStage = new Stage();
-        secondStage.setScene(secondScene);
-        secondStage.show();
-    }
-
     private void makeEnemyMove(final Queue<Point2D> points) {
         for (Point2D point : points) {
             int x = point.getX();
@@ -99,10 +83,6 @@ class GameScene extends Application {
             Cell cellOnBoard = playerBoard.getCell(x, y);
             cellOnBoard.shoot();
         }
-    }
-
-    private boolean checkForWin(final Board board) {
-        return board.areAllShipsSunk();
     }
 
     void start() {
