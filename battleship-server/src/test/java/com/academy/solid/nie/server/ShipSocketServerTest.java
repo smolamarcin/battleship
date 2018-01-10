@@ -12,6 +12,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@Test
 public class ShipSocketServerTest {
     static final String IP = "127.0.0.1";
     private Player first;
@@ -23,7 +24,7 @@ public class ShipSocketServerTest {
     private String initialMessageForSecondPlayer = "Game has started. 2";
     private int millis = 100;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"unit", "integration"})
     public void setUp() throws Exception {
         first = mock(Player.class);
         second = mock(Player.class);
@@ -111,7 +112,6 @@ public class ShipSocketServerTest {
         verify(second).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
     }
-
     @Test(groups = {"unit"})
     public void afterThirdInvokeOfMethodPlaySecondPlayerShouldReceiveFirstsPlayersMoveAgain() throws IOException {
         //given
@@ -129,7 +129,6 @@ public class ShipSocketServerTest {
         verify(second, times(2)).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
     }
-
     @Test(groups = {"unit"})
     public void gameShouldBeOverAfterSendingMoveWithEndOfGameInformation() throws IOException {
         //given
