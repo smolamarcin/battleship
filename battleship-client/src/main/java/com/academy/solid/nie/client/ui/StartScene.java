@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 
 /**
- *  Represent starting screen UI.
- *  The window allows to enter the IP.
+ * Represent starting screen UI.
+ * The window allows to enter the IP.
  */
 public final class StartScene extends Application {
     @Override

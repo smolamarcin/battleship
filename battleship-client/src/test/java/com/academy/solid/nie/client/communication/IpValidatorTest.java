@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config;
+package com.academy.solid.nie.client.communication;
 
 import com.academy.solid.nie.client.communication.IpValidator;
 import org.testng.annotations.DataProvider;

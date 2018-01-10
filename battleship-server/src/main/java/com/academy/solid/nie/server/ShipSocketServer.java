@@ -61,7 +61,7 @@ class ShipSocketServer implements ShipServer {
         changeCurrentPlayer();
         currentPlayer.inform(move);
 
-        log((currentPlayer.equals(first) ? "0" : "1") + ":" + move);
+        log((currentPlayer.equals(first) ? "First Player" : "Second Player") + ":" + move);
 
         isGameOver = move.equals("Q");
     }

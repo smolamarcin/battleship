@@ -6,7 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- * Class which purpose is to display window with only one button with provided message on that button
+ * This class displays a window containing only one button that displays the provided message
  */
 public class WindowDisplayer {
     private static final int DEFAULT_WIDTH = 200;
@@ -14,7 +14,7 @@ public class WindowDisplayer {
     private final Button button;
 
     /**
-     * Constructor which create Button with provided message on it
+     * Constructor which creates Button with provided message on it
      *
      * @param message represents message
      */
@@ -24,7 +24,7 @@ public class WindowDisplayer {
     }
 
     /**
-     * Make Button to exit system after being pressed
+     * Creates a button for exiting system after being pressed
      *
      * @return This object
      */
@@ -34,7 +34,7 @@ public class WindowDisplayer {
     }
 
     /**
-     * Make Button to exit window on which this Button is placed
+     * Creates a button to exit window on which this Button is placed
      *
      * @return This object
      */
