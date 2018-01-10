@@ -12,7 +12,6 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@Test(groups = {"integration"})
 public class ShipSocketServerTest {
     static final String IP = "127.0.0.1";
     private Player first;
@@ -33,6 +32,7 @@ public class ShipSocketServerTest {
         secondClientThread = new ClientThread();
     }
 
+    @Test(groups = {"integration"})
     public void afterConnectionSecondPlayerShouldBeRegistered() throws IOException {
         //given
         String shipsOfSecondPlayer = "0,1,;";
@@ -60,6 +60,7 @@ public class ShipSocketServerTest {
         verify(second).inform(shipsOfFirstPlayer);
     }
 
+    @Test(groups = {"unit"})
     public void methodInitialized() throws IOException {
         //given
         String shipsOfSecondPlayer = "0,1,;";
@@ -81,6 +82,7 @@ public class ShipSocketServerTest {
         verify(second).inform(shipsOfFirstPlayer);
     }
 
+    @Test(groups = {"unit"})
     public void afterOneInvokeOfMethodPlaySecondPlayerShouldReceiveFirstPlayersMove() throws IOException {
         //given
         String moveOfFirstPlayer = "0,0";
@@ -93,6 +95,7 @@ public class ShipSocketServerTest {
         verify(second).inform(moveOfFirstPlayer);
     }
 
+    @Test(groups = {"unit"})
     public void afterSecondInvokeOfMethodPlayFirstPlayerShouldReceiveSecondPlayersMove() throws IOException {
         //given
         String moveOfSecondPlayer = "0,1";
@@ -109,6 +112,7 @@ public class ShipSocketServerTest {
         verify(first).inform(moveOfSecondPlayer);
     }
 
+    @Test(groups = {"unit"})
     public void afterThirdInvokeOfMethodPlaySecondPlayerShouldReceiveFirstsPlayersMoveAgain() throws IOException {
         //given
         String moveOfSecondPlayer = "0,1";
@@ -126,6 +130,7 @@ public class ShipSocketServerTest {
         verify(first).inform(moveOfSecondPlayer);
     }
 
+    @Test(groups = {"unit"})
     public void gameShouldBeOverAfterSendingMoveWithEndOfGameInformation() throws IOException {
         //given
         String moveOfFirstPlayer = "Q";
