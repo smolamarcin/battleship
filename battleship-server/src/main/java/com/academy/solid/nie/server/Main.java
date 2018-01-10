@@ -22,6 +22,7 @@ public final class Main {
         String arg = args[0];
         String emptyString = "";
         ShipServer shipServer;
+        
         Player first = new NetPlayer();
         Player second = new NetPlayer();
         if (args.length > 0) {

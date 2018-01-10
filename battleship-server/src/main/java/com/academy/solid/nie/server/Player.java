@@ -1,12 +1,17 @@
 package com.academy.solid.nie.server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 
 /**
  * Provides methods for the player.
  */
 public interface Player {
+
+    void initialize(PrintWriter out, BufferedReader in);
+
     /**
      * Marks the connection of the player to the game.
      *

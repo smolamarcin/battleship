@@ -1,8 +1,14 @@
 package com.academy.solid.nie.server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +30,9 @@ class ShipSocketServer implements ShipServer {
 
     @Override
     public void initializeGame() throws IOException {
-        registerPlayers(initializeConnection());
+        ServerSocket serverSocket = initializeConnection();
+        registerPlayers(first, serverSocket);
+        registerPlayers(second, serverSocket);
         informAboutGameBeginning();
         exchangeShips();
         LOGGER.info("Initialized");
@@ -36,9 +44,12 @@ class ShipSocketServer implements ShipServer {
         return serverSocket;
     }
 
-    private void registerPlayers(ServerSocket serverSocket) throws IOException {
-        first.register(serverSocket);
-        second.register(serverSocket);
+    private void registerPlayers(Player player, ServerSocket serverSocket) throws IOException {
+        Socket clientSocket = serverSocket.accept();
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
+        player.initialize(out, in);
+        player.register(serverSocket);
     }
 
     private void informAboutGameBeginning() {

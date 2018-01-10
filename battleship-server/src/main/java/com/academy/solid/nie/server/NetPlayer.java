@@ -15,11 +15,13 @@ public final class NetPlayer implements Player {
     private BufferedReader in;
 
     @Override
-    public void register(final ServerSocket serverSocket) throws IOException {
-        Socket clientSocket = serverSocket.accept();
-        out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
+    public void initialize(PrintWriter out, BufferedReader in) {
+        this.out = out;
+        this.in = in;
+    }
 
+    @Override
+    public void register(final ServerSocket serverSocket) throws IOException {
         out.println("hi. wait.");
         LOGGER.info("registered");
     }
