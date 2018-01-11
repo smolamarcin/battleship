@@ -1,7 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -85,11 +84,11 @@ class ShipPlacer {
 
     private void placeShipsOfEnemy(String shipsString) {
         String shipsSeparator = ",\\|";
-        String cooridatesSeparator = ",";
+        String coordinatesSeparator = ",";
         String[] ships = shipsString.split(shipsSeparator);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] coords = shipStr.split(cooridatesSeparator);
+            String[] coords = shipStr.split(coordinatesSeparator);
 
             IntStream.range(0, coords.length).filter(i -> i % 2 == 0).forEach(index -> {
                 int x = Integer.parseInt(coords[index]);

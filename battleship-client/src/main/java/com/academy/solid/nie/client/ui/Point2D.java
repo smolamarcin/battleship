@@ -1,4 +1,4 @@
-package com.academy.solid.nie.utils;
+package com.academy.solid.nie.client.ui;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,4 +12,12 @@ import lombok.RequiredArgsConstructor;
 public class Point2D {
     private final int x;
     private final int y;
+
+    /**
+     * @return String representation of the object
+     */
+    @Override
+    public String toString() {
+        return x + "," + y + ",";
+    }
 }

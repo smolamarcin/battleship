@@ -1,7 +1,5 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.utils.Point2D;
-
 import java.util.List;
 
 /**

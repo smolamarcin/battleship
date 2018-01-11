@@ -2,8 +2,8 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.IpValidator;
-import com.academy.solid.nie.client.communication.Validator;
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.client.communication.Validator;
 import com.academy.solid.nie.client.language.Communicate;
 import com.academy.solid.nie.client.language.CommunicateProviderImpl;
 import com.academy.solid.nie.client.language.Language;
