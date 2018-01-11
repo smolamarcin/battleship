@@ -22,13 +22,12 @@ public class ShipSocketServerTest {
     private ClientThread secondClientThread;
     private String initialMessageForFirstPlayer = "Game has started. 1";
     private String initialMessageForSecondPlayer = "Game has started. 2";
-    private int millis = 100;
 
     @BeforeMethod(groups = {"unit", "integration"})
     public void setUp() throws Exception {
         first = mock(Player.class);
         second = mock(Player.class);
-        serverThread = new ServerThread(first, second);
+        serverThread = new ServerThread(first, second, 0);
         firstClientThread = new ClientThread();
         secondClientThread = new ClientThread();
     }
@@ -44,11 +43,6 @@ public class ShipSocketServerTest {
         serverThread.start();
         firstClientThread.start();
         secondClientThread.start();
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         //then
         verify(first).register(any(ServerSocket.class));
         verify(second).register(any(ServerSocket.class));
@@ -69,7 +63,7 @@ public class ShipSocketServerTest {
         String shipsOfFirstPlayer = "0,0,;";
         when(first.provideShips()).thenReturn(shipsOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.2");
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.2",0);
         shipSocketServer.initializeGame();
         //then
         verify(first).register(any(ServerSocket.class));
@@ -89,7 +83,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.3");
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.3",0);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         //then
@@ -104,7 +98,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.4");
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.4",0);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         shipSocketServer.play();
@@ -120,7 +114,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.5");
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.5",0);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         shipSocketServer.play();
@@ -135,7 +129,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "Q";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.6");
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.6",0);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         //then

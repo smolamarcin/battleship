@@ -8,6 +8,7 @@ import java.util.logging.Logger;
  */
 public final class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final int PORT_NUMBER = 8081;
 
     private Main() {
     }
@@ -25,9 +26,9 @@ public final class Main {
         Player first = new NetPlayer();
         Player second = new NetPlayer();
         if (args.length > 0) {
-            shipServer = new ShipSocketServer(first, second, arg);
+            shipServer = new ShipSocketServer(first, second, arg, PORT_NUMBER);
         } else {
-            shipServer = new ShipSocketServer(first, second, emptyString);
+            shipServer = new ShipSocketServer(first, second, emptyString, PORT_NUMBER);
         }
         shipServer.initializeGame();
         while (!shipServer.isGameOver()) {
