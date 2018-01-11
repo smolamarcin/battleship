@@ -20,16 +20,16 @@ public final class Main {
      * @throws IOException when something happens with the Server.
      */
     public static void main(final String[] args) throws IOException {
-        String arg = args[0];
-        String emptyString = "";
+        String arg;
+        if (args.length == 0) {
+            arg = "";
+        } else {
+            arg = args[0];
+        }
         ShipServer shipServer;
         Player first = new NetPlayer();
         Player second = new NetPlayer();
-        if (args.length > 0) {
-            shipServer = new ShipSocketServer(first, second, arg, PORT_NUMBER);
-        } else {
-            shipServer = new ShipSocketServer(first, second, emptyString, PORT_NUMBER);
-        }
+        shipServer = new ShipSocketServer(first, second, arg, PORT_NUMBER);
         shipServer.initializeGame();
         while (!shipServer.isGameOver()) {
             shipServer.play();

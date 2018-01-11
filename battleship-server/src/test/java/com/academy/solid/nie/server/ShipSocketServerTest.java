@@ -15,6 +15,10 @@ import static org.mockito.Mockito.verify;
 @Test
 public class ShipSocketServerTest {
     static final String IP = "127.0.0.1";
+    /**
+     * 0 stands for first available port
+     */
+    private static final int AVAILABLE_PORT = 0;
     private Player first;
     private Player second;
     private ServerThread serverThread;
@@ -27,7 +31,7 @@ public class ShipSocketServerTest {
     public void setUp() throws Exception {
         first = mock(Player.class);
         second = mock(Player.class);
-        serverThread = new ServerThread(first, second, 0);
+        serverThread = new ServerThread(first, second, AVAILABLE_PORT);
         firstClientThread = new ClientThread();
         secondClientThread = new ClientThread();
     }
@@ -63,7 +67,7 @@ public class ShipSocketServerTest {
         String shipsOfFirstPlayer = "0,0,;";
         when(first.provideShips()).thenReturn(shipsOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.2",0);
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.2", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         //then
         verify(first).register(any(ServerSocket.class));
@@ -83,7 +87,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.3",0);
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.3", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         //then
@@ -98,7 +102,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.4",0);
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.4", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         shipSocketServer.play();
@@ -106,6 +110,7 @@ public class ShipSocketServerTest {
         verify(second).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
     }
+
     @Test(groups = {"unit"})
     public void afterThirdInvokeOfMethodPlaySecondPlayerShouldReceiveFirstsPlayersMoveAgain() throws IOException {
         //given
@@ -114,7 +119,7 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.5",0);
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.5", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         shipSocketServer.play();
@@ -123,13 +128,14 @@ public class ShipSocketServerTest {
         verify(second, times(2)).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
     }
+
     @Test(groups = {"unit"})
     public void gameShouldBeOverAfterSendingMoveWithEndOfGameInformation() throws IOException {
         //given
         String moveOfFirstPlayer = "Q";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.6",0);
+        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.6", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         shipSocketServer.play();
         //then
