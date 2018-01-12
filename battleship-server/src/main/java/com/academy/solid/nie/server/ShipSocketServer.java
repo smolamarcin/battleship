@@ -8,18 +8,23 @@ import java.util.logging.Logger;
 
 class ShipSocketServer implements ShipServer {
     private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
-    private static final int PORT_NUMBER = 8081;
+    /**
+     * 0 stands for first available port
+     */
+    private static final int AVAILABLE_PORT = 0;
     private final Player first;
     private final Player second;
     private final String ip;
     private Player currentPlayer;
     private boolean isGameOver;
+    private final int portNumber;
 
-    ShipSocketServer(Player first, Player second, String ip) {
+    ShipSocketServer(Player first, Player second, String ip, int portNumber) {
         this.first = first;
         this.second = second;
         this.ip = ip;
         this.currentPlayer = first;
+        this.portNumber = portNumber;
     }
 
     @Override
@@ -31,7 +36,7 @@ class ShipSocketServer implements ShipServer {
     }
 
     private ServerSocket initializeConnection() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName(ip));
+        ServerSocket serverSocket = new ServerSocket(this.portNumber, AVAILABLE_PORT, InetAddress.getByName(ip));
         log("Server " + ip + " is here");
         return serverSocket;
     }
