@@ -1,9 +1,9 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.utils.Point2D;
+import com.academy.solid.nie.client.ui.Point2D;
 
 import java.io.IOException;
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Lists methods for the server.
@@ -39,7 +39,7 @@ public interface Server {
      *
      * @return collection of posiitions
      */
-    Queue<Point2D> receiveEnemyMoves();
+    List<Point2D> receiveEnemyMoves();
 
     /**
      * Receive ships.

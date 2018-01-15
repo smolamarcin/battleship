@@ -4,7 +4,6 @@ package com.academy.solid.nie.client.ui;
 import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.client.language.Communicate;
 import com.academy.solid.nie.client.language.CommunicateProviderImpl;
-import com.academy.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -15,8 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Queue;
 
 /**
  * Class represents Game UI.
@@ -47,7 +44,7 @@ class GameScene extends Application {
         playerBoard = new Board(false);
         shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
-        VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard, playerBoard);
+        VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
         return root;
@@ -79,17 +76,7 @@ class GameScene extends Application {
     }
 
     private void handleEnemyMove() {
-        Queue<Point2D> enemyMoves = socketServer.receiveEnemyMoves();
-        makeEnemyMove(enemyMoves);
-    }
-
-    private void makeEnemyMove(final Queue<Point2D> points) {
-        for (Point2D point : points) {
-            int x = point.getX();
-            int y = point.getY();
-            Cell cellOnBoard = playerBoard.getCell(x, y);
-            cellOnBoard.shoot();
-        }
+        playerBoard.makeMoves(socketServer.receiveEnemyMoves());
     }
 
     void start() {

@@ -1,6 +1,5 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.utils.Point2D;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
