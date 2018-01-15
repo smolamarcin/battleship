@@ -2,7 +2,6 @@ package com.academy.solid.nie.client.ui;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,12 +30,6 @@ class Board {
     BoardFX getBoardFX() {
         return boardFX;
     }
-
-    Board(final boolean enemy, final VBox rows) {
-        this.enemy = enemy;
-        this.boardFX = new BoardFX(rows, MAX_HEIGHT, MAX_WIDTH);
-    }
-
 
     Board(final boolean enemy) {
         this.enemy = enemy;
