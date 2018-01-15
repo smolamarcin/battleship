@@ -30,7 +30,7 @@ class Game {
     }
 
     boolean isGameOver() {
-        return move.equals("Q");
+        return "Q".equals(move);
     }
 
     private void log(String msg) {
