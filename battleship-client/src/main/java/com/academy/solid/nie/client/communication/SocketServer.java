@@ -2,14 +2,14 @@ package com.academy.solid.nie.client.communication;
 
 import com.academy.solid.nie.client.language.Communicate;
 import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.ui.Point2D;
 import com.academy.solid.nie.client.ui.WindowDisplayer;
-import com.academy.solid.nie.utils.Point2D;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -60,22 +60,22 @@ public final class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
-    private Queue<Point2D> receiveAllMovesWithoutSending() {
+    private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
-        Queue<Point2D> cells = new LinkedList<>();
+        List<Point2D> points = new ArrayList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
                     .withButtonWhoExitSystem().display();
         }
-        String[] movesArr = moves.split(",;");
-        for (String aMovesArr : movesArr) {
-            String[] coordinates = aMovesArr.split(",");
+        String[] split = moves.split(",;");
+        for (String point : split) {
+            String[] coordinates = point.split(",");
             int x = Integer.parseInt(coordinates[0]);
             int y = Integer.parseInt(coordinates[1]);
-            cells.add(Point2D.of(x, y));
+            points.add(Point2D.of(x, y));
         }
-        return cells;
+        return points;
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class SocketServer implements Server {
     }
 
     @Override
-    public Queue<Point2D> receiveEnemyMoves() {
+    public List<Point2D> receiveEnemyMoves() {
         send(allMoves);
         return receiveAllMovesWithoutSending();
     }

@@ -1,17 +1,16 @@
 package com.academy.solid.nie.client.ui;
 
-import com.academy.solid.nie.utils.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
 /**
  * Graphic representation of the cell on the board.
- * The class inherits from the rectange class which is the part of Java FX.
+ * The class inherits from the rectangle class which is the part of Java FX.
  *
  * @since 1.0.1
  */
-public final class Cell extends Rectangle {
+class Cell extends Rectangle {
     private static final int DEFAULT_WIDTH = 30;
     private static final int DEFAULT_HEIGHT = 30;
     private Point2D point2D;
@@ -28,7 +27,7 @@ public final class Cell extends Rectangle {
      *
      * @param point2D represents point on the Board
      */
-    public Cell(final Point2D point2D) {
+    Cell(final Point2D point2D) {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.point2D = point2D;
         setFill(Color.LIGHTGRAY);
