@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config;
+package com.academy.solid.nie.client.config;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;

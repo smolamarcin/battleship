@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config.language;
+package com.academy.solid.nie.client.language;
 
 import java.util.EnumMap;
 import java.util.ResourceBundle;
@@ -9,7 +9,7 @@ import java.util.stream.Stream;
  * It provides relevant messages to the game.
  */
 public class CommunicateProviderImpl implements CommunicateProvider {
-    private EnumMap<Communicate, String> communicates = new EnumMap<>(Communicate.class);
+    private static EnumMap<Communicate, String> communicates = new EnumMap<>(Communicate.class);
 
     /**
      * Fills the map with messages in the appropriate language.
@@ -32,7 +32,7 @@ public class CommunicateProviderImpl implements CommunicateProvider {
      * @param communicate communicate
      * @return specified message from the map
      */
-    public final String getCommunicate(final Communicate communicate) {
+    public static String getCommunicate(final Communicate communicate) {
         return communicates.get(communicate);
     }
 

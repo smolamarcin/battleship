@@ -1,8 +1,9 @@
-package com.academy.solid.nie.config.language;
+package com.academy.solid.nie.client.language;
 
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 public class LanguageConfigurationImplTest {
     private LanguageConfiguration languageConfiguration = new LanguageConfigurationImpl();

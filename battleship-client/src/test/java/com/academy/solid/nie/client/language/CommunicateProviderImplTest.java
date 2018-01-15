@@ -1,9 +1,9 @@
-package com.academy.solid.nie.config.language;
+package com.academy.solid.nie.client.language;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertFalse;
 
 public class CommunicateProviderImplTest {
     private CommunicateProviderImpl communicateProvider = new CommunicateProviderImpl();

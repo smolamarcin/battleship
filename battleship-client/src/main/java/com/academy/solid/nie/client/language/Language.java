@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config.language;
+package com.academy.solid.nie.client.language;
 
 /**
  * Available languages in the game.

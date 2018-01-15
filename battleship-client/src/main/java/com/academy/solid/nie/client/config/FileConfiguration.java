@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config;
+package com.academy.solid.nie.client.config;
 
 import java.util.EnumMap;
 import java.util.Map;

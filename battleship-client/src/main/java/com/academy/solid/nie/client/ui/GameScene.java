@@ -2,22 +2,24 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.client.language.Communicate;
+import com.academy.solid.nie.client.language.CommunicateProviderImpl;
 import com.academy.solid.nie.utils.Point2D;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Queue;
 
 /**
- *  Class represents Game UI.
+ * Class represents Game UI.
  */
 class GameScene extends Application {
     private static final int DEFAULT_ROOT_WIDTH = 500;
@@ -36,7 +38,10 @@ class GameScene extends Application {
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+        Button button = new Button();
+        button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WRONG_IP));
+        button.setOnMouseClicked(event -> button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WELCOME)));
+        root.setRight(button);
         enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
@@ -65,7 +70,9 @@ class GameScene extends Application {
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (enemyBoard.areAllShipsSunk()) {
-            new WindowDisplayer("YOU WIN").withButtonWhoExitSystem().display();
+            new WindowDisplayer(CommunicateProviderImpl
+                    .getCommunicate(Communicate.WIN))
+                    .withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
         socketServer.sendPlayerMove(cell.toString());
@@ -94,7 +101,7 @@ class GameScene extends Application {
         Scene scene = new Scene(createContent());
         primaryStage.setTitle("Battleship");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 }
