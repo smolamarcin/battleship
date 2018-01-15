@@ -1,6 +1,8 @@
-package com.academy.solid.nie.config.language;
+package com.academy.solid.nie.client.language;
 
-import com.academy.solid.nie.config.FileConfiguration;
+
+
+import com.academy.solid.nie.client.config.FileConfiguration;
 
 import java.util.ResourceBundle;
 

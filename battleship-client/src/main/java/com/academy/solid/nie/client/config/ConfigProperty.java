@@ -1,4 +1,4 @@
-package com.academy.solid.nie.config;
+package com.academy.solid.nie.client.config;
 
 /**
  * Variables corresponding to the constants in the game.

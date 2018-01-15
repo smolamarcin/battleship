@@ -51,6 +51,7 @@ public class WindowDisplayer {
         secondaryLayout.getChildren().add(button);
         Scene secondScene = new Scene(secondaryLayout, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         Stage secondStage = new Stage();
+        secondStage.sizeToScene();
         secondStage.setScene(secondScene);
         secondStage.show();
     }
