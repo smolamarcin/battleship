@@ -96,7 +96,7 @@ class Board {
      * Indicates the cell as occupied by the ship.
      * The cell color changes to white with a green border.
      *
-     * @param ship - represents single instance of Ship
+     * @param ship  - represents single instance of Ship
      * @param point - represents single Point of the board
      */
     private void markFieldAsOccupiedByShip(Ship ship, Point2D point) {
@@ -170,8 +170,8 @@ class Board {
      * @return true - if point is in the board scope
      */
     private boolean isInScope(Point2D point) {
-        return (double) point.getX() >= 0 && (double) point.getX() < MAX_HEIGHT
-                && (double) point.getY() >= 0 && (double) point.getY() < MAX_WIDTH;
+        return point.getX() >= 0 && point.getX() < MAX_HEIGHT
+                && point.getY() >= 0 && point.getY() < MAX_WIDTH;
     }
 
     /**
