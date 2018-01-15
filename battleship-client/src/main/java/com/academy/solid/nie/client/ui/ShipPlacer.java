@@ -83,8 +83,8 @@ class ShipPlacer {
     }
 
     private void placeShipsOfEnemy(String shipsString) {
-        String shipsSeparator = ",\\|";
-        String coordinatesSeparator = ",";
+        final String shipsSeparator = ",\\|";
+        final String coordinatesSeparator = ",";
         String[] ships = shipsString.split(shipsSeparator);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();

@@ -127,10 +127,10 @@ class Board {
      * @param point - represents single Point of the board
      * @return array of neighbours cells
      */
-    private Point2D[] getAllNeighborsOf(Point2D point) {
+    private ArrayList<Point2D> getAllNeighborsOf(Point2D point) {
         int x = point.getX();
         int y = point.getY();
-        return new Point2D[]{
+        Point2D[] array = new Point2D[]{
                 Point2D.of(x - 1, y),
                 Point2D.of(x + 1, y),
                 Point2D.of(x, y - 1),
@@ -140,6 +140,7 @@ class Board {
                 Point2D.of(x - 1, y + 1),
                 Point2D.of(x + 1, y + 1)
         };
+        return new ArrayList<>(Arrays.asList(array));
     }
 
     /**
@@ -159,7 +160,7 @@ class Board {
      * @return
      */
     private boolean isThereShipInTheNeighborhood(Point2D point) {
-        return Arrays.stream(getAllNeighborsOf(point)).filter(this::isInScope).anyMatch(p -> boardFX.isOccupied(p));
+        return getAllNeighborsOf(point).stream().filter(this::isInScope).anyMatch(p -> boardFX.isOccupied(p));
     }
 
     /**
@@ -192,12 +193,9 @@ class Board {
         return allShips.stream().noneMatch(Ship::isAlive);
     }
 
-    void makeMoves(String[] points) {
-        for (String point : points) {
-            String[] coordinates = point.split(",");
-            int x = Integer.parseInt(coordinates[0]);
-            int y = Integer.parseInt(coordinates[1]);
-            boardFX.shoot(Point2D.of(x, y));
+    void makeMoves(List<Point2D> points) {
+        for (Point2D point : points) {
+            boardFX.shoot(point);
         }
     }
 }

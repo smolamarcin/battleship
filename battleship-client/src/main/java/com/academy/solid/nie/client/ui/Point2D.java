@@ -18,6 +18,6 @@ public class Point2D {
      */
     @Override
     public String toString() {
-        return x + "," + y + ",";
+        return String.format("%d,%d,", x, y);
     }
 }

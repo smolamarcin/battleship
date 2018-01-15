@@ -2,11 +2,14 @@ package com.academy.solid.nie.client.communication;
 
 import com.academy.solid.nie.client.language.Communicate;
 import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.ui.Point2D;
 import com.academy.solid.nie.client.ui.WindowDisplayer;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -57,14 +60,22 @@ public final class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
-    private String[] receiveAllMovesWithoutSending() {
+    private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
+        ArrayList<Point2D> points = new ArrayList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
                     .withButtonWhoExitSystem().display();
         }
-        return moves.split(",;");
+        String[] split = moves.split(",;");
+        for (String point : split) {
+            String[] coordinates = point.split(",");
+            int x = Integer.parseInt(coordinates[0]);
+            int y = Integer.parseInt(coordinates[1]);
+            points.add(Point2D.of(x, y));
+        }
+        return points;
     }
 
     @Override
@@ -73,7 +84,7 @@ public final class SocketServer implements Server {
     }
 
     @Override
-    public String[] receiveEnemyMoves() {
+    public List<Point2D> receiveEnemyMoves() {
         send(allMoves);
         return receiveAllMovesWithoutSending();
     }
