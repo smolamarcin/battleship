@@ -23,6 +23,8 @@ class ShipPlacer {
     private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
             DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
+    private static final String SHIPS_SEPARATOR = ",\\|";
+    private static final String COORDINATES_SEPARATOR = ",";
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
@@ -83,12 +85,10 @@ class ShipPlacer {
     }
 
     private void placeShipsOfEnemy(String shipsString) {
-        final String shipsSeparator = ",\\|";
-        final String coordinatesSeparator = ",";
-        String[] ships = shipsString.split(shipsSeparator);
+        String[] ships = shipsString.split(SHIPS_SEPARATOR);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] coords = shipStr.split(coordinatesSeparator);
+            String[] coords = shipStr.split(COORDINATES_SEPARATOR);
 
             IntStream.range(0, coords.length).filter(i -> i % 2 == 0).forEach(index -> {
                 int x = Integer.parseInt(coords[index]);

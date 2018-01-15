@@ -127,7 +127,7 @@ class Board {
      * @param point - represents single Point of the board
      * @return array of neighbours cells
      */
-    private ArrayList<Point2D> getAllNeighborsOf(Point2D point) {
+    private List<Point2D> getAllNeighborsOf(Point2D point) {
         int x = point.getX();
         int y = point.getY();
         Point2D[] array = new Point2D[]{
@@ -170,9 +170,8 @@ class Board {
      * @return true - if point is in the board scope
      */
     private boolean isInScope(Point2D point) {
-        double x = point.getX();
-        double y = point.getY();
-        return x >= 0 && x < MAX_HEIGHT && y >= 0 && y < MAX_WIDTH;
+        return (double) point.getX() >= 0 && (double) point.getX() < MAX_HEIGHT
+                && (double) point.getY() >= 0 && (double) point.getY() < MAX_WIDTH;
     }
 
     /**

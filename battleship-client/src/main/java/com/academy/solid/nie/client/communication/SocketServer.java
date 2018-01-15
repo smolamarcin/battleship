@@ -62,7 +62,7 @@ public final class SocketServer implements Server {
 
     private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
-        ArrayList<Point2D> points = new ArrayList<>();
+        List<Point2D> points = new ArrayList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
