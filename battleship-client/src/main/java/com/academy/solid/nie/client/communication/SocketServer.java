@@ -9,8 +9,10 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 
 /**
@@ -68,13 +70,16 @@ public final class SocketServer implements Server {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
                     .withButtonWhoExitSystem().display();
         }
-        String[] split = moves.split(",;");
-        for (String point : split) {
-            String[] coordinates = point.split(",");
-            int x = Integer.parseInt(coordinates[0]);
-            int y = Integer.parseInt(coordinates[1]);
-            points.add(Point2D.of(x, y));
-        }
+
+        Arrays.stream(moves.split(",;"))
+                .map(s -> s.split(","))
+                .map(arr ->
+                        Stream.of(arr)
+                        .mapToInt(Integer::parseInt)
+                        .toArray())
+                .map(arr -> Point2D.of(arr[0], arr[1]))
+                .forEach(points::add);
+
         return points;
     }
 
