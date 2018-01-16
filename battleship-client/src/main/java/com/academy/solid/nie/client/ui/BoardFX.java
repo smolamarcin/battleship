@@ -21,12 +21,6 @@ class BoardFX extends Parent {
     private final int maxHeight;
     private final int maxWidth;
 
-    BoardFX(VBox rows, int maxHeight, int maxWidth) {
-        this.rows = rows;
-        this.maxHeight = maxHeight;
-        this.maxWidth = maxWidth;
-    }
-
     BoardFX(int maxHeight, int maxWidth) {
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;

@@ -8,9 +8,12 @@ import com.academy.solid.nie.client.ui.WindowDisplayer;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -62,20 +65,23 @@ public final class SocketServer implements Server {
 
     private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
-        List<Point2D> points = new ArrayList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
                     .withButtonWhoExitSystem().display();
         }
-        String[] split = moves.split(",;");
-        for (String point : split) {
-            String[] coordinates = point.split(",");
-            int x = Integer.parseInt(coordinates[0]);
-            int y = Integer.parseInt(coordinates[1]);
-            points.add(Point2D.of(x, y));
-        }
-        return points;
+
+        return Arrays.stream(moves.split(",;"))
+                .map(s -> s.split(","))
+                .map(stringArrayToIntArray())
+                .map(arr -> Point2D.of(arr[0], arr[1]))
+                .collect(Collectors.toList());
+    }
+
+    private Function<String[], int[]> stringArrayToIntArray() {
+        return arr -> Stream.of(arr)
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 
     @Override
