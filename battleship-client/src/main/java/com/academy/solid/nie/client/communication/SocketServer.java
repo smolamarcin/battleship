@@ -8,10 +8,11 @@ import com.academy.solid.nie.client.ui.WindowDisplayer;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -64,23 +65,23 @@ public final class SocketServer implements Server {
 
     private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
-        List<Point2D> points = new ArrayList<>();
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
             new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
                     .withButtonWhoExitSystem().display();
         }
 
-        Arrays.stream(moves.split(",;"))
+        return Arrays.stream(moves.split(",;"))
                 .map(s -> s.split(","))
-                .map(arr ->
-                        Stream.of(arr)
-                        .mapToInt(Integer::parseInt)
-                        .toArray())
+                .map(stringArrayToIntArray())
                 .map(arr -> Point2D.of(arr[0], arr[1]))
-                .forEach(points::add);
+                .collect(Collectors.toList());
+    }
 
-        return points;
+    private Function<String[], int[]> stringArrayToIntArray() {
+        return arr -> Stream.of(arr)
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 
     @Override
