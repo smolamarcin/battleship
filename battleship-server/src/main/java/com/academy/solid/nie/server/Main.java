@@ -31,8 +31,9 @@ public final class Main {
         Player second = new NetPlayer();
         shipServer = new ShipSocketServer(first, second, arg, PORT_NUMBER);
         shipServer.initializeGame();
-        while (!shipServer.isGameOver()) {
-            shipServer.play();
+        Game game = new Game(first, second);
+        while (!game.isGameOver()) {
+            game.play();
         }
         LOGGER.info("Game over");
     }
