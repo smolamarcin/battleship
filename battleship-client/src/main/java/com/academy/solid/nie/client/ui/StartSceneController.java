@@ -37,7 +37,6 @@ public final class StartSceneController {
     private ObservableList<Language> availableLanguages = FXCollections.
             observableArrayList(Language.POLISH, Language.ENGLISH);
     private CommunicateProviderImpl communicateProvider;
-    private Language language;
 
     @FXML
     void initialize() {
@@ -54,7 +53,7 @@ public final class StartSceneController {
             new GameScene(socketServer).start();
         } else {
             WindowDisplayer wrongIpWindow = new WindowDisplayer(
-                    communicateProvider.getCommunicate(Communicate.WRONG_IP))
+                    CommunicateProviderImpl.getCommunicate(Communicate.WRONG_IP))
                     .withButtonWhoExitThisWindow();
             wrongIpWindow.display();
         }
@@ -67,13 +66,13 @@ public final class StartSceneController {
     }
     private void initializeLanguageMenu() {
         communicateProvider = new CommunicateProviderImpl();
-        language = Language.ENGLISH;
+        Language language = Language.ENGLISH;
         communicateProvider.populate(language);
         languageChoice.setItems(availableLanguages);
         languageChoice.setValue(Language.ENGLISH);
     }
     private void updateFields() {
-        insertIpLabel.setText(communicateProvider.getCommunicate(Communicate.INSERT_IP));
-        btnConnect.setText(communicateProvider.getCommunicate(Communicate.CONNECT));
+        insertIpLabel.setText(CommunicateProviderImpl.getCommunicate(Communicate.INSERT_IP));
+        btnConnect.setText(CommunicateProviderImpl.getCommunicate(Communicate.CONNECT));
     }
 }
