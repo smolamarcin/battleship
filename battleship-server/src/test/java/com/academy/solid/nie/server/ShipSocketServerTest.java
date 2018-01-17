@@ -93,8 +93,6 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.3", AVAILABLE_PORT);
-        shipSocketServer.initializeGame();
         Game game = new Game(first, second);
         game.play();
         //then
@@ -109,8 +107,6 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.4", AVAILABLE_PORT);
-        shipSocketServer.initializeGame();
         Game game = new Game(first, second);
         game.play();
         game.play();
@@ -127,8 +123,6 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.5", AVAILABLE_PORT);
-        shipSocketServer.initializeGame();
         Game game = new Game(first, second);
         game.play();
         game.play();
@@ -144,8 +138,6 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "Q";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.6", AVAILABLE_PORT);
-        shipSocketServer.initializeGame();
         Game game = new Game(first, second);
         game.play();
         //then
