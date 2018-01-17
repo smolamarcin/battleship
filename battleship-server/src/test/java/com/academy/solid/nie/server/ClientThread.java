@@ -2,7 +2,7 @@ package com.academy.solid.nie.server;
 
 import com.academy.solid.nie.client.communication.SocketServer;
 
-import static com.academy.solid.nie.server.ShipSocketServerTest.IP;
+import static com.academy.solid.nie.server.ServerGameInitializerTest.IP;
 
 public class ClientThread extends Thread {
 

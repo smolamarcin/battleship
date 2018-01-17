@@ -9,11 +9,9 @@ import java.net.ServerSocket;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @Test
-public class ShipSocketServerTest {
+public class ServerGameInitializerTest {
     static final String IP = "127.0.0.1";
     private int millis = 100;
     /**
@@ -85,62 +83,5 @@ public class ShipSocketServerTest {
 
         verify(first).inform(shipsOfSecondPlayer);
         verify(second).inform(shipsOfFirstPlayer);
-    }
-
-    @Test(groups = {"unit"})
-    public void afterOneInvokeOfMethodPlaySecondPlayerShouldReceiveFirstPlayersMove() throws IOException {
-        //given
-        String moveOfFirstPlayer = "0,0";
-        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
-        //when
-        Game game = new Game(first, second);
-        game.play();
-        //then
-        verify(second).inform(moveOfFirstPlayer);
-    }
-
-    @Test(groups = {"unit"})
-    public void afterSecondInvokeOfMethodPlayFirstPlayerShouldReceiveSecondPlayersMove() throws IOException {
-        //given
-        String moveOfSecondPlayer = "0,1";
-        when(second.makeMove()).thenReturn(moveOfSecondPlayer);
-        String moveOfFirstPlayer = "0,0";
-        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
-        //when
-        Game game = new Game(first, second);
-        game.play();
-        game.play();
-        //then
-        verify(second).inform(moveOfFirstPlayer);
-        verify(first).inform(moveOfSecondPlayer);
-    }
-
-    @Test(groups = {"unit"})
-    public void afterThirdInvokeOfMethodPlaySecondPlayerShouldReceiveFirstsPlayersMoveAgain() throws IOException {
-        //given
-        String moveOfSecondPlayer = "0,1";
-        when(second.makeMove()).thenReturn(moveOfSecondPlayer);
-        String moveOfFirstPlayer = "0,0";
-        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
-        //when
-        Game game = new Game(first, second);
-        game.play();
-        game.play();
-        game.play();
-        //then
-        verify(second, times(2)).inform(moveOfFirstPlayer);
-        verify(first).inform(moveOfSecondPlayer);
-    }
-
-    @Test(groups = {"unit"})
-    public void gameShouldBeOverAfterSendingMoveWithEndOfGameInformation() throws IOException {
-        //given
-        String moveOfFirstPlayer = "Q";
-        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
-        //when
-        Game game = new Game(first, second);
-        game.play();
-        //then
-        Assert.assertTrue(game.isGameOver());
     }
 }
