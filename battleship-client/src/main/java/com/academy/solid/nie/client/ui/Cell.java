@@ -60,7 +60,6 @@ class Cell extends Rectangle {
             setFill(Color.RED);
             return true;
         }
-
         return false;
     }
 
@@ -82,5 +81,9 @@ class Cell extends Rectangle {
 
     int getCellY() {
         return point2D.getY();
+    }
+
+    public Ship getShip() {
+        return ship;
     }
 }

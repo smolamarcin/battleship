@@ -13,7 +13,7 @@ class Ship {
         return positions;
     }
 
-    private List<Point2D> positions = new ArrayList<>();
+    private List<Point2D> positions;
 
     Ship(List<Point2D> positions) {
         this.positions = positions;
@@ -21,12 +21,11 @@ class Ship {
     }
 
     void hit(Point2D point2D) {
-        positions.remove(point2D);
         health--;
     }
 
     boolean isAlive() {
-        return health != 0;
+        return health > 0;
     }
 
     int getLength() {

@@ -72,6 +72,9 @@ class GameScene extends Application {
                     .withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
+        if (enemyBoard.isShipSunken(cell.getShip())){
+            enemyBoard.markShipAsSunken(cell.getShip());
+        }
         socketServer.sendPlayerMove(cell.toString());
     }
 
