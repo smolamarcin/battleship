@@ -6,8 +6,8 @@ import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class ShipSocketServer implements ShipServer {
-    private static final Logger LOGGER = Logger.getLogger(ShipSocketServer.class.getName());
+class ServerGameInitializer implements GameInitializer {
+    private static final Logger LOGGER = Logger.getLogger(ServerGameInitializer.class.getName());
     /**
      * 0 stands for first available port
      */
@@ -15,15 +15,12 @@ class ShipSocketServer implements ShipServer {
     private final Player first;
     private final Player second;
     private final String ip;
-    private Player currentPlayer;
-    private boolean isGameOver;
     private final int portNumber;
 
-    ShipSocketServer(Player first, Player second, String ip, int portNumber) {
+    ServerGameInitializer(Player first, Player second, String ip, int portNumber) {
         this.first = first;
         this.second = second;
         this.ip = ip;
-        this.currentPlayer = first;
         this.portNumber = portNumber;
     }
 
@@ -58,26 +55,6 @@ class ShipSocketServer implements ShipServer {
         second.inform(firstShips);
 
         log("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
-    }
-
-    @Override
-    public void play() throws IOException {
-        String move = currentPlayer.makeMove();
-        changeCurrentPlayer();
-        currentPlayer.inform(move);
-
-        log((currentPlayer.equals(first) ? "First Player" : "Second Player") + ":" + move);
-
-        isGameOver = move.equals("Q");
-    }
-
-    private void changeCurrentPlayer() {
-        currentPlayer = currentPlayer.equals(first) ? second : first;
-    }
-
-    @Override
-    public boolean isGameOver() {
-        return isGameOver;
     }
 
     private void log(String msg) {

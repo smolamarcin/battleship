@@ -15,9 +15,9 @@ public class ServerThread extends Thread {
 
     @Override
     public void run() {
-        ShipServer shipServer = new ShipSocketServer(first, second, ShipSocketServerTest.IP, portNumber);
+        GameInitializer gameInitializer = new ServerGameInitializer(first, second, ServerGameInitializerTest.IP, portNumber);
         try {
-            shipServer.initializeGame();
+            gameInitializer.initializeGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
