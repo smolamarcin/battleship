@@ -71,7 +71,9 @@ public final class StartSceneController {
         if (ipValidator.validate(ip) && portValidator.validate(port)) {
             SocketServer socketServer = new SocketServer();
             socketServer.connect(ip, Integer.parseInt(port));
-            new GameScene(socketServer).start();
+            GameScene gameScene = new GameScene(socketServer);
+            gameScene.start();
+            new Thread(gameScene).start();
         } else {
             WindowDisplayer wrongIpWindow = new WindowDisplayer(
                     MessageProviderImpl.getCommunicate(Message.WRONG_INPUT))

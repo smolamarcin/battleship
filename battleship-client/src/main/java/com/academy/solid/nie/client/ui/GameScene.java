@@ -15,21 +15,27 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.concurrent.Semaphore;
+
 /**
  * Class represents Game UI.
  */
-class GameScene extends Application {
+class GameScene extends Application implements Runnable {
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
+    private final boolean firstPlayer;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
+    private Semaphore shipsPlaced = new Semaphore(0);
 
-    GameScene(final SocketServer socketServer) {
+    GameScene(final SocketServer socketServer) throws IOException {
         this.socketServer = socketServer;
+        this.firstPlayer = socketServer.isFirstPlayer();
     }
 
     private Parent createContent() {
@@ -40,7 +46,7 @@ class GameScene extends Application {
         enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, shipsPlaced);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
         vbox.setAlignment(Pos.CENTER);
@@ -98,5 +104,24 @@ class GameScene extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
         primaryStage.show();
+    }
+
+    @Override
+    public void run() {
+        System.out.println("uruchomiliśmy wątek");
+        if (!firstPlayer) {
+            System.out.println("jesteśmy drugim gracze");
+            try {
+                shipsPlaced.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("rozstawiono statki");
+            try {
+                playerBoard.makeMoves(socketServer.receiveMoves());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

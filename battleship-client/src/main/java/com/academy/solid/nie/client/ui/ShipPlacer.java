@@ -5,12 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.stream.IntStream;
 
 class ShipPlacer {
@@ -24,14 +20,16 @@ class ShipPlacer {
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private Semaphore shipsPlaced;
     private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
-        DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
+            DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
-    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore shipsPlaced) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
+        this.shipsPlaced = shipsPlaced;
     }
 
     EventHandler<MouseEvent> setUpPlayerShips() {
@@ -53,6 +51,7 @@ class ShipPlacer {
             socketServer.send(playerBoard.getAllPositions());
             placeEnemyShips(socketServer.receiveAllShips());
             areAllShipsPlaced = true;
+            shipsPlaced.release();
         }
     }
 

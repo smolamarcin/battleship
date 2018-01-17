@@ -26,14 +26,19 @@ public final class SocketClient implements ShipClient {
     private static final int PORT_NUMBER = 8081;
 
     @Override
-    public void run() throws IOException {
+    public boolean receiveServerInitialMessage() throws IOException {
         String fromServer = in.readLine();
+        boolean firstPlayer = false;
         while (!("Provide ships").equals(fromServer)) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.info("Server: " + fromServer);
             }
             fromServer = in.readLine();
+            if ("Game has started. 1".equals(fromServer)) {
+                firstPlayer = true;
+            }
         }
+        return firstPlayer;
     }
 
     @Override
@@ -50,5 +55,10 @@ public final class SocketClient implements ShipClient {
     @Override
     public void sendGameOverToOpponent() {
         out.println("Q");
+    }
+
+    @Override
+    public String receiveMoves() throws IOException {
+        return in.readLine();
     }
 }

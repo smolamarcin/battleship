@@ -27,6 +27,12 @@ public final class SocketServer implements Server {
     private ShipClient server;
     private String allMoves = "";
 
+    public boolean isFirstPlayer() {
+        return firstPlayer;
+    }
+
+    private boolean firstPlayer;
+
     @Override
     public void connect(String ip, int port) {
         try {
@@ -36,7 +42,7 @@ public final class SocketServer implements Server {
                     out(createPrintWriter(socket)).
                     in(createBufferedReader(socket)).
                     build();
-            server.run();
+            firstPlayer = server.receiveServerInitialMessage();
         } catch (IOException e) {
             LOGGER.warning(e.getMessage());
         }
@@ -114,4 +120,17 @@ public final class SocketServer implements Server {
         return new OutputStreamWriter(inputSocket.getOutputStream(), StandardCharsets.UTF_8);
     }
 
+    public List<Point2D> receiveMoves() throws IOException {
+        String moves = server.receiveMoves();
+        if (moves.equals("Q")) {
+            new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
+                    .withButtonWhoExitSystem().display();
+        }
+
+        return Arrays.stream(moves.split(",;"))
+                .map(s -> s.split(","))
+                .map(stringArrayToIntArray())
+                .map(arr -> Point2D.of(arr[0], arr[1]))
+                .collect(Collectors.toList());
+    }
 }

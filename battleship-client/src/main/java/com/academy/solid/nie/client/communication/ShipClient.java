@@ -14,7 +14,7 @@ interface ShipClient {
      *
      * @throws IOException
      */
-    void run() throws IOException;
+    boolean receiveServerInitialMessage() throws IOException;
 
     /**
      * Sends the positions of all ships on the board.
@@ -37,4 +37,6 @@ interface ShipClient {
      * If the opponent got such a message it means that he has lost the game.
      */
     void sendGameOverToOpponent();
+
+    String receiveMoves() throws IOException;
 }
