@@ -130,8 +130,9 @@ class GameScene extends Application implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (playerBoard.isMyTurn())
+            if (playerBoard.isMyTurn()) {
                 waitForSending.release();
+            }
         }
     }
 }
