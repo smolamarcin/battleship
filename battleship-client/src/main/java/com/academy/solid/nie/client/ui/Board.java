@@ -3,11 +3,10 @@ package com.academy.solid.nie.client.ui;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 /**
@@ -49,6 +48,7 @@ class Board {
 
     /**
      * Determines if you can put a ship in a given place.
+     *
      *
      * @param ship - represents single instance of Ship
      * @return true if the position of the ship is correct.
@@ -186,8 +186,26 @@ class Board {
     }
 
     void makeMoves(List<Point2D> points) {
-        for (Point2D point : points) {
-            boardFX.shoot(point);
-        }
+        points.forEach(e -> boardFX.shoot(e));
+        markSunkenShipOnPlayerBoard();
+    }
+
+    private void markSunkenShipOnPlayerBoard() {
+        allShips.stream().filter(ship -> isShipSunken(ship)).forEach(ship -> markShipAsSunken(ship));
+    }
+
+    boolean isShipSunken(Ship ship) {
+        return ship != null && !ship.isAlive();
+    }
+
+    void markShipAsSunken(Ship ship) {
+        getAllNeighborsOf(ship).stream().filter(e -> isInScope(e)).forEach(e -> boardFX.shoot(e));
+    }
+
+    private List<Point2D> getAllNeighborsOf(Ship ship) {
+        return ship.getPositions().stream()
+                .map(e -> getAllNeighborsOf(e))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }

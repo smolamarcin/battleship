@@ -3,6 +3,8 @@ package com.academy.solid.nie.client.ui;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Objects;
+
 /**
  * Represents a point in two-dimensional space.
  * Contains horizontal and vertical coordinates.
@@ -19,5 +21,19 @@ public class Point2D {
     @Override
     public String toString() {
         return String.format("%d,%d,", x, y);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point2D point2D = (Point2D) o;
+        return x == point2D.x &&
+                y == point2D.y;
+    }
+
+    @Override
+    public int hashCode() {git st
+        return Objects.hash(x, y);
     }
 }
