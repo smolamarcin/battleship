@@ -15,6 +15,7 @@ import static org.mockito.Mockito.verify;
 @Test
 public class ShipSocketServerTest {
     static final String IP = "127.0.0.1";
+    private int millis = 100;
     /**
      * 0 stands for first available port
      */
@@ -47,6 +48,11 @@ public class ShipSocketServerTest {
         serverThread.start();
         firstClientThread.start();
         secondClientThread.start();
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //then
         verify(first).register(any(ServerSocket.class));
         verify(second).register(any(ServerSocket.class));
@@ -67,7 +73,7 @@ public class ShipSocketServerTest {
         String shipsOfFirstPlayer = "0,0,;";
         when(first.provideShips()).thenReturn(shipsOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.2", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.2", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         //then
         verify(first).register(any(ServerSocket.class));
@@ -87,9 +93,10 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.3", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.3", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
-        shipSocketServer.play();
+        Game game = new Game(first, second);
+        game.play();
         //then
         verify(second).inform(moveOfFirstPlayer);
     }
@@ -102,10 +109,11 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.4", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.4", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
-        shipSocketServer.play();
-        shipSocketServer.play();
+        Game game = new Game(first, second);
+        game.play();
+        game.play();
         //then
         verify(second).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
@@ -119,11 +127,12 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "0,0";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.5", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.5", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
-        shipSocketServer.play();
-        shipSocketServer.play();
-        shipSocketServer.play();
+        Game game = new Game(first, second);
+        game.play();
+        game.play();
+        game.play();
         //then
         verify(second, times(2)).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
@@ -135,10 +144,11 @@ public class ShipSocketServerTest {
         String moveOfFirstPlayer = "Q";
         when(first.makeMove()).thenReturn(moveOfFirstPlayer);
         //when
-        ShipSocketServer shipSocketServer = new ShipSocketServer(first, second, "127.0.0.6", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.6", AVAILABLE_PORT);
         shipSocketServer.initializeGame();
-        shipSocketServer.play();
+        Game game = new Game(first, second);
+        game.play();
         //then
-        Assert.assertTrue(shipSocketServer.isGameOver());
+        Assert.assertTrue(game.isGameOver());
     }
 }

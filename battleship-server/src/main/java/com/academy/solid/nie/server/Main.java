@@ -26,11 +26,11 @@ public final class Main {
         } else {
             arg = args[0];
         }
-        ShipServer shipServer;
+        GameInitializer gameInitializer;
         Player first = new NetPlayer();
         Player second = new NetPlayer();
-        shipServer = new ShipSocketServer(first, second, arg, PORT_NUMBER);
-        shipServer.initializeGame();
+        gameInitializer = new ServerGameInitializer(first, second, arg, PORT_NUMBER);
+        gameInitializer.initializeGame();
         Game game = new Game(first, second);
         while (!game.isGameOver()) {
             game.play();
