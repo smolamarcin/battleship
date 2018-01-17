@@ -33,7 +33,7 @@ public class Point2D {
     }
 
     @Override
-    public int hashCode() {git st
+    public int hashCode() {
         return Objects.hash(x, y);
     }
 }
