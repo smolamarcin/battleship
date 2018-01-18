@@ -7,5 +7,5 @@ public enum Communicate {
     /**
      * Messages in game.
      */
-    WELCOME, WRONG_IP, WIN, INSERT_IP, CONNECT, LOSE
+    WELCOME, WRONG_IP, WIN, INSERT_IP, CONNECT, RANDOM, LOSE
 }

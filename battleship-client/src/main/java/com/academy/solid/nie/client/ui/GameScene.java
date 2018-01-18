@@ -35,10 +35,8 @@ class GameScene extends Application {
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
-        Button button = new Button();
-        button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WRONG_IP));
-        button.setOnMouseClicked(event -> button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WELCOME)));
-        root.setRight(button);
+        Button randomPlacementButton = createRandomButton();
+        root.setBottom(randomPlacementButton);
         enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
@@ -48,6 +46,13 @@ class GameScene extends Application {
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
         return root;
+    }
+
+    private Button createRandomButton() {
+        Button button = new Button();
+        button.setText(CommunicateProviderImpl.getCommunicate(Communicate.RANDOM));
+        button.setOnMouseClicked(e -> shipPlacer.placeShipsRandomly());
+        return button;
     }
 
     private EventHandler<MouseEvent> getMove() {
@@ -72,7 +77,7 @@ class GameScene extends Application {
                     .withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
-        if (enemyBoard.isShipSunken(cell.getShip())){
+        if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
         socketServer.sendPlayerMove(cell.toString());

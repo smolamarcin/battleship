@@ -208,4 +208,5 @@ class Board {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
+
 }

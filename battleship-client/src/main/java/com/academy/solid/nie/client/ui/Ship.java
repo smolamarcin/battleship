@@ -1,6 +1,5 @@
 package com.academy.solid.nie.client.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
