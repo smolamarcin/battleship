@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 class ShipPlacer {
+    private static final String SHIPS_SEPARATOR = ",\\|";
+    private static final String COORDINATES_SEPARATOR = ",";
     private static final int FOUR_MAST = 4;
     private static final int THREE_MAST = 3;
     private static final int DOUBLE_MAST = 2;
@@ -23,12 +25,8 @@ class ShipPlacer {
     private Board playerBoard;
     private SocketServer socketServer;
     private boolean areAllShipsPlaced = false;
-
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
         DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
-
-    private static final String SHIPS_SEPARATOR = ",\\|";
-    private static final String COORDINATES_SEPARATOR = ",";
 
     ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
         this.enemyBoard = enemyBoard;
