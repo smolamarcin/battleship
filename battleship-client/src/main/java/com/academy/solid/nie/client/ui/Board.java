@@ -142,7 +142,8 @@ class Board {
      * @param ship - represents single instance of Ship
      */
     private boolean canPlaceShip(final Ship ship) {
-        return ship.getPositions().stream().noneMatch(point2D -> !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
+        return ship.getPositions().stream().noneMatch(point2D ->
+                !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
     }
 
     /**
@@ -191,7 +192,7 @@ class Board {
     }
 
     private void markSunkenShipOnPlayerBoard() {
-        allShips.stream().filter(ship -> isShipSunken(ship)).forEach(ship -> markShipAsSunken(ship));
+        allShips.stream().filter(this::isShipSunken).forEach(this::markShipAsSunken);
     }
 
     boolean isShipSunken(Ship ship) {
@@ -199,12 +200,12 @@ class Board {
     }
 
     void markShipAsSunken(Ship ship) {
-        getAllNeighborsOf(ship).stream().filter(e -> isInScope(e)).forEach(e -> boardFX.shoot(e));
+        getAllNeighborsOf(ship).stream().filter(this::isInScope).forEach(e -> boardFX.shoot(e));
     }
 
     private List<Point2D> getAllNeighborsOf(Ship ship) {
         return ship.getPositions().stream()
-                .map(e -> getAllNeighborsOf(e))
+                .map(this::getAllNeighborsOf)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }

@@ -8,7 +8,7 @@ import java.util.List;
 class Ship {
     private int health;
 
-    public List<Point2D> getPositions() {
+    List<Point2D> getPositions() {
         return positions;
     }
 
@@ -19,7 +19,7 @@ class Ship {
         this.health = getLength();
     }
 
-    void hit(Point2D point2D) {
+    void hit() {
         health--;
     }
 
@@ -27,7 +27,7 @@ class Ship {
         return health > 0;
     }
 
-    int getLength() {
+    private int getLength() {
         return positions.size();
     }
 }

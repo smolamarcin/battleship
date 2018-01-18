@@ -39,24 +39,22 @@ class Cell extends Rectangle {
      * It changes the cell properties.
      *
      * @param newShip
-     * @return
      */
-    Cell addShip(final Ship newShip) {
+    void addShip(Ship newShip) {
         this.ship = newShip;
-        return this;
     }
 
     /**
      * Changes the cell color and marks it as a hit.
      * If there was a piece of a ship in the cell, it would return true.
      *
-     * @return
+     * @return Information whether there was a part of a ship in the cell
      */
     boolean shoot() {
         wasShot = true;
         setFill(Color.BLACK);
         if (ship != null) {
-            ship.hit(point2D);
+            ship.hit();
             setFill(Color.RED);
             return true;
         }
@@ -83,7 +81,7 @@ class Cell extends Rectangle {
         return point2D.getY();
     }
 
-    public Ship getShip() {
+    Ship getShip() {
         return ship;
     }
 }
