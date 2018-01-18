@@ -16,6 +16,7 @@ public interface Server {
      * Returns true if connection was successful.
      *
      * @param ip as String
+     * @throws IOException when there is no server with provided ip
      */
     void connect(String ip) throws IOException;
 
@@ -43,6 +44,7 @@ public interface Server {
 
     /**
      * Receive ships.
+     *
      * @return ships positions as string
      */
     String receiveAllShips();

@@ -27,11 +27,12 @@ public final class SocketClient implements ShipClient {
 
     @Override
     public void run() throws IOException {
-        String fromServer;
-        while (!("Provide ships").equals(fromServer = in.readLine())) {
+        String fromServer = in.readLine();
+        while (!("Provide ships").equals(fromServer)) {
             if (LOGGER.isLoggable(Level.INFO)) {
                 LOGGER.info("Server: " + fromServer);
             }
+            fromServer = in.readLine();
         }
     }
 
