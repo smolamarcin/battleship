@@ -91,7 +91,8 @@ public final class SocketServer implements Server {
 
     @Override
     public void sendPlayerMove(final String move) {
-        allMoves += move + ";";
+//        allMoves += move + ";";
+        send(move);
     }
 
     @Override

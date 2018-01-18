@@ -44,12 +44,17 @@ public final class SocketClient implements ShipClient {
     @Override
     public void send(final String allShips) throws IOException {
         out.println(allShips);
-        enemyShips = in.readLine();
+//        enemyShips = in.readLine();
     }
 
     @Override
     public String getEnemyShips() {
-        return enemyShips;
+        try {
+            return in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
