@@ -72,7 +72,7 @@ class BoardFX extends Parent {
      */
     void markFieldAsOccupiedByShip(Ship ship, Point2D point) {
         Cell cell = getCell(point);
-        cell.addShip(ship);
+        cell.setShip(ship);
         cell.setFill(Color.WHITE);
         cell.setStroke(Color.GREEN);
     }
@@ -97,6 +97,6 @@ class BoardFX extends Parent {
     }
 
     void add(Ship ship, Point2D point) {
-        getCell(point).addShip(ship);
+        getCell(point).setShip(ship);
     }
 }

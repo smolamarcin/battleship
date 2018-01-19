@@ -35,12 +35,12 @@ class Cell extends Rectangle {
     }
 
     /**
-     * Adds the ship to the cell.
+     * Sets the ship to the cell.
      * It changes the cell properties.
      *
      * @param newShip
      */
-    void addShip(Ship newShip) {
+    void setShip(Ship newShip) {
         this.ship = newShip;
     }
 

@@ -32,7 +32,7 @@ public class Point2D {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (o == null || !(o instanceof Point2D)) {
             return false;
         }
         Point2D point2D = (Point2D) o;
