@@ -8,6 +8,7 @@ class Game {
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     private final Player first;
     private final Player second;
+    private Player otherPlayer;
     private Player currentPlayer;
     private String move;
 
@@ -15,6 +16,7 @@ class Game {
         this.first = first;
         this.second = second;
         this.currentPlayer = first;
+        this.otherPlayer = second;
     }
 
     void play() throws IOException {
@@ -26,7 +28,11 @@ class Game {
     }
 
     private void changeCurrentPlayer() {
-        currentPlayer = currentPlayer.equals(first) ? second : first;
+        if (!otherPlayer.getShips().contains(move)) {
+            Player temp = currentPlayer;
+            currentPlayer = otherPlayer;
+            otherPlayer = temp;
+        }
     }
 
     boolean isGameOver() {

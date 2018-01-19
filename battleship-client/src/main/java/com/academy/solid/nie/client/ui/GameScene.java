@@ -80,7 +80,7 @@ class GameScene extends Application implements Runnable {
 
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
-        if (!isMyTurn)
+        if (isMyTurn)
             waitForSending.release();
         if (enemyBoard.areAllShipsSunk()) {
             new WindowDisplayer(MessageProviderImpl
@@ -92,10 +92,6 @@ class GameScene extends Application implements Runnable {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
         socketServer.sendPlayerMove(cell.toString());
-    }
-
-    private void handleEnemyMove() {
-        playerBoard.makeMoves(socketServer.receiveEnemyMoves());
     }
 
     void start() {
@@ -116,24 +112,26 @@ class GameScene extends Application implements Runnable {
         System.out.println("uruchomiliśmy wątek");
         if (!firstPlayer) {
             System.out.println("jesteśmy drugim gracze");
+        }
+        try {
+            shipsPlaced.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("rozstawiono statki");
+        while (true) {
             try {
-                shipsPlaced.acquire();
+                waitForSending.acquire();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("rozstawiono statki");
-            while (true) {
-                try {
-                    waitForSending.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    playerBoard.makeMoves(socketServer.receiveMoves());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                playerBoard.makeMoves(socketServer.receiveMoves());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            if (playerBoard.isMyTurn())
+                waitForSending.release();
         }
     }
 }

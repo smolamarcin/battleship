@@ -7,6 +7,7 @@ import java.net.ServerSocket;
  * Provides methods for the player.
  */
 public interface Player {
+    String getShips();
     /**
      * Marks the connection of the player to the game.
      *
