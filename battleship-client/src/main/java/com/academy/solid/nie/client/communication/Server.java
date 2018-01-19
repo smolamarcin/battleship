@@ -35,15 +35,11 @@ public interface Server {
 
 
     /**
-     * Receive enemy moves.
-     *
      * @return collection of positions
      */
     List<Point2D> receiveEnemyMoves();
 
     /**
-     * Receive ships.
-     *
      * @return ships positions as String
      */
     String receiveAllShips();
