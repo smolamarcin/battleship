@@ -35,12 +35,12 @@ class Cell extends Rectangle {
     }
 
     /**
-     * Adds the ship to the cell.
+     * Sets the ship to the cell.
      * It changes the cell properties.
      *
      * @param newShip
      */
-    void addShip(Ship newShip) {
+    void setShip(Ship newShip) {
         this.ship = newShip;
     }
 
@@ -48,7 +48,7 @@ class Cell extends Rectangle {
      * Changes the cell color and marks it as a hit.
      * If there was a piece of a ship in the cell, it would return true.
      *
-     * @return Information whether there was a part of a ship in the cell
+     * @return true if there was a part of a ship in the cell
      */
     boolean shoot() {
         wasShot = true;

@@ -13,8 +13,7 @@ import java.util.List;
  */
 public interface Server {
     /**
-     * Returns true if connection was successful.
-     *
+     * Tries to connect to server.
      * @param ip as String
      * @throws IOException when there is no server with provided ip
      */
@@ -36,15 +35,11 @@ public interface Server {
 
 
     /**
-     * Receive enemy moves.
-     *
      * @return collection of posiitions
      */
     List<Point2D> receiveEnemyMoves();
 
     /**
-     * Receive ships.
-     *
      * @return ships positions as string
      */
     String receiveAllShips();
