@@ -48,7 +48,7 @@ class Cell extends Rectangle {
      * Changes the cell color and marks it as a hit.
      * If there was a piece of a ship in the cell, it would return true.
      *
-     * @return Information whether there was a part of a ship in the cell
+     * @return true if there was a part of a ship in the cell
      */
     boolean shoot() {
         wasShot = true;
