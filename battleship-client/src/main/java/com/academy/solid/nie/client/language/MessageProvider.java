@@ -3,7 +3,7 @@ package com.academy.solid.nie.client.language;
 /**
  * It provides the proper communicates based on specified language.
  */
-public interface CommunicateProvider {
+public interface MessageProvider {
     /**
      * Populate given language.
      *

@@ -2,8 +2,8 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.client.language.Communicate;
-import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.language.Message;
+import com.academy.solid.nie.client.language.MessageProviderImpl;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -50,7 +50,7 @@ class GameScene extends Application {
 
     private Button createRandomButton() {
         Button button = new Button();
-        button.setText(CommunicateProviderImpl.getCommunicate(Communicate.RANDOM));
+        button.setText(MessageProviderImpl.getCommunicate(Message.RANDOM));
         button.setOnMouseClicked(e -> shipPlacer.placeShipsRandomly());
         return button;
     }
@@ -72,8 +72,8 @@ class GameScene extends Application {
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (enemyBoard.areAllShipsSunk()) {
-            new WindowDisplayer(CommunicateProviderImpl
-                    .getCommunicate(Communicate.WIN))
+            new WindowDisplayer(MessageProviderImpl
+                    .getCommunicate(Message.WIN))
                     .withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }

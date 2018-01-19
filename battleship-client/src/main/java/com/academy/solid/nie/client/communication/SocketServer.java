@@ -1,7 +1,7 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.language.Communicate;
-import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.language.Message;
+import com.academy.solid.nie.client.language.MessageProviderImpl;
 import com.academy.solid.nie.client.ui.Point2D;
 import com.academy.solid.nie.client.ui.WindowDisplayer;
 
@@ -67,7 +67,7 @@ public final class SocketServer implements Server {
         allMoves = "";
         String moves = server.getEnemyShips();
         if (moves.equals("Q")) {
-            new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
+            new WindowDisplayer(MessageProviderImpl.getCommunicate(Message.LOSE))
                     .withButtonWhoExitSystem().display();
         }
 

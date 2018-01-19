@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 /**
  * It provides relevant messages to the game.
  */
-public class CommunicateProviderImpl implements CommunicateProvider {
-    private static EnumMap<Communicate, String> communicates = new EnumMap<>(Communicate.class);
+public class MessageProviderImpl implements MessageProvider {
+    private static EnumMap<Message, String> communicates = new EnumMap<>(Message.class);
 
     /**
      * Fills the map with messages in the appropriate language.
@@ -18,10 +18,10 @@ public class CommunicateProviderImpl implements CommunicateProvider {
      */
     public final void populate(final Language language) {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(language.name());
-        Stream.of(Communicate.values()).forEach(consume(resourceBundle));
+        Stream.of(Message.values()).forEach(consume(resourceBundle));
     }
 
-    private Consumer<Communicate> consume(final ResourceBundle resourceBundle) {
+    private Consumer<Message> consume(final ResourceBundle resourceBundle) {
         return element -> communicates.put(element, resourceBundle.getString(element
                 .name()));
     }
@@ -29,11 +29,11 @@ public class CommunicateProviderImpl implements CommunicateProvider {
     /**
      * Retrieves the message in the appropriate language from the map.
      *
-     * @param communicate communicate
+     * @param message message
      * @return specified message from the map
      */
-    public static String getCommunicate(final Communicate communicate) {
-        return communicates.get(communicate);
+    public static String getCommunicate(final Message message) {
+        return communicates.get(message);
     }
 
     /**
