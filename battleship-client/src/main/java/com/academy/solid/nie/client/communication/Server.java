@@ -15,7 +15,7 @@ public interface Server {
     /**
      * Tries to connect to server.
      * @param ip as String
-     * @throws IOException when there is no server with provided ip
+     * @throws IOException when there is no server with provided IP
      */
     void connect(String ip) throws IOException;
 
@@ -35,12 +35,12 @@ public interface Server {
 
 
     /**
-     * @return collection of posiitions
+     * @return collection of positions
      */
     List<Point2D> receiveEnemyMoves();
 
     /**
-     * @return ships positions as string
+     * @return ships positions as String
      */
     String receiveAllShips();
 

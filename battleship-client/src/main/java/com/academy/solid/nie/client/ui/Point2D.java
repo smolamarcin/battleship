@@ -25,7 +25,7 @@ public class Point2D {
 
     /**
      * @param o represent another Point2D
-     * @return information whether two points are the same
+     * @return true if both points are same or equal
      */
     @Override
     public boolean equals(Object o) {
@@ -40,7 +40,7 @@ public class Point2D {
     }
 
     /**
-     * @return HashCode based of values of fields
+     * @return hash code based of values of fields
      */
     @Override
     public int hashCode() {

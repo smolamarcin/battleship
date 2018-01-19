@@ -51,7 +51,7 @@ class ShipPlacer {
     private void finishSetup() {
         if (typesOfShips.isEmpty()) {
             socketServer.send(playerBoard.getAllPositions());
-            placeShipsOfEnemy(socketServer.receiveAllShips());
+            placeEnemyShips(socketServer.receiveAllShips());
             areAllShipsPlaced = true;
         }
     }
@@ -74,7 +74,7 @@ class ShipPlacer {
         return producePoints(x, y, type);
     }
 
-    private void placeShipsOfEnemy(String shipsString) {
+    private void placeEnemyShips(String shipsString) {
         String[] ships = shipsString.split(SHIPS_SEPARATOR);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();

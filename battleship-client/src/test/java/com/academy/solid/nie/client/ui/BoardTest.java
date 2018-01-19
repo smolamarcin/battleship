@@ -41,9 +41,6 @@ public class BoardTest implements TestHelper {
         Point2D pointA = Point2D.of(1, 6);
         Ship ship = new Ship(Collections.singletonList(pointA));
 
-        Point2D pointB = Point2D.of(0, 0);
-        new Cell(pointB).setShip(ship);
-
         //when
         board.isShipPositionValid(ship);
         boolean result = board.isShipPositionValid(ship);
@@ -59,7 +56,6 @@ public class BoardTest implements TestHelper {
         board.initialize(handler);
         Point2D pointA = Point2D.of(0, 0);
         Ship ship = createShipHorizontally(Collections.singletonList(pointA));
-        new Cell(pointA).setShip(ship);
 
         //when
         boolean result = board.isShipPositionValid(ship);
@@ -67,7 +63,6 @@ public class BoardTest implements TestHelper {
 
         Point2D pointB = Point2D.of(0, 1);
         Ship ship2 = createShipHorizontally(Collections.singletonList(pointB));
-        new Cell(pointB).setShip(ship2);
 
         result = board.isShipPositionValid(ship2);
 

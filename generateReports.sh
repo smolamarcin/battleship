@@ -2,13 +2,13 @@
 #Script used to generate reports.
 #Inspired by the scripts by Mateusz Tapa.
 
-
+set -e
 
 function all(){
     echo "Generating all reports. "
     mvn clean
     mvn install site
-	sleep 1
+    sleep 1
     findbugs
     checkstyle
     jacoco
@@ -27,7 +27,6 @@ function findbugs(){
 }
 
 function sonar(){
-    set -e
     goToRootDirectory
     mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
     -Dsonar.host.url=https://sonarcloud.io \
@@ -37,7 +36,6 @@ function sonar(){
 }
 
 function jacoco(){
-    set -e
     mvn jacoco:report
     goToRootDirectory;
     xargs -a reports/jacoco.txt firefox "$line"
@@ -45,7 +43,6 @@ function jacoco(){
 
 
 function jdepend(){
-    set -e
     goToRootDirectory
     cd battleship-client
     mvn jdepend:generate
