@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 class ShipPlacer {
-    private static final String SHIPS_SEPARATOR = ";\\|";
-    private static final String COORDINATES_SEPARATOR = ";";
     private static final int FOUR_MAST = 4;
     private static final int THREE_MAST = 3;
     private static final int DOUBLE_MAST = 2;
@@ -48,7 +46,7 @@ class ShipPlacer {
     private void finishSetup() {
         if (typesOfShips.isEmpty()) {
             socketServer.send(playerBoard.getAllPositions());
-            placeEnemyShips(socketServer.receiveAllShips());
+            placeEnemyShips(Converter.convert(socketServer.receiveAllShips()));
             areAllShipsPlaced = true;
             shipsPlaced.release();
         }
@@ -72,18 +70,9 @@ class ShipPlacer {
         return producePoints(x, y, type);
     }
 
-    private void placeEnemyShips(String shipsString) {
-        String[] ships = shipsString.split(SHIPS_SEPARATOR);
-        for (String shipStr : ships) {
-            List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] coords = shipStr.split(COORDINATES_SEPARATOR);
-
-            Arrays.stream(coords).forEach(e -> {
-                String[] sth = e.split(",");
-                point2DOfShip.add(Point2D.of(Integer.parseInt(sth[0]), Integer.parseInt(sth[1])));
-            });
-
-            Ship ship = new Ship(point2DOfShip);
+    private void placeEnemyShips(List<List<Point2D>> ships) {
+        for (List<Point2D> shipAsPoints : ships) {
+            Ship ship = new Ship(shipAsPoints);
             enemyBoard.isShipPositionValid(ship);
         }
     }

@@ -1,9 +1,6 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.language.Message;
-import com.academy.solid.nie.client.language.MessageProviderImpl;
 import com.academy.solid.nie.client.ui.Point2D;
-import com.academy.solid.nie.client.ui.WindowDisplayer;
 
 import java.io.*;
 import java.net.Socket;

@@ -26,7 +26,6 @@ class GameScene extends Application implements Runnable {
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
     private final boolean firstPlayer;
-    private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
@@ -85,11 +84,10 @@ class GameScene extends Application implements Runnable {
     }
 
     private void handlePlayersMove(final Cell cell) {
-        isMyTurn = cell.shoot();
+        boolean isMyTurn = cell.shoot();
         if (!isMyTurn) {
             waitForSending.release();
-        }
-        else {
+        } else {
             myTurn.release();
         }
         socketServer.sendPlayerMove(cell.toString());
@@ -143,8 +141,7 @@ class GameScene extends Application implements Runnable {
             }
             if (playerBoard.isMyTurn()) {
                 waitForSending.release();
-            }
-            else {
+            } else {
                 myTurn.release();
             }
         }
