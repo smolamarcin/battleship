@@ -1,7 +1,6 @@
 package com.academy.solid.nie.server;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,16 +10,13 @@ class ServerGameInitializer implements GameInitializer {
     /**
      * 0 stands for first available port
      */
-    private static final int AVAILABLE_PORT = 0;
     private final Player first;
     private final Player second;
-    private final String ip;
     private final int portNumber;
 
-    ServerGameInitializer(Player first, Player second, String ip, int portNumber) {
+    ServerGameInitializer(Player first, Player second, int portNumber) {
         this.first = first;
         this.second = second;
-        this.ip = ip;
         this.portNumber = portNumber;
     }
 
@@ -33,8 +29,8 @@ class ServerGameInitializer implements GameInitializer {
     }
 
     private ServerSocket initializeConnection() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(this.portNumber, AVAILABLE_PORT, InetAddress.getByName(ip));
-        log("Server " + ip + " is here");
+        ServerSocket serverSocket = new ServerSocket(this.portNumber);
+        log("Server is here");
         return serverSocket;
     }
 
