@@ -8,6 +8,7 @@ import com.academy.solid.nie.client.ui.WindowDisplayer;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -71,10 +72,6 @@ public final class SocketServer implements Server {
     private List<Point2D> receiveAllMovesWithoutSending() {
         allMoves = "";
         String moves = server.getEnemyShips();
-        if (moves.equals("Q")) {
-            new WindowDisplayer(MessageProviderImpl.getCommunicate(Message.LOSE))
-                    .withButtonWhoExitSystem().display();
-        }
 
         return Arrays.stream(moves.split(",;"))
                 .map(s -> s.split(","))
@@ -91,7 +88,6 @@ public final class SocketServer implements Server {
 
     @Override
     public void sendPlayerMove(final String move) {
-//        allMoves += move + ";";
         send(move);
     }
 
@@ -123,9 +119,8 @@ public final class SocketServer implements Server {
 
     public List<Point2D> receiveMoves() throws IOException {
         String moves = server.receiveMoves();
-        if (moves.equals("Q")) {
-            new WindowDisplayer(CommunicateProviderImpl.getCommunicate(Communicate.LOSE))
-                    .withButtonWhoExitSystem().display();
+        if (moves == null || moves.equals("Q")) {
+            return new ArrayList<>();
         }
 
         return Arrays.stream(moves.split(";"))

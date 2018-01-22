@@ -66,6 +66,12 @@ class GameScene extends Application implements Runnable {
 
     private EventHandler<MouseEvent> getMove() {
         return event -> {
+            if (playerBoard.areAllShipsSunk()) {
+                new WindowDisplayer(MessageProviderImpl
+                        .getCommunicate(Message.LOSE))
+                        .withButtonWhoExitSystem().display();
+                socketServer.sendGameOverToOpponent();
+            }
             Cell cell = (Cell) event.getSource();
             if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
                 return;
@@ -80,8 +86,10 @@ class GameScene extends Application implements Runnable {
 
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
-        if (!isMyTurn)
+        if (!isMyTurn) {
             waitForSending.release();
+        }
+        socketServer.sendPlayerMove(cell.toString());
         if (enemyBoard.areAllShipsSunk()) {
             new WindowDisplayer(MessageProviderImpl
                     .getCommunicate(Message.WIN))
@@ -91,7 +99,6 @@ class GameScene extends Application implements Runnable {
         if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
-        socketServer.sendPlayerMove(cell.toString());
     }
 
     void start() {

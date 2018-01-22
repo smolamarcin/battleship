@@ -50,7 +50,6 @@ class Board {
     /**
      * Determines if you can put a ship in a given place.
      *
-     *
      * @param ship - represents single instance of Ship
      * @return true if the position of the ship is correct.
      */
@@ -188,8 +187,10 @@ class Board {
     }
 
     void makeMoves(List<Point2D> points) {
-        points.forEach(e -> isMyTurn = boardFX.shoot(e));
-        markSunkenShipOnPlayerBoard();
+        if (!points.isEmpty()) {
+            points.forEach(e -> isMyTurn = boardFX.shoot(e));
+            markSunkenShipOnPlayerBoard();
+        }
     }
 
     private void markSunkenShipOnPlayerBoard() {
