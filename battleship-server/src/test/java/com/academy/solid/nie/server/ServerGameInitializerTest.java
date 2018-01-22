@@ -13,6 +13,7 @@ import static org.mockito.Mockito.*;
 @Test
 public class ServerGameInitializerTest {
     static final String IP = "127.0.0.1";
+    static final int PORT = 9970;
     private int millis = 100;
     /**
      * 0 stands for first available port

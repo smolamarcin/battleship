@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 /**
  * Reads configuration from the file.
  */
-public class FileConfiguration implements Configuration {
+public final class FileConfiguration implements Configuration {
     /**
      * Default configuration file name.
      */
-    public static final String NAME = "configuration";
-    private EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
+    private static final String NAME = "configuration";
+    private static EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
 
     /**
      * Return the config map which is used in the game.
@@ -22,7 +22,7 @@ public class FileConfiguration implements Configuration {
      *
      * @return map with config parameters
      */
-    public final Map<ConfigProperty, String> provide() {
+    public Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(NAME);
             Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));
@@ -33,4 +33,15 @@ public class FileConfiguration implements Configuration {
     private Consumer<ConfigProperty> consume(final ResourceBundle resourceBundle) {
         return element -> map.put(element, resourceBundle.getString(element.name()));
     }
+
+    /**
+     * Return specified message in the game.
+     *
+     * @param property sadasd
+     * @return string representation of the property
+     */
+    public String getCommunicate(ConfigProperty property) {
+        return map.get(property);
+    }
+
 }

@@ -4,6 +4,9 @@ package com.academy.solid.nie.client.ui;
 import com.academy.solid.nie.client.communication.IpValidator;
 import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.client.communication.Validator;
+import com.academy.solid.nie.client.config.ConfigProperty;
+import com.academy.solid.nie.client.config.Configuration;
+import com.academy.solid.nie.client.config.FileConfiguration;
 import com.academy.solid.nie.client.language.Message;
 import com.academy.solid.nie.client.language.MessageProviderImpl;
 import com.academy.solid.nie.client.language.Language;
@@ -33,27 +36,45 @@ public final class StartSceneController {
     @FXML
     private TextField fieldIP;
     @FXML
+    private TextField fieldPort;
+    @FXML
     private ChoiceBox<Language> languageChoice;
     private ObservableList<Language> availableLanguages = FXCollections.
             observableArrayList(Language.POLISH, Language.ENGLISH);
     private MessageProviderImpl communicateProvider;
+    private Configuration configuration;
 
     @FXML
     void initialize() {
-        initializeLanguageMenu();
+        configuration = new FileConfiguration();
+        configuration.provide();
+        Language defaultLanguage = Language.valueOf(configuration.getCommunicate(ConfigProperty.LANGUAGE));
+        initializeLanguageMenu(defaultLanguage);
+        intitializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
+        initializePortField(configuration.getCommunicate(ConfigProperty.SERVER_PORT));
+    }
+
+    private void initializePortField(String communicate) {
+        fieldPort.setText(communicate);
+    }
+
+    private void intitializeIpField(String communicate) {
+        fieldIP.setText(communicate);
     }
 
     @FXML
     void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
+        Validator portValidator = new PortValidator();
         String ip = fieldIP.getText();
-        if (ipValidator.validate(ip)) {
+        String port = fieldPort.getText();
+        if (ipValidator.validate(ip) && portValidator.validate(port)) {
             SocketServer socketServer = new SocketServer();
-            socketServer.connect(ip);
+            socketServer.connect(ip, Integer.parseInt(port));
             new GameScene(socketServer).start();
         } else {
             WindowDisplayer wrongIpWindow = new WindowDisplayer(
-                    MessageProviderImpl.getCommunicate(Message.WRONG_IP))
+                    MessageProviderImpl.getCommunicate(Message.WRONG_INPUT))
                     .withButtonWhoExitThisWindow();
             wrongIpWindow.display();
         }
@@ -64,13 +85,14 @@ public final class StartSceneController {
         communicateProvider.populate(languageChoice.getValue());
         updateFields();
     }
-    private void initializeLanguageMenu() {
+
+    private void initializeLanguageMenu(Language defaultLanguage) {
         communicateProvider = new MessageProviderImpl();
-        Language language = Language.ENGLISH;
-        communicateProvider.populate(language);
+        communicateProvider.populate(defaultLanguage);
         languageChoice.setItems(availableLanguages);
-        languageChoice.setValue(Language.ENGLISH);
+        languageChoice.setValue(defaultLanguage);
     }
+
     private void updateFields() {
         insertIpLabel.setText(MessageProviderImpl.getCommunicate(Message.INSERT_IP));
         btnConnect.setText(MessageProviderImpl.getCommunicate(Message.CONNECT));

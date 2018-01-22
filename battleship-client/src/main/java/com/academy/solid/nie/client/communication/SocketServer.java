@@ -26,12 +26,11 @@ public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
     private String allMoves = "";
-    private static final int DEFAULT_PORT_NUMBER = 8081;
 
     @Override
-    public void connect(String ip) {
+    public void connect(String ip, int port) {
         try {
-            Socket socket = createSocket(ip, DEFAULT_PORT_NUMBER);
+            Socket socket = createSocket(ip, port);
             server = SocketClient.builder().
                     ip(ip).socket(socket).
                     out(createPrintWriter(socket)).
