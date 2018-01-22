@@ -15,21 +15,30 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.concurrent.Semaphore;
+
 /**
  * Class represents Game UI.
  */
-class GameScene extends Application {
+class GameScene extends Application implements Runnable {
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
+    private final boolean firstPlayer;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
+    private Semaphore shipsPlaced = new Semaphore(0);
+    private Semaphore waitForSending = new Semaphore(0);
 
-    GameScene(final SocketServer socketServer) {
+    GameScene(final SocketServer socketServer) throws IOException {
         this.socketServer = socketServer;
+        this.firstPlayer = socketServer.isFirstPlayer();
+        if (!firstPlayer)
+            waitForSending.release();
     }
 
     private Parent createContent() {
@@ -40,7 +49,7 @@ class GameScene extends Application {
         enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, shipsPlaced);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
         vbox.setAlignment(Pos.CENTER);
@@ -57,13 +66,19 @@ class GameScene extends Application {
 
     private EventHandler<MouseEvent> getMove() {
         return event -> {
+            if (playerBoard.areAllShipsSunk()) {
+                new WindowDisplayer(MessageProviderImpl
+                        .getCommunicate(Message.LOSE))
+                        .withButtonWhoExitSystem().display();
+                socketServer.sendGameOverToOpponent();
+            }
             Cell cell = (Cell) event.getSource();
             if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
                 return;
             }
             handlePlayersMove(cell);
             if (!isMyTurn) {
-                handleEnemyMove();
+//                handleEnemyMove();
                 isMyTurn = true;
             }
         };
@@ -71,6 +86,10 @@ class GameScene extends Application {
 
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
+        if (!isMyTurn) {
+            waitForSending.release();
+        }
+        socketServer.sendPlayerMove(cell.toString());
         if (enemyBoard.areAllShipsSunk()) {
             new WindowDisplayer(MessageProviderImpl
                     .getCommunicate(Message.WIN))
@@ -80,11 +99,6 @@ class GameScene extends Application {
         if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
-        socketServer.sendPlayerMove(cell.toString());
-    }
-
-    private void handleEnemyMove() {
-        playerBoard.makeMoves(socketServer.receiveEnemyMoves());
     }
 
     void start() {
@@ -98,5 +112,35 @@ class GameScene extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
         primaryStage.show();
+    }
+
+    @Override
+    public void run() {
+        System.out.println("uruchomiliśmy wątek");
+        if (!firstPlayer) {
+            System.out.println("jesteśmy drugim gracze");
+        }
+        try {
+            shipsPlaced.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("rozstawiono statki");
+        while (true) {
+            try {
+                waitForSending.acquire();
+                System.out.println("Słucham");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                playerBoard.makeMoves(socketServer.receiveMoves());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (playerBoard.isMyTurn()) {
+                waitForSending.release();
+            }
+        }
     }
 }

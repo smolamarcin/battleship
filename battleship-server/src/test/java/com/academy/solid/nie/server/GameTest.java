@@ -21,6 +21,8 @@ public class GameTest {
     public void setUp() throws Exception {
         first = mock(Player.class);
         second = mock(Player.class);
+        when(first.getShips()).thenReturn("");
+        when(second.getShips()).thenReturn("");
     }
 
     @Test(groups = {"unit"})

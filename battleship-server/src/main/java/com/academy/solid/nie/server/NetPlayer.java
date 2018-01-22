@@ -15,6 +15,13 @@ public final class NetPlayer implements Player {
     private BufferedReader in;
 
     @Override
+    public String getShips() {
+        return ships;
+    }
+
+    private String ships;
+
+    @Override
     public void register(final ServerSocket serverSocket) throws IOException {
         Socket clientSocket = serverSocket.accept();
         out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), StandardCharsets.UTF_8), true);
@@ -32,7 +39,8 @@ public final class NetPlayer implements Player {
     @Override
     public String provideShips() throws IOException {
         out.println("Provide ships");
-        return in.readLine();
+        ships = in.readLine();
+        return ships;
     }
 
     @Override

@@ -91,9 +91,9 @@ class BoardFX extends Parent {
         return getCell(point).isOccupied();
     }
 
-    void shoot(Point2D point) {
+    boolean shoot(Point2D point) {
         Cell cellOnBoard = getCell(point);
-        cellOnBoard.shoot();
+        return cellOnBoard.shoot();
     }
 
     void add(Ship ship, Point2D point) {

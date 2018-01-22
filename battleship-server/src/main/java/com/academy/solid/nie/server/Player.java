@@ -7,6 +7,7 @@ import java.net.ServerSocket;
  * Provides methods for the player.
  */
 public interface Player {
+    String getShips();
     /**
      * Marks the connection of the player to the game.
      *
@@ -26,7 +27,7 @@ public interface Player {
     /**
      * Provides ships to the player.
      *
-     * @return string representation of the ships
+     * @return String representation of the ships
      * @throws IOException when cannot provide the ships.
      */
     String provideShips() throws IOException;
@@ -34,7 +35,7 @@ public interface Player {
     /**
      * Makes a move.
      *
-     * @return string representation of the single move.
+     * @return String representation of the single move.
      * @throws IOException when cannot perform a move.
      */
     String makeMove() throws IOException;
