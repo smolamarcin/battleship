@@ -128,7 +128,7 @@ public final class SocketServer implements Server {
                     .withButtonWhoExitSystem().display();
         }
 
-        return Arrays.stream(moves.split(",;"))
+        return Arrays.stream(moves.split(";"))
                 .map(s -> s.split(","))
                 .map(stringArrayToIntArray())
                 .map(arr -> Point2D.of(arr[0], arr[1]))

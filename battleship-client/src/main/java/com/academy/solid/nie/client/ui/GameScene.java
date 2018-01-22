@@ -80,7 +80,7 @@ class GameScene extends Application implements Runnable {
 
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
-        if (isMyTurn)
+        if (!isMyTurn)
             waitForSending.release();
         if (enemyBoard.areAllShipsSunk()) {
             new WindowDisplayer(MessageProviderImpl
@@ -122,6 +122,7 @@ class GameScene extends Application implements Runnable {
         while (true) {
             try {
                 waitForSending.acquire();
+                System.out.println("Słucham");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

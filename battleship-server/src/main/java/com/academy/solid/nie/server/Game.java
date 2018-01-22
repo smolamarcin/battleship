@@ -21,8 +21,8 @@ class Game {
 
     void play() throws IOException {
         move = currentPlayer.makeMove();
+        otherPlayer.inform(move);
         changeCurrentPlayer();
-        currentPlayer.inform(move);
 
         log((currentPlayer.equals(first) ? "First Player" : "Second Player") + ":" + move);
     }

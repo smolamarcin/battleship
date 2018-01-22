@@ -7,11 +7,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 import java.util.concurrent.Semaphore;
-import java.util.stream.IntStream;
 
 class ShipPlacer {
-    private static final String SHIPS_SEPARATOR = ",\\|";
-    private static final String COORDINATES_SEPARATOR = ",";
+    private static final String SHIPS_SEPARATOR = ";\\|";
+    private static final String COORDINATES_SEPARATOR = ";";
     private static final int FOUR_MAST = 4;
     private static final int THREE_MAST = 3;
     private static final int DOUBLE_MAST = 2;
@@ -79,10 +78,9 @@ class ShipPlacer {
             List<Point2D> point2DOfShip = new ArrayList<>();
             String[] coords = shipStr.split(COORDINATES_SEPARATOR);
 
-            IntStream.range(0, coords.length).filter(i -> i % 2 == 0).forEach(index -> {
-                int x = Integer.parseInt(coords[index]);
-                int y = Integer.parseInt(coords[index + 1]);
-                point2DOfShip.add(Point2D.of(x, y));
+            Arrays.stream(coords).forEach(e -> {
+                String[] sth = e.split(",");
+                point2DOfShip.add(Point2D.of(Integer.parseInt(sth[0]), Integer.parseInt(sth[1])));
             });
 
             Ship ship = new Ship(point2DOfShip);

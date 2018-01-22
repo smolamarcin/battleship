@@ -70,7 +70,7 @@ class Cell extends Rectangle {
      */
     @Override
     public String toString() {
-        return point2D.getX() + "," + point2D.getY() + ",";
+        return point2D.getX() + "," + point2D.getY() + ";";
     }
 
     int getCellX() {
