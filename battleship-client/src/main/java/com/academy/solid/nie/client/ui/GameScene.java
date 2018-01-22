@@ -73,7 +73,7 @@ class GameScene extends Application implements Runnable {
                 socketServer.sendGameOverToOpponent();
             }
             Cell cell = (Cell) event.getSource();
-            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
+            if (!isMyTurn || !shipPlacer.areAllShipsPlaced()) {
                 return;
             }
             handlePlayersMove(cell);
