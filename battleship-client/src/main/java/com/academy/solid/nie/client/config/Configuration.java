@@ -12,4 +12,11 @@ public interface Configuration {
      * @return a map with contains config properties
      */
     Map<ConfigProperty, String> provide();
+
+    /**
+     * Return specified message from config file.
+     * @param property represents desired config property.
+     * @return string representation of the property
+     */
+    String getCommunicate(ConfigProperty property);
 }

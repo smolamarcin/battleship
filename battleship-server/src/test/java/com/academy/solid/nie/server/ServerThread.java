@@ -15,7 +15,7 @@ public class ServerThread extends Thread {
 
     @Override
     public void run() {
-        GameInitializer gameInitializer = new ServerGameInitializer(first, second, ServerGameInitializerTest.IP, portNumber);
+        GameInitializer gameInitializer = new ServerGameInitializer(first, second, portNumber);
         try {
             gameInitializer.initializeGame();
         } catch (IOException e) {

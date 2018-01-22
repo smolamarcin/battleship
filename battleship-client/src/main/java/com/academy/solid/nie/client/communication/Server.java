@@ -14,10 +14,12 @@ import java.util.List;
 public interface Server {
     /**
      * Tries to connect to server.
-     * @param ip as String
+     *
+     * @param ip   as String
+     * @param port you want to connect
      * @throws IOException when there is no server with provided IP
      */
-    void connect(String ip) throws IOException;
+    void connect(String ip, int port) throws IOException;
 
     /**
      * Send a list of ships between clients.

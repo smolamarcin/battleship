@@ -11,19 +11,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-      prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.academy.solid.nie.client.ui.StartSceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.academy.solid.nie.client.ui.StartSceneController">
     <children>
-        <ImageView fx:id="logo" fitHeight="378.0" fitWidth="600.0" layoutY="14.0" opacity="0.3" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fx:id="logo" fitHeight="378.0" fitWidth="600.0" layoutY="14.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="logo.png"/>
+                <Image url="logo.png" />
             </image>
         </ImageView>
-        <TextField fx:id="fieldIP" layoutX="215.0" layoutY="188.0"/>
-        <Button fx:id="btnConnect" layoutX="269.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnConnectClicked"/>
-        <Label fx:id="insertIpLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="163.0"/>
-        <ChoiceBox fx:id="languageChoice" layoutX="223.0" layoutY="291.0" prefWidth="150.0" onAction="#languageChosen"/>
+        <TextField fx:id="fieldIP" layoutX="215.0" layoutY="188.0" />
+        <Button fx:id="btnConnect" layoutX="269.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnConnectClicked" />
+        <Label fx:id="insertIpLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="231.0" layoutY="163.0" />
+        <ChoiceBox fx:id="languageChoice" layoutX="223.0" layoutY="291.0" onAction="#languageChosen" prefWidth="150.0" />
+      <TextField fx:id="fieldPort" layoutX="393.0" layoutY="187.0" prefHeight="27.0" prefWidth="50.0" />
     </children>
 </Pane>

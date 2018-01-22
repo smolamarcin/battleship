@@ -13,6 +13,7 @@ import static org.mockito.Mockito.*;
 @Test
 public class ServerGameInitializerTest {
     static final String IP = "127.0.0.1";
+    static final int PORT = 9970;
     private int millis = 100;
     /**
      * 0 stands for first available port
@@ -71,7 +72,7 @@ public class ServerGameInitializerTest {
         String shipsOfFirstPlayer = "0,0,;";
         when(first.provideShips()).thenReturn(shipsOfFirstPlayer);
         //when
-        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, "127.0.0.2", AVAILABLE_PORT);
+        ServerGameInitializer shipSocketServer = new ServerGameInitializer(first, second, AVAILABLE_PORT);
         shipSocketServer.initializeGame();
         //then
         verify(first).register(any(ServerSocket.class));
