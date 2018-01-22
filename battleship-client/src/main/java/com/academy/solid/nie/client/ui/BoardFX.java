@@ -67,11 +67,12 @@ class BoardFX extends Parent {
      * Indicates the cell as occupied by the ship.
      * The cell color changes to white with a green border.
      *
-     * @param ship - represents single instance of Ship
+     * @param ship  - represents single instance of Ship
      * @param point - represents single Point of the board
      */
     void markFieldAsOccupiedByShip(Ship ship, Point2D point) {
-        Cell cell = getCell(point).addShip(ship);
+        Cell cell = getCell(point);
+        cell.setShip(ship);
         cell.setFill(Color.WHITE);
         cell.setStroke(Color.GREEN);
     }
@@ -96,6 +97,6 @@ class BoardFX extends Parent {
     }
 
     void add(Ship ship, Point2D point) {
-        getCell(point).addShip(ship);
+        getCell(point).setShip(ship);
     }
 }

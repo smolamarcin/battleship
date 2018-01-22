@@ -170,7 +170,6 @@
         </pluginManagement>
 
         <plugins>
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -204,7 +203,7 @@
                 <version>${mavenCheckstylePluginVersion}</version>
                 <configuration>
                     <configLocation>${checkstyle.config.location}</configLocation>
-                    <failsOnError>true</failsOnError>
+                    <failsOnError>false</failsOnError>
                     <failOnViolation>false</failOnViolation>
                 </configuration>
             </plugin>

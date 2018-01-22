@@ -4,8 +4,8 @@ package com.academy.solid.nie.client.ui;
 import com.academy.solid.nie.client.communication.IpValidator;
 import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.client.communication.Validator;
-import com.academy.solid.nie.client.language.Communicate;
-import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.language.Message;
+import com.academy.solid.nie.client.language.MessageProviderImpl;
 import com.academy.solid.nie.client.language.Language;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +36,7 @@ public final class StartSceneController {
     private ChoiceBox<Language> languageChoice;
     private ObservableList<Language> availableLanguages = FXCollections.
             observableArrayList(Language.POLISH, Language.ENGLISH);
-    private CommunicateProviderImpl communicateProvider;
+    private MessageProviderImpl communicateProvider;
 
     @FXML
     void initialize() {
@@ -53,7 +53,7 @@ public final class StartSceneController {
             new GameScene(socketServer).start();
         } else {
             WindowDisplayer wrongIpWindow = new WindowDisplayer(
-                    CommunicateProviderImpl.getCommunicate(Communicate.WRONG_IP))
+                    MessageProviderImpl.getCommunicate(Message.WRONG_IP))
                     .withButtonWhoExitThisWindow();
             wrongIpWindow.display();
         }
@@ -65,14 +65,14 @@ public final class StartSceneController {
         updateFields();
     }
     private void initializeLanguageMenu() {
-        communicateProvider = new CommunicateProviderImpl();
+        communicateProvider = new MessageProviderImpl();
         Language language = Language.ENGLISH;
         communicateProvider.populate(language);
         languageChoice.setItems(availableLanguages);
         languageChoice.setValue(Language.ENGLISH);
     }
     private void updateFields() {
-        insertIpLabel.setText(CommunicateProviderImpl.getCommunicate(Communicate.INSERT_IP));
-        btnConnect.setText(CommunicateProviderImpl.getCommunicate(Communicate.CONNECT));
+        insertIpLabel.setText(MessageProviderImpl.getCommunicate(Message.INSERT_IP));
+        btnConnect.setText(MessageProviderImpl.getCommunicate(Message.CONNECT));
     }
 }

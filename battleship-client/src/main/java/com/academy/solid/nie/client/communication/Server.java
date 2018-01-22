@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface Server {
     /**
-     * Returns true if connection was successful.
-     *
+     * Tries to connect to server.
      * @param ip as String
+     * @throws IOException when there is no server with provided IP
      */
     void connect(String ip) throws IOException;
 
@@ -35,15 +35,12 @@ public interface Server {
 
 
     /**
-     * Receive enemy moves.
-     *
-     * @return collection of posiitions
+     * @return collection of positions
      */
     List<Point2D> receiveEnemyMoves();
 
     /**
-     * Receive ships.
-     * @return ships positions as string
+     * @return ships positions as String
      */
     String receiveAllShips();
 

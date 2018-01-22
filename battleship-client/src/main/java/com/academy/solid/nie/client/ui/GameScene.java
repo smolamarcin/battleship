@@ -2,8 +2,8 @@ package com.academy.solid.nie.client.ui;
 
 
 import com.academy.solid.nie.client.communication.SocketServer;
-import com.academy.solid.nie.client.language.Communicate;
-import com.academy.solid.nie.client.language.CommunicateProviderImpl;
+import com.academy.solid.nie.client.language.Message;
+import com.academy.solid.nie.client.language.MessageProviderImpl;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,10 +35,8 @@ class GameScene extends Application {
     private Parent createContent() {
         BorderPane root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
-        Button button = new Button();
-        button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WRONG_IP));
-        button.setOnMouseClicked(event -> button.setText(CommunicateProviderImpl.getCommunicate(Communicate.WELCOME)));
-        root.setRight(button);
+        Button randomPlacementButton = createRandomButton();
+        root.setBottom(randomPlacementButton);
         enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false);
@@ -48,6 +46,13 @@ class GameScene extends Application {
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
         return root;
+    }
+
+    private Button createRandomButton() {
+        Button button = new Button();
+        button.setText(MessageProviderImpl.getCommunicate(Message.RANDOM));
+        button.setOnMouseClicked(e -> shipPlacer.placeShipsRandomly());
+        return button;
     }
 
     private EventHandler<MouseEvent> getMove() {
@@ -67,12 +72,12 @@ class GameScene extends Application {
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (enemyBoard.areAllShipsSunk()) {
-            new WindowDisplayer(CommunicateProviderImpl
-                    .getCommunicate(Communicate.WIN))
+            new WindowDisplayer(MessageProviderImpl
+                    .getCommunicate(Message.WIN))
                     .withButtonWhoExitSystem().display();
             socketServer.sendGameOverToOpponent();
         }
-        if (enemyBoard.isShipSunken(cell.getShip())){
+        if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
         socketServer.sendPlayerMove(cell.toString());
