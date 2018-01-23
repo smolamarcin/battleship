@@ -4,6 +4,7 @@ package com.academy.solid.nie.client.ui;
 import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.client.language.Message;
 import com.academy.solid.nie.client.language.MessageProviderImpl;
+import com.academy.solid.nie.client.output.Output;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,16 +19,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Logger;
 
 /**
  * Class represents Game UI.
  */
 class GameScene extends Application implements Runnable {
-    private static final Logger LOGGER = Logger.getLogger(GameScene.class.getName());
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
+    private Output output;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
@@ -38,9 +38,10 @@ class GameScene extends Application implements Runnable {
     private Semaphore myTurn = new Semaphore(0);
     private BorderPane root;
 
-    GameScene(final SocketServer socketServer) throws IOException {
+    GameScene(final SocketServer socketServer, final Output output) throws IOException {
         this.socketServer = socketServer;
         boolean firstPlayer = socketServer.isFirstPlayer();
+        this.output = output;
         if (!firstPlayer) {
             waitForSending.release();
         } else {
@@ -48,14 +49,15 @@ class GameScene extends Application implements Runnable {
         }
     }
 
+
     private Parent createContent() {
         root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         Button randomPlacementButton = createRandomButton();
         root.setBottom(randomPlacementButton);
-        enemyBoard = new Board(true);
+        enemyBoard = new Board(true, output);
         enemyBoard.initialize(getMove());
-        playerBoard = new Board(false);
+        playerBoard = new Board(false, output);
         shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, shipsPlaced);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
@@ -131,18 +133,18 @@ class GameScene extends Application implements Runnable {
         try {
             shipsPlaced.acquire();
         } catch (InterruptedException e) {
-            LOGGER.warning(e.getMessage());
+            output.send(e.getMessage());
         }
         while (true) {
             try {
                 waitForSending.acquire();
             } catch (InterruptedException e) {
-                LOGGER.warning(e.getMessage());
+                output.send(e.getMessage());
             }
             try {
                 playerBoard.makeMoves(socketServer.receiveMoves());
             } catch (IOException e) {
-                LOGGER.warning(e.getMessage());
+                output.send(e.getMessage());
             }
             if (playerBoard.isMyTurn()) {
                 waitForSending.release();

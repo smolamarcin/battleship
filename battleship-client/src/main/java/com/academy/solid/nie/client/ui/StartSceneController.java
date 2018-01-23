@@ -10,6 +10,8 @@ import com.academy.solid.nie.client.config.FileConfiguration;
 import com.academy.solid.nie.client.language.Message;
 import com.academy.solid.nie.client.language.MessageProviderImpl;
 import com.academy.solid.nie.client.language.Language;
+import com.academy.solid.nie.client.output.Output;
+import com.academy.solid.nie.client.output.OutputFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,6 +45,7 @@ public final class StartSceneController {
             observableArrayList(Language.POLISH, Language.ENGLISH);
     private MessageProviderImpl communicateProvider;
     private Configuration configuration;
+    private Output output;
 
     @FXML
     void initialize() {
@@ -52,6 +55,7 @@ public final class StartSceneController {
         initializeLanguageMenu(defaultLanguage);
         intitializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
         initializePortField(configuration.getCommunicate(ConfigProperty.SERVER_PORT));
+        output = new OutputFactory(configuration).create();
     }
 
     private void initializePortField(String communicate) {
@@ -65,13 +69,13 @@ public final class StartSceneController {
     @FXML
     void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
-        Validator portValidator = new PortValidator();
+        Validator portValidator = new PortValidator(output);
         String ip = fieldIP.getText();
         String port = fieldPort.getText();
         if (ipValidator.validate(ip) && portValidator.validate(port)) {
-            SocketServer socketServer = new SocketServer();
+            SocketServer socketServer = new SocketServer(output);
             socketServer.connect(ip, Integer.parseInt(port));
-            GameScene gameScene = new GameScene(socketServer);
+            GameScene gameScene = new GameScene(socketServer, output);
             gameScene.start();
             new Thread(gameScene).start();
         } else {

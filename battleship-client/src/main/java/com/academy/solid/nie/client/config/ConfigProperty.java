@@ -6,5 +6,5 @@ package com.academy.solid.nie.client.config;
  * output type and number of rounds in the game.
  */
 public enum ConfigProperty {
-    SERVER_PORT, SERVER_IP, OUTPUT, LANGUAGE
+    SERVER_PORT, SERVER_IP, OUTPUT, LANGUAGE, FILE
 }

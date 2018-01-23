@@ -1,12 +1,14 @@
 package com.academy.solid.nie.client.ui;
 
+import com.academy.solid.nie.client.output.Output;
+import org.mockito.Mockito;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
 public class PortValidatorTest {
-    private PortValidator portValidator = new PortValidator();
+    private PortValidator portValidator = new PortValidator(Mockito.mock(Output.class));
     @DataProvider
     public static Object[][] ports() {
 

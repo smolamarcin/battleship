@@ -1,5 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
+import com.academy.solid.nie.client.output.Output;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -18,11 +19,11 @@ import java.util.stream.Collectors;
  * @since 1.0.1
  */
 class Board {
-    private static final Logger LOGGER = Logger.getLogger(Board.class.getName());
     private static final int MAX_HEIGHT = 10;
     private static final int MAX_WIDTH = 10;
     private BoardFX boardFX;
     private boolean enemy;
+    private Output output;
     private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
     private boolean isMyTurn;
@@ -31,8 +32,9 @@ class Board {
         return boardFX;
     }
 
-    Board(final boolean enemy) {
+    Board(final boolean enemy, final Output output) {
         this.enemy = enemy;
+        this.output = output;
         this.boardFX = new BoardFX(MAX_HEIGHT, MAX_WIDTH);
     }
 
@@ -58,9 +60,7 @@ class Board {
             allShips.add(ship);
             return placeAndMarkShip(ship);
         }
-        if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.info(positions.toString());
-        }
+        output.send(positions.toString());
         return false;
     }
 
