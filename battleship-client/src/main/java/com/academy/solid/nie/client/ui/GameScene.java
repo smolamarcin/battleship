@@ -17,15 +17,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
 
 /**
  * Class represents Game UI.
  */
 class GameScene extends Application implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(GameScene.class.getName());
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
-    private final boolean firstPlayer;
     private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
@@ -37,8 +38,8 @@ class GameScene extends Application implements Runnable {
 
     GameScene(final SocketServer socketServer) throws IOException {
         this.socketServer = socketServer;
-        this.firstPlayer = socketServer.isFirstPlayer();
-        if (!firstPlayer)
+        boolean firstPlayer = socketServer.isFirstPlayer();
+        if (!firstPlayer) {
             waitForSending.release();
         else {
             myTurn.release();
@@ -119,27 +120,21 @@ class GameScene extends Application implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("uruchomiliśmy wątek");
-        if (!firstPlayer) {
-            System.out.println("jesteśmy drugim gracze");
-        }
         try {
             shipsPlaced.acquire();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
-        System.out.println("rozstawiono statki");
         while (true) {
             try {
                 waitForSending.acquire();
-                System.out.println("Słucham");
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.warning(e.getMessage());
             }
             try {
                 playerBoard.makeMoves(socketServer.receiveMoves());
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.warning(e.getMessage());
             }
             if (playerBoard.isMyTurn()) {
                 waitForSending.release();

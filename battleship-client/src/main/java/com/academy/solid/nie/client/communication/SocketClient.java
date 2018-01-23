@@ -44,7 +44,6 @@ public final class SocketClient implements ShipClient {
     @Override
     public void send(final String allShips) throws IOException {
         out.println(allShips);
-//        enemyShips = in.readLine();
     }
 
     @Override
