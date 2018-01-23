@@ -39,7 +39,6 @@ public class SocketClientTest {
         socketClient.send(message);
         //then
         verify(printWriter).println(message);
-        verify(bufferedReader).readLine();
     }
 
     @Test(groups = {"unit"})

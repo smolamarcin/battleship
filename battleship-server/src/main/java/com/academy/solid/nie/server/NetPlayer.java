@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -13,6 +15,8 @@ public final class NetPlayer implements Player {
     private static final Logger LOGGER = Logger.getLogger(NetPlayer.class.getName());
     private PrintWriter out;
     private BufferedReader in;
+    private List<String> previousMoves = new ArrayList<>();
+    private String ships;
 
     @Override
     public void register(final ServerSocket serverSocket) throws IOException {
@@ -32,11 +36,21 @@ public final class NetPlayer implements Player {
     @Override
     public String provideShips() throws IOException {
         out.println("Provide ships");
-        return in.readLine();
+        ships = in.readLine();
+        return ships;
     }
 
     @Override
     public String makeMove() throws IOException {
         return in.readLine();
+    }
+
+    @Override
+    public boolean shallPlayersBeChanged(String move) {
+        if (previousMoves.contains(move)) {
+            return true;
+        }
+        previousMoves.add(move);
+        return !ships.contains(move);
     }
 }

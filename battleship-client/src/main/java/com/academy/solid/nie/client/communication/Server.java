@@ -1,9 +1,6 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.ui.Point2D;
-
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Lists methods for the server.
@@ -34,12 +31,6 @@ public interface Server {
      * @param move as String
      */
     void sendPlayerMove(String move);
-
-
-    /**
-     * @return collection of positions
-     */
-    List<Point2D> receiveEnemyMoves();
 
     /**
      * @return ships positions as String

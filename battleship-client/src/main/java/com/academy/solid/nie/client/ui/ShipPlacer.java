@@ -5,17 +5,12 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
-import java.util.stream.IntStream;
+import java.util.*;
+import java.util.concurrent.Semaphore;
 
 class ShipPlacer {
-    private static final String SHIPS_SEPARATOR = ",\\|";
-    private static final String COORDINATES_SEPARATOR = ",";
+    private static final String SHIPS_SEPARATOR = ";\\|";
+    private static final String COORDINATES_SEPARATOR = ";";
     private static final int FOUR_MAST = 4;
     private static final int THREE_MAST = 3;
     private static final int DOUBLE_MAST = 2;
@@ -24,14 +19,16 @@ class ShipPlacer {
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
+    private Semaphore shipsPlaced;
     private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
-        DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
+            DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
-    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore shipsPlaced) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
+        this.shipsPlaced = shipsPlaced;
     }
 
     EventHandler<MouseEvent> setUpPlayerShips() {
@@ -53,6 +50,7 @@ class ShipPlacer {
             socketServer.send(playerBoard.getAllPositions());
             placeEnemyShips(socketServer.receiveAllShips());
             areAllShipsPlaced = true;
+            shipsPlaced.release();
         }
     }
 
@@ -78,11 +76,12 @@ class ShipPlacer {
         String[] ships = shipsString.split(SHIPS_SEPARATOR);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] coords = shipStr.split(COORDINATES_SEPARATOR);
+            String[] allCoordinates = shipStr.split(COORDINATES_SEPARATOR);
 
-            IntStream.range(0, coords.length).filter(i -> i % 2 == 0).forEach(index -> {
-                int x = Integer.parseInt(coords[index]);
-                int y = Integer.parseInt(coords[index + 1]);
+            Arrays.stream(allCoordinates).forEach(e -> {
+                String[] coordinates = e.split(",");
+                int x = Integer.parseInt(coordinates[0]);
+                int y = Integer.parseInt(coordinates[1]);
                 point2DOfShip.add(Point2D.of(x, y));
             });
 

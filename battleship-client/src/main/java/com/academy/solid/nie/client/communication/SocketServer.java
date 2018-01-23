@@ -8,6 +8,7 @@ import com.academy.solid.nie.client.ui.WindowDisplayer;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -25,7 +26,12 @@ import java.util.stream.Stream;
 public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
-    private String allMoves = "";
+
+    public boolean isFirstPlayer() {
+        return firstPlayer;
+    }
+
+    private boolean firstPlayer;
 
     @Override
     public void connect(String ip, int port) {
@@ -36,7 +42,7 @@ public final class SocketServer implements Server {
                     out(createPrintWriter(socket)).
                     in(createBufferedReader(socket)).
                     build();
-            server.run();
+            firstPlayer = server.receiveServerInitialMessage();
         } catch (IOException e) {
             LOGGER.warning(e.getMessage());
         }
@@ -62,21 +68,6 @@ public final class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
-    private List<Point2D> receiveAllMovesWithoutSending() {
-        allMoves = "";
-        String moves = server.getEnemyShips();
-        if (moves.equals("Q")) {
-            new WindowDisplayer(MessageProviderImpl.getCommunicate(Message.LOSE))
-                    .withButtonWhoExitSystem().display();
-        }
-
-        return Arrays.stream(moves.split(",;"))
-                .map(s -> s.split(","))
-                .map(stringArrayToIntArray())
-                .map(arr -> Point2D.of(arr[0], arr[1]))
-                .collect(Collectors.toList());
-    }
-
     private Function<String[], int[]> stringArrayToIntArray() {
         return arr -> Stream.of(arr)
                 .mapToInt(Integer::parseInt)
@@ -84,14 +75,8 @@ public final class SocketServer implements Server {
     }
 
     @Override
-    public void sendPlayerMove(final String move) {
-        allMoves += move + ";";
-    }
-
-    @Override
-    public List<Point2D> receiveEnemyMoves() {
-        send(allMoves);
-        return receiveAllMovesWithoutSending();
+    public void sendPlayerMove(String move) {
+        send(move);
     }
 
     private Socket createSocket(String inputIp, int inputPortNumber) throws IOException {
@@ -114,4 +99,16 @@ public final class SocketServer implements Server {
         return new OutputStreamWriter(inputSocket.getOutputStream(), StandardCharsets.UTF_8);
     }
 
+    public List<Point2D> receiveMoves() throws IOException {
+        String moves = server.receiveMoves();
+        if (moves == null || moves.equals("Q")) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.stream(moves.split(";"))
+                .map(s -> s.split(","))
+                .map(stringArrayToIntArray())
+                .map(arr -> Point2D.of(arr[0], arr[1]))
+                .collect(Collectors.toList());
+    }
 }

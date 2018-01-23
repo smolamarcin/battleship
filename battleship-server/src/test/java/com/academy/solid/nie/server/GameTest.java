@@ -21,6 +21,8 @@ public class GameTest {
     public void setUp() throws Exception {
         first = mock(Player.class);
         second = mock(Player.class);
+        when(first.shallPlayersBeChanged(anyString())).thenReturn(true);
+        when(second.shallPlayersBeChanged(anyString())).thenReturn(true);
     }
 
     @Test(groups = {"unit"})

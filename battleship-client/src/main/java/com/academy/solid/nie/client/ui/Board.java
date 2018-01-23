@@ -25,6 +25,7 @@ class Board {
     private boolean enemy;
     private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
+    private boolean isMyTurn;
 
     BoardFX getBoardFX() {
         return boardFX;
@@ -48,7 +49,6 @@ class Board {
 
     /**
      * Determines if you can put a ship in a given place.
-     *
      *
      * @param ship - represents single instance of Ship
      * @return true if the position of the ship is correct.
@@ -187,8 +187,10 @@ class Board {
     }
 
     void makeMoves(List<Point2D> points) {
-        points.forEach(e -> boardFX.shoot(e));
-        markSunkenShipOnPlayerBoard();
+        if (!points.isEmpty()) {
+            points.forEach(e -> isMyTurn = boardFX.shoot(e));
+            markSunkenShipOnPlayerBoard();
+        }
     }
 
     private void markSunkenShipOnPlayerBoard() {
@@ -208,5 +210,9 @@ class Board {
                 .map(this::getAllNeighborsOf)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
+    }
+
+    boolean isMyTurn() {
+        return isMyTurn;
     }
 }

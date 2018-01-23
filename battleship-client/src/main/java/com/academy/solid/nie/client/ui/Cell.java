@@ -51,6 +51,9 @@ class Cell extends Rectangle {
      * @return true if there was a part of a ship in the cell
      */
     boolean shoot() {
+        if (wasShot) {
+            return false;
+        }
         wasShot = true;
         setFill(Color.BLACK);
         if (ship != null) {
@@ -70,7 +73,7 @@ class Cell extends Rectangle {
      */
     @Override
     public String toString() {
-        return point2D.getX() + "," + point2D.getY() + ",";
+        return point2D.getX() + "," + point2D.getY() + ";";
     }
 
     int getCellX() {
