@@ -1,18 +1,19 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.language.Message;
-import com.academy.solid.nie.client.language.MessageProviderImpl;
+import com.academy.solid.nie.client.output.Output;
 import com.academy.solid.nie.client.ui.Point2D;
-import com.academy.solid.nie.client.ui.WindowDisplayer;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,8 +25,12 @@ import java.util.stream.Stream;
  */
 
 public final class SocketServer implements Server {
-    private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
+    private Output output;
+
+    public SocketServer(Output output) {
+        this.output = output;
+    }
 
     public boolean isFirstPlayer() {
         return firstPlayer;
@@ -41,20 +46,21 @@ public final class SocketServer implements Server {
                     ip(ip).socket(socket).
                     out(createPrintWriter(socket)).
                     in(createBufferedReader(socket)).
+                    output(output).
                     build();
             firstPlayer = server.receiveServerInitialMessage();
         } catch (IOException e) {
-            LOGGER.warning(e.getMessage());
+            output.send(e.getMessage());
         }
     }
 
     @Override
     public void send(final String allShips) {
-        LOGGER.info(allShips);
+        output.send(allShips);
         try {
             server.send(allShips);
         } catch (IOException e) {
-            LOGGER.warning(e.getMessage());
+            output.send(e.getMessage());
         }
     }
 

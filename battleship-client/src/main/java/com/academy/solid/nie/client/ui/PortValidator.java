@@ -1,6 +1,7 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.Validator;
+import com.academy.solid.nie.client.output.Output;
 
 import java.util.logging.Logger;
 
@@ -11,6 +12,11 @@ import java.util.logging.Logger;
 public class PortValidator implements Validator {
     private static final int MINIMAL_POSSIBLE_NUMBER = 1024;
     private static final int MAXIMAL_POSSIBLE_NUMBER = 65535;
+    private Output output;
+
+    public PortValidator(final Output output) {
+        this.output = output;
+    }
 
     /**
      * Determines whether the given Port is in the correct range
@@ -29,7 +35,7 @@ public class PortValidator implements Validator {
         try {
             Integer.parseInt(port);
         } catch (NumberFormatException e) {
-            Logger.getLogger(e.getMessage());
+            output.send(e.getMessage());
             result = false;
         }
         return result;
