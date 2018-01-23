@@ -76,11 +76,13 @@ class ShipPlacer {
         String[] ships = shipsString.split(SHIPS_SEPARATOR);
         for (String shipStr : ships) {
             List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] coords = shipStr.split(COORDINATES_SEPARATOR);
+            String[] allCoordinates = shipStr.split(COORDINATES_SEPARATOR);
 
-            Arrays.stream(coords).forEach(e -> {
-                String[] sth = e.split(",");
-                point2DOfShip.add(Point2D.of(Integer.parseInt(sth[0]), Integer.parseInt(sth[1])));
+            Arrays.stream(allCoordinates).forEach(e -> {
+                String[] coordinates = e.split(",");
+                int x = Integer.parseInt(coordinates[0]);
+                int y = Integer.parseInt(coordinates[1]);
+                point2DOfShip.add(Point2D.of(x, y));
             });
 
             Ship ship = new Ship(point2DOfShip);

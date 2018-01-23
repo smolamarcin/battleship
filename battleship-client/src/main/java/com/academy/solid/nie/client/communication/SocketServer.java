@@ -26,7 +26,6 @@ import java.util.stream.Stream;
 public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
-    private String allMoves = "";
 
     public boolean isFirstPlayer() {
         return firstPlayer;
@@ -69,17 +68,6 @@ public final class SocketServer implements Server {
         server.sendGameOverToOpponent();
     }
 
-    private List<Point2D> receiveAllMovesWithoutSending() {
-        allMoves = "";
-        String moves = server.getEnemyShips();
-
-        return Arrays.stream(moves.split(",;"))
-                .map(s -> s.split(","))
-                .map(stringArrayToIntArray())
-                .map(arr -> Point2D.of(arr[0], arr[1]))
-                .collect(Collectors.toList());
-    }
-
     private Function<String[], int[]> stringArrayToIntArray() {
         return arr -> Stream.of(arr)
                 .mapToInt(Integer::parseInt)
@@ -87,14 +75,8 @@ public final class SocketServer implements Server {
     }
 
     @Override
-    public void sendPlayerMove(final String move) {
+    public void sendPlayerMove(String move) {
         send(move);
-    }
-
-    @Override
-    public List<Point2D> receiveEnemyMoves() {
-        send(allMoves);
-        return receiveAllMovesWithoutSending();
     }
 
     private Socket createSocket(String inputIp, int inputPortNumber) throws IOException {
