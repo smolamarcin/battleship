@@ -51,6 +51,9 @@ class Cell extends Rectangle {
      * @return true if there was a part of a ship in the cell
      */
     boolean shoot() {
+        if (wasShot) {
+            return false;
+        }
         wasShot = true;
         setFill(Color.BLACK);
         if (ship != null) {

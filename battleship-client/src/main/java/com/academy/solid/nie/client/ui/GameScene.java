@@ -34,12 +34,15 @@ class GameScene extends Application implements Runnable {
     private ShipPlacer shipPlacer;
     private Semaphore shipsPlaced = new Semaphore(0);
     private Semaphore waitForSending = new Semaphore(0);
+    private Semaphore myTurn = new Semaphore(0);
 
     GameScene(final SocketServer socketServer) throws IOException {
         this.socketServer = socketServer;
         boolean firstPlayer = socketServer.isFirstPlayer();
         if (!firstPlayer) {
             waitForSending.release();
+        else {
+            myTurn.release();
         }
     }
 
@@ -75,13 +78,10 @@ class GameScene extends Application implements Runnable {
                 socketServer.sendGameOverToOpponent();
             }
             Cell cell = (Cell) event.getSource();
-            if (!isMyTurn || !shipPlacer.areAllShipsPlaced() || cell.wasShot()) {
+            if (!myTurn.tryAcquire() || !shipPlacer.areAllShipsPlaced()) {
                 return;
             }
             handlePlayersMove(cell);
-            if (!isMyTurn) {
-                isMyTurn = true;
-            }
         };
     }
 
@@ -89,6 +89,9 @@ class GameScene extends Application implements Runnable {
         isMyTurn = cell.shoot();
         if (!isMyTurn) {
             waitForSending.release();
+        }
+        else {
+            myTurn.release();
         }
         socketServer.sendPlayerMove(cell.toString());
         if (enemyBoard.areAllShipsSunk()) {
@@ -135,6 +138,9 @@ class GameScene extends Application implements Runnable {
             }
             if (playerBoard.isMyTurn()) {
                 waitForSending.release();
+            }
+            else {
+                myTurn.release();
             }
         }
     }

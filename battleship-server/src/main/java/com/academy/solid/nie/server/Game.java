@@ -28,7 +28,7 @@ class Game {
     }
 
     private void changeCurrentPlayer() {
-        if (!otherPlayer.getShips().contains(move)) {
+        if (otherPlayer.shallPlayersBeChanged(move)) {
             Player temp = currentPlayer;
             currentPlayer = otherPlayer;
             otherPlayer = temp;
