@@ -41,7 +41,7 @@ class GameScene extends Application implements Runnable {
         boolean firstPlayer = socketServer.isFirstPlayer();
         if (!firstPlayer) {
             waitForSending.release();
-        else {
+        } else {
             myTurn.release();
         }
     }
