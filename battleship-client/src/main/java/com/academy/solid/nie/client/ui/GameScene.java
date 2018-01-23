@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ class GameScene extends Application implements Runnable {
     private Semaphore shipsPlaced = new Semaphore(0);
     private Semaphore waitForSending = new Semaphore(0);
     private Semaphore myTurn = new Semaphore(0);
+    private BorderPane root;
 
     GameScene(final SocketServer socketServer) throws IOException {
         this.socketServer = socketServer;
@@ -47,7 +49,7 @@ class GameScene extends Application implements Runnable {
     }
 
     private Parent createContent() {
-        BorderPane root = new BorderPane();
+        root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         Button randomPlacementButton = createRandomButton();
         root.setBottom(randomPlacementButton);
@@ -79,18 +81,24 @@ class GameScene extends Application implements Runnable {
             }
             Cell cell = (Cell) event.getSource();
             if (!myTurn.tryAcquire() || !shipPlacer.areAllShipsPlaced()) {
+                informAboutCurrentTurn();
                 return;
             }
             handlePlayersMove(cell);
         };
     }
 
+    private void informAboutCurrentTurn() {
+        new WindowDisplayer(MessageProviderImpl.getCommunicate(Message.NOT_YOUR_TURN))
+                .withButtonWhoExitThisWindow()
+                .display();
+    }
+
     private void handlePlayersMove(final Cell cell) {
         isMyTurn = cell.shoot();
         if (!isMyTurn) {
             waitForSending.release();
-        }
-        else {
+        } else {
             myTurn.release();
         }
         socketServer.sendPlayerMove(cell.toString());
@@ -138,8 +146,7 @@ class GameScene extends Application implements Runnable {
             }
             if (playerBoard.isMyTurn()) {
                 waitForSending.release();
-            }
-            else {
+            } else {
                 myTurn.release();
             }
         }
