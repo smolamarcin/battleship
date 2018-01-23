@@ -7,5 +7,5 @@ public enum Message {
     /**
      * Messages in game.
      */
-    WELCOME, WRONG_INPUT, WIN, INSERT_IP, CONNECT, RANDOM, LOSE
+    WELCOME, WRONG_INPUT, WIN, INSERT_IP, CONNECT, RANDOM, NOT_YOUR_TURN, LOSE
 }
