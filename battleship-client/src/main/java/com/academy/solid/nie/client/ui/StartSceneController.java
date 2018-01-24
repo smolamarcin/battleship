@@ -50,7 +50,8 @@ public final class StartSceneController {
     void initialize() {
         Configuration configuration = new FileConfiguration();
         configuration.provide();
-        Language defaultLanguage = Language.valueOf(configuration.getCommunicate(ConfigProperty.LANGUAGE));
+        String language = configuration.getCommunicate(ConfigProperty.LANGUAGE).toUpperCase();
+        Language defaultLanguage = Language.valueOf(language);
         initializeLanguageMenu(defaultLanguage);
         initializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
         initializePortField(configuration.getCommunicate(ConfigProperty.SERVER_PORT));
