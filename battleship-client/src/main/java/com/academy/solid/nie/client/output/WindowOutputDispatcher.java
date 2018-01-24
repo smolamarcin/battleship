@@ -1,21 +1,20 @@
 package com.academy.solid.nie.client.output;
 
-import com.academy.solid.nie.client.ui.WindowDisplayer;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.academy.solid.nie.client.ui.WindowTranscript;
 
 /**
  * Logs messages to windows
  */
 public class WindowOutputDispatcher implements Output {
-    private List<WindowDisplayer> windows = new ArrayList();
+    private WindowTranscript window = new WindowTranscript();
 
-    @Override
-    public final void send(String msg) {
-        WindowDisplayer window = new WindowDisplayer(msg).withButtonWhoExitThisWindow();
-        windows.add(window);
+    WindowOutputDispatcher() {
         window.display();
     }
 
+    @Override
+    public final void send(String msg) {
+        window.append(msg);
+        window.append("\n");
+    }
 }
