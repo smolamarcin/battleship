@@ -7,36 +7,47 @@ import java.util.logging.Logger;
 class Game {
     private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     private final Player first;
-    private final Player second;
     private Player otherPlayer;
     private Player currentPlayer;
     private String move;
 
     Game(Player first, Player second) {
         this.first = first;
-        this.second = second;
         this.currentPlayer = first;
         this.otherPlayer = second;
     }
 
     void play() throws IOException {
+        log("It is now turn of " + getNameOfCurrentPlayer());
         move = currentPlayer.makeMove();
+        log((getNameOfCurrentPlayer()) + " shoot at " + move);
         otherPlayer.inform(move);
         changeCurrentPlayer();
+    }
 
-        log((currentPlayer.equals(first) ? "First Player" : "Second Player") + ":" + move);
+    private String getNameOfCurrentPlayer() {
+        return currentPlayer.equals(first) ? "First Player" : "Second Player";
     }
 
     private void changeCurrentPlayer() {
         if (otherPlayer.shallPlayersBeChanged(move)) {
+            log((getNameOfCurrentPlayer()) + " missed");
             Player temp = currentPlayer;
             currentPlayer = otherPlayer;
             otherPlayer = temp;
+        } else {
+            log((getNameOfCurrentPlayer()) + " hit ship");
+            if (otherPlayer.wasSunk()) {
+                log("Ship has been sunk");
+            }
+            if (otherPlayer.isGameOver()) {
+                log(getNameOfCurrentPlayer() + "has won the game");
+            }
         }
     }
 
     boolean isGameOver() {
-        return "Q".equals(move);
+        return otherPlayer.isGameOver();
     }
 
     private void log(String msg) {

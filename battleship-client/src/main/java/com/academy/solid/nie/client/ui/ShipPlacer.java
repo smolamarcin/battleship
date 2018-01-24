@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.concurrent.Semaphore;
 
 class ShipPlacer {
-    private static final String SHIPS_SEPARATOR = ";\\|";
-    private static final String COORDINATES_SEPARATOR = ";";
     private static final int FOUR_MAST = 4;
     private static final int THREE_MAST = 3;
     private static final int DOUBLE_MAST = 2;
@@ -19,16 +17,20 @@ class ShipPlacer {
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
-    private Semaphore shipsPlaced;
+    private Semaphore myTurn;
+    private boolean firstPlayer;
+    private Semaphore waitForSending;
     private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
             DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
-    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore shipsPlaced) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore myTurn, boolean firstPlayer, Semaphore waitForSending) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
-        this.shipsPlaced = shipsPlaced;
+        this.myTurn = myTurn;
+        this.firstPlayer = firstPlayer;
+        this.waitForSending = waitForSending;
     }
 
     EventHandler<MouseEvent> setUpPlayerShips() {
@@ -48,9 +50,13 @@ class ShipPlacer {
     private void finishSetup() {
         if (typesOfShips.isEmpty()) {
             socketServer.send(playerBoard.getAllPositions());
-            placeEnemyShips(socketServer.receiveAllShips());
+            placeEnemyShips(Converter.convert(socketServer.receiveAllShips()));
             areAllShipsPlaced = true;
-            shipsPlaced.release();
+            if (firstPlayer) {
+                myTurn.release();
+            } else {
+                waitForSending.release();
+            }
         }
     }
 
@@ -72,20 +78,9 @@ class ShipPlacer {
         return producePoints(x, y, type);
     }
 
-    private void placeEnemyShips(String shipsString) {
-        String[] ships = shipsString.split(SHIPS_SEPARATOR);
-        for (String shipStr : ships) {
-            List<Point2D> point2DOfShip = new ArrayList<>();
-            String[] allCoordinates = shipStr.split(COORDINATES_SEPARATOR);
-
-            Arrays.stream(allCoordinates).forEach(e -> {
-                String[] coordinates = e.split(",");
-                int x = Integer.parseInt(coordinates[0]);
-                int y = Integer.parseInt(coordinates[1]);
-                point2DOfShip.add(Point2D.of(x, y));
-            });
-
-            Ship ship = new Ship(point2DOfShip);
+    private void placeEnemyShips(List<List<Point2D>> shipsString) {
+        for (List<Point2D> shipAsPoints : shipsString) {
+            Ship ship = new Ship(shipAsPoints);
             enemyBoard.isShipPositionValid(ship);
         }
     }

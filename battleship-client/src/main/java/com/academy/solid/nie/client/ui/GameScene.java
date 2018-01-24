@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,37 +27,27 @@ class GameScene extends Application implements Runnable {
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
     private Output output;
-    private boolean isMyTurn = true;
     private Board enemyBoard;
     private Board playerBoard;
     private SocketServer socketServer;
     private ShipPlacer shipPlacer;
-    private Semaphore shipsPlaced = new Semaphore(0);
     private Semaphore waitForSending = new Semaphore(0);
     private Semaphore myTurn = new Semaphore(0);
-    private BorderPane root;
 
     GameScene(final SocketServer socketServer, final Output output) throws IOException {
         this.socketServer = socketServer;
-        boolean firstPlayer = socketServer.isFirstPlayer();
-        this.output = output;
-        if (!firstPlayer) {
-            waitForSending.release();
-        } else {
-            myTurn.release();
-        }
     }
 
 
     private Parent createContent() {
-        root = new BorderPane();
+        BorderPane root = new BorderPane();
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         Button randomPlacementButton = createRandomButton();
         root.setBottom(randomPlacementButton);
-        enemyBoard = new Board(true, output);
+        enemyBoard = new Board(true);
         enemyBoard.initialize(getMove());
-        playerBoard = new Board(false, output);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, shipsPlaced);
+        playerBoard = new Board(false);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
         vbox.setAlignment(Pos.CENTER);
@@ -80,13 +69,14 @@ class GameScene extends Application implements Runnable {
                         .getCommunicate(Message.LOSE))
                         .withButtonWhoExitSystem().display();
                 socketServer.sendGameOverToOpponent();
+            } else {
+                Cell cell = (Cell) event.getSource();
+                if (!myTurn.tryAcquire() || !shipPlacer.areAllShipsPlaced()) {
+                    informAboutCurrentTurn();
+                    return;
+                }
+                handlePlayersMove(cell);
             }
-            Cell cell = (Cell) event.getSource();
-            if (!myTurn.tryAcquire() || !shipPlacer.areAllShipsPlaced()) {
-                informAboutCurrentTurn();
-                return;
-            }
-            handlePlayersMove(cell);
         };
     }
 
@@ -97,7 +87,7 @@ class GameScene extends Application implements Runnable {
     }
 
     private void handlePlayersMove(final Cell cell) {
-        isMyTurn = cell.shoot();
+        boolean isMyTurn = cell.shoot();
         if (!isMyTurn) {
             waitForSending.release();
         } else {
@@ -130,11 +120,6 @@ class GameScene extends Application implements Runnable {
 
     @Override
     public void run() {
-        try {
-            shipsPlaced.acquire();
-        } catch (InterruptedException e) {
-            output.send(e.getMessage());
-        }
         while (true) {
             try {
                 waitForSending.acquire();
