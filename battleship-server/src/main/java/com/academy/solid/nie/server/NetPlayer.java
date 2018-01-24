@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -14,8 +15,8 @@ public final class NetPlayer implements Player {
     private static final Logger LOGGER = Logger.getLogger(NetPlayer.class.getName());
     private PrintWriter out;
     private BufferedReader in;
-    private List<List<String>> shipsPositions;
-    private boolean wasSunk;
+    private List<String> previousMoves = new ArrayList<>();
+    private String ships;
 
     @Override
     public void register(final ServerSocket serverSocket) throws IOException {
@@ -35,8 +36,7 @@ public final class NetPlayer implements Player {
     @Override
     public String provideShips() throws IOException {
         out.println("Provide ships");
-        String ships = in.readLine();
-        shipsPositions = Converter.convert(ships);
+        ships = in.readLine();
         return ships;
     }
 
@@ -47,22 +47,10 @@ public final class NetPlayer implements Player {
 
     @Override
     public boolean shallPlayersBeChanged(String move) {
-        for (List<String> ship : shipsPositions) {
-            if (ship.remove(move)) {
-                wasSunk = ship.isEmpty();
-                return false;
-            }
+        if (previousMoves.contains(move)) {
+            return true;
         }
-        return true;
-    }
-
-    @Override
-    public boolean wasSunk() {
-        return wasSunk;
-    }
-
-    @Override
-    public boolean isGameOver() {
-        return shipsPositions.stream().allMatch(List::isEmpty);
+        previousMoves.add(move);
+        return !ships.contains(move);
     }
 }

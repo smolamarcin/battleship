@@ -2,7 +2,6 @@ package com.academy.solid.nie.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +25,7 @@ class ServerGameInitializer implements GameInitializer {
         registerPlayers(initializeConnection());
         informAboutGameBeginning();
         exchangeShips();
-        LOGGER.info("Both players have positioned their ships");
+        LOGGER.info("Initialized");
     }
 
     private ServerSocket initializeConnection() throws IOException {
@@ -38,7 +37,6 @@ class ServerGameInitializer implements GameInitializer {
     private void registerPlayers(ServerSocket serverSocket) throws IOException {
         first.register(serverSocket);
         second.register(serverSocket);
-        LOGGER.info("Game has started");
     }
 
     private void informAboutGameBeginning() {
@@ -51,20 +49,8 @@ class ServerGameInitializer implements GameInitializer {
         String secondShips = second.provideShips();
         first.inform(secondShips);
         second.inform(firstShips);
-        StringBuilder stringBuilder = new StringBuilder("Ships of First Player are located at:");
-        Arrays.stream(firstShips.split("\\|")).forEach(ship -> {
-                    stringBuilder.append("\n");
-                    stringBuilder.append(ship);
-                }
-        );
-        stringBuilder.append("\n");
-        stringBuilder.append("Ships of Second Player are located at:");
-        Arrays.stream(firstShips.split("\\|")).forEach(ship -> {
-                    stringBuilder.append("\n");
-                    stringBuilder.append(ship);
-                }
-        );
-        log(stringBuilder.toString());
+
+        log("First's ships:" + firstShips + "\n" + "Second's ships:" + secondShips);
     }
 
     private void log(String msg) {

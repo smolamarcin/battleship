@@ -3,6 +3,8 @@ package com.academy.solid.nie.client.ui;
 import com.academy.solid.nie.client.communication.Validator;
 import com.academy.solid.nie.client.output.Output;
 
+import java.util.logging.Logger;
+
 /**
  * Implementation of Validator interface.
  * Checks whether the given port number is in the correct format.

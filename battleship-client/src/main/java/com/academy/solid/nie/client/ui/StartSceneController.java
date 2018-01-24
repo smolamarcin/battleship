@@ -44,15 +44,16 @@ public final class StartSceneController {
     private ObservableList<Language> availableLanguages = FXCollections.
             observableArrayList(Language.POLISH, Language.ENGLISH);
     private MessageProviderImpl communicateProvider;
+    private Configuration configuration;
     private Output output;
 
     @FXML
     void initialize() {
-        Configuration configuration = new FileConfiguration();
+        configuration = new FileConfiguration();
         configuration.provide();
         Language defaultLanguage = Language.valueOf(configuration.getCommunicate(ConfigProperty.LANGUAGE));
         initializeLanguageMenu(defaultLanguage);
-        initializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
+        intitializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
         initializePortField(configuration.getCommunicate(ConfigProperty.SERVER_PORT));
         output = new OutputFactory(configuration).create();
     }
@@ -61,7 +62,7 @@ public final class StartSceneController {
         fieldPort.setText(communicate);
     }
 
-    private void initializeIpField(String communicate) {
+    private void intitializeIpField(String communicate) {
         fieldIP.setText(communicate);
     }
 

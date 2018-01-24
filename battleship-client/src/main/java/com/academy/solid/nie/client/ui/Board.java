@@ -1,11 +1,12 @@
 package com.academy.solid.nie.client.ui;
 
+import com.academy.solid.nie.client.output.Output;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -22,6 +23,7 @@ class Board {
     private static final int MAX_WIDTH = 10;
     private BoardFX boardFX;
     private boolean enemy;
+    private Output output;
     private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
     private boolean isMyTurn;
@@ -30,8 +32,9 @@ class Board {
         return boardFX;
     }
 
-    Board(final boolean enemy) {
+    Board(final boolean enemy, final Output output) {
         this.enemy = enemy;
+        this.output = output;
         this.boardFX = new BoardFX(MAX_HEIGHT, MAX_WIDTH);
     }
 
@@ -57,6 +60,7 @@ class Board {
             allShips.add(ship);
             return placeAndMarkShip(ship);
         }
+        output.send(positions.toString());
         return false;
     }
 

@@ -22,7 +22,7 @@ public class BoardTest implements TestHelper {
 
     public void shouldPlaceShip_whenThereAreNoShips() {
         //given
-        Board board = new Board(false);
+        Board board = new Board(false, output);
         Point2D point = Point2D.of(0, 0);
         Ship ship = new Ship(Collections.singletonList(point));
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
@@ -34,7 +34,7 @@ public class BoardTest implements TestHelper {
 
     public void shouldNotPlaceShip_WhenThereIsAlreadyShip() {
         //given
-        Board board = new Board(false);
+        Board board = new Board(false, output);
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
         board.initialize(handler);
 
@@ -50,7 +50,7 @@ public class BoardTest implements TestHelper {
     public void shouldNotPlaceShip_WhenNearbyIsShip() {
         //given
         EventHandler<MouseEvent> handler = Mockito.mock(EventHandler.class);
-        Board board = new Board(false);
+        Board board = new Board(false, output);
         board.initialize(handler);
         Point2D pointA = Point2D.of(0, 0);
         Ship ship = createShipHorizontally(Collections.singletonList(pointA));

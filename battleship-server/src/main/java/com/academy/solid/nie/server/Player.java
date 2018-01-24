@@ -19,6 +19,7 @@ public interface Player {
      * Informs player based on provided message.
      *
      * @param s represents message
+     * @throws IOException when something fail
      */
     void inform(String s);
 
@@ -38,19 +39,5 @@ public interface Player {
      */
     String makeMove() throws IOException;
 
-    /**
-     * @param move last move of current player
-     * @return true when current player should shoot again
-     */
     boolean shallPlayersBeChanged(String move);
-
-    /**
-     * @return true when last move sunk ship
-     */
-    boolean wasSunk();
-
-    /**
-     * @return true when last move has won the game
-     */
-    boolean isGameOver();
 }
