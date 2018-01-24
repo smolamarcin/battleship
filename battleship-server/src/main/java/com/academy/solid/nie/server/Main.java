@@ -23,7 +23,6 @@ public final class Main {
         Player first = new NetPlayer();
         Player second = new NetPlayer();
         int port = Integer.parseInt(args[0]);
-        System.out.println(port);
         gameInitializer = new ServerGameInitializer(first, second, port);
         gameInitializer.initializeGame();
         Game game = new Game(first, second);
