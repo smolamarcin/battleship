@@ -37,7 +37,7 @@ public final class FileConfiguration implements Configuration {
         ResourceBundle resourceBundle = ResourceBundle.getBundle(NAME);
         for (ConfigProperty configProperty : ConfigProperty.values()) {
             try {
-                map.put(configProperty, resourceBundle.getString(configProperty.name()));
+                map.put(configProperty, resourceBundle.getString(configProperty.name().toUpperCase()));
             } catch (MissingResourceException e) {
                 fillDefaultConfigMap();
                 provideDefaultProperty(configProperty, e);
