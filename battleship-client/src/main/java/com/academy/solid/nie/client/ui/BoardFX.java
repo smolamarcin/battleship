@@ -1,12 +1,15 @@
 package com.academy.solid.nie.client.ui;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  * Class representing the game board.
@@ -24,6 +27,13 @@ class BoardFX extends Parent {
     BoardFX(int maxHeight, int maxWidth) {
         this.maxHeight = maxHeight;
         this.maxWidth = maxWidth;
+    }
+
+    void addLabel(String labelTitle) {
+        Label lbl = new Label(labelTitle);
+        lbl.setFont(Font.font("Courier New", FontWeight.BOLD, 20));
+        lbl.setPadding(new Insets(0, 0, 0, 85));
+        rows.getChildren().add(lbl);
     }
 
     /**

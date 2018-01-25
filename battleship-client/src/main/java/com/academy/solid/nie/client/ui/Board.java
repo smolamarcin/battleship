@@ -35,6 +35,10 @@ class Board {
         this.boardFX = new BoardFX(MAX_HEIGHT, MAX_WIDTH);
     }
 
+    void addLabel(String label) {
+        boardFX.addLabel(label);
+    }
+
     /**
      * Creates a board at the beginning of the game.
      * Each row is filled during iteration in a loop.
@@ -119,15 +123,15 @@ class Board {
     private List<Point2D> getAllNeighborsOf(Point2D point) {
         int x = point.getX();
         int y = point.getY();
-        Point2D[] array = new Point2D[]{
-                Point2D.of(x - 1, y),
-                Point2D.of(x + 1, y),
-                Point2D.of(x, y - 1),
-                Point2D.of(x, y + 1),
-                Point2D.of(x - 1, y - 1),
-                Point2D.of(x + 1, y - 1),
-                Point2D.of(x - 1, y + 1),
-                Point2D.of(x + 1, y + 1)
+        Point2D[] array = new Point2D[] {
+            Point2D.of(x - 1, y),
+            Point2D.of(x + 1, y),
+            Point2D.of(x, y - 1),
+            Point2D.of(x, y + 1),
+            Point2D.of(x - 1, y - 1),
+            Point2D.of(x + 1, y - 1),
+            Point2D.of(x - 1, y + 1),
+            Point2D.of(x + 1, y + 1)
         };
         return new ArrayList<>(Arrays.asList(array));
     }
@@ -139,7 +143,7 @@ class Board {
      */
     private boolean canPlaceShip(final Ship ship) {
         return ship.getPositions().stream().noneMatch(point2D ->
-                !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
+            !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
     }
 
     /**
@@ -161,7 +165,7 @@ class Board {
      */
     private boolean isInScope(Point2D point) {
         return point.getX() >= 0 && point.getX() < MAX_HEIGHT
-                && point.getY() >= 0 && point.getY() < MAX_WIDTH;
+            && point.getY() >= 0 && point.getY() < MAX_WIDTH;
     }
 
     /**
@@ -203,9 +207,9 @@ class Board {
 
     private List<Point2D> getAllNeighborsOf(Ship ship) {
         return ship.getPositions().stream()
-                .map(this::getAllNeighborsOf)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+            .map(this::getAllNeighborsOf)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
     boolean isMyTurn() {
