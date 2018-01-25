@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class PortValidatorTest {
-    private PortValidator portValidator = new PortValidator(Mockito.mock(Output.class));
+    private PortValidator portValidator = new PortValidator();
     @DataProvider
     public static Object[][] ports() {
 
