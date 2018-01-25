@@ -10,7 +10,7 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        SocketServer socketServer = new SocketServer(new LoggerOutputDispatcher());
+        SocketServer socketServer = new SocketServer();
         socketServer.connect(IP,PORT);
     }
 }
