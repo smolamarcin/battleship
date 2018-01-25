@@ -53,4 +53,5 @@ public interface Player {
      * @return true when last move has won the game
      */
     boolean isGameOver();
+
 }

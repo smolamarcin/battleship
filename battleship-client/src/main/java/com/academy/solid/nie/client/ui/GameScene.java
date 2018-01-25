@@ -33,9 +33,11 @@ class GameScene extends Application implements Runnable {
     private ShipPlacer shipPlacer;
     private Semaphore waitForSending = new Semaphore(0);
     private Semaphore myTurn = new Semaphore(0);
+    private String playerName;
 
-    GameScene(final SocketServer socketServer, final Output output) throws IOException {
+    GameScene(final SocketServer socketServer, final Output output, String playerName) throws IOException {
         this.socketServer = socketServer;
+        this.playerName = playerName;
     }
 
 
@@ -49,6 +51,8 @@ class GameScene extends Application implements Runnable {
         playerBoard = new Board(false);
         shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
+        playerBoard.addLabel(MessageProviderImpl.getCommunicate(Message.YOUR_BOARD));
+        enemyBoard.addLabel(MessageProviderImpl.getCommunicate(Message.ENEMY_BOARD));
         VBox vbox = new VBox(DEFAULT_SPACING, enemyBoard.getBoardFX(), playerBoard.getBoardFX());
         vbox.setAlignment(Pos.CENTER);
         root.setCenter(vbox);
@@ -83,6 +87,7 @@ class GameScene extends Application implements Runnable {
     private void informAboutCurrentTurn() {
         new WindowDisplayer(MessageProviderImpl.getCommunicate(Message.NOT_YOUR_TURN))
                 .withButtonWhoExitThisWindow()
+                .withTitle(String.format("%s - %s", MessageProviderImpl.getCommunicate(Message.TITLE), playerName))
                 .display();
     }
 
@@ -112,7 +117,7 @@ class GameScene extends Application implements Runnable {
     @Override
     public void start(final Stage primaryStage) {
         Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Battleship");
+        primaryStage.setTitle(String.format("%s - %s", MessageProviderImpl.getCommunicate(Message.TITLE), playerName));
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
         primaryStage.show();
