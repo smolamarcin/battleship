@@ -69,16 +69,4 @@ public class GameTest {
         verify(second, times(2)).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
     }
-
-    @Test(groups = {"unit"})
-    public void gameShouldBeOverAfterSendingMoveWithEndOfGameInformation() throws IOException {
-        //given
-        String moveOfFirstPlayer = "Q";
-        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
-        //when
-        Game game = new Game(first, second);
-        game.play();
-        //then
-        Assert.assertTrue(game.isGameOver());
-    }
 }

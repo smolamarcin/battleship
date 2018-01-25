@@ -1,5 +1,6 @@
 package com.academy.solid.nie.client.ui;
 
+import com.academy.solid.nie.client.output.Output;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /**
@@ -22,6 +24,7 @@ class Board {
     private static final int MAX_WIDTH = 10;
     private BoardFX boardFX;
     private boolean enemy;
+    private Output output;
     private List<Ship> allShips = new ArrayList<>();
     private static StringBuilder positions = new StringBuilder();
     private boolean isMyTurn;
@@ -30,9 +33,14 @@ class Board {
         return boardFX;
     }
 
-    Board(final boolean enemy) {
+    Board(final boolean enemy, Output output) {
         this.enemy = enemy;
+        this.output = output;
         this.boardFX = new BoardFX(MAX_HEIGHT, MAX_WIDTH);
+    }
+
+    void addLabel(String label) {
+        boardFX.addLabel(label);
     }
 
     /**
@@ -119,15 +127,15 @@ class Board {
     private List<Point2D> getAllNeighborsOf(Point2D point) {
         int x = point.getX();
         int y = point.getY();
-        Point2D[] array = new Point2D[]{
-                Point2D.of(x - 1, y),
-                Point2D.of(x + 1, y),
-                Point2D.of(x, y - 1),
-                Point2D.of(x, y + 1),
-                Point2D.of(x - 1, y - 1),
-                Point2D.of(x + 1, y - 1),
-                Point2D.of(x - 1, y + 1),
-                Point2D.of(x + 1, y + 1)
+        Point2D[] array = new Point2D[] {
+            Point2D.of(x - 1, y),
+            Point2D.of(x + 1, y),
+            Point2D.of(x, y - 1),
+            Point2D.of(x, y + 1),
+            Point2D.of(x - 1, y - 1),
+            Point2D.of(x + 1, y - 1),
+            Point2D.of(x - 1, y + 1),
+            Point2D.of(x + 1, y + 1)
         };
         return new ArrayList<>(Arrays.asList(array));
     }
@@ -139,7 +147,7 @@ class Board {
      */
     private boolean canPlaceShip(final Ship ship) {
         return ship.getPositions().stream().noneMatch(point2D ->
-                !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
+            !isInScope(point2D) || boardFX.isOccupied(point2D) || isThereShipInTheNeighborhood(point2D));
     }
 
     /**
@@ -161,7 +169,7 @@ class Board {
      */
     private boolean isInScope(Point2D point) {
         return point.getX() >= 0 && point.getX() < MAX_HEIGHT
-                && point.getY() >= 0 && point.getY() < MAX_WIDTH;
+            && point.getY() >= 0 && point.getY() < MAX_WIDTH;
     }
 
     /**
@@ -185,12 +193,14 @@ class Board {
     void makeMoves(List<Point2D> points) {
         if (!points.isEmpty()) {
             points.forEach(e -> isMyTurn = boardFX.shoot(e));
-            markSunkenShipOnPlayerBoard();
         }
     }
 
-    private void markSunkenShipOnPlayerBoard() {
-        allShips.stream().filter(this::isShipSunken).forEach(this::markShipAsSunken);
+    void markSunkenShipOnPlayerBoard() {
+        Stream<Ship> shipStream = allShips.stream().filter(this::isShipSunken);
+        shipStream.forEach(this::markShipAsSunken);
+        shipStream = allShips.stream().filter(s -> !isShipSunken(s));
+        allShips = shipStream.collect(Collectors.toList());
     }
 
     boolean isShipSunken(Ship ship) {
@@ -198,14 +208,15 @@ class Board {
     }
 
     void markShipAsSunken(Ship ship) {
+        output.send("The last shoot has sunk the ship");
         getAllNeighborsOf(ship).stream().filter(this::isInScope).forEach(e -> boardFX.shoot(e));
     }
 
     private List<Point2D> getAllNeighborsOf(Ship ship) {
         return ship.getPositions().stream()
-                .map(this::getAllNeighborsOf)
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+            .map(this::getAllNeighborsOf)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
     boolean isMyTurn() {
