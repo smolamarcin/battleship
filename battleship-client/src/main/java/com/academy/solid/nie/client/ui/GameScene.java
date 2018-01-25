@@ -26,8 +26,8 @@ import java.util.logging.Logger;
  */
 class GameScene extends Application implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(GameScene.class.getName());
-    private static final int DEFAULT_ROOT_WIDTH = 500;
-    private static final int DEFAULT_ROOT_HEIGHT = 1000;
+    private static final int DEFAULT_ROOT_WIDTH = 650;
+    private static final int DEFAULT_ROOT_HEIGHT = 950;
     private static final int DEFAULT_SPACING = 50;
     private Output output;
     private Board enemyBoard;
@@ -72,7 +72,7 @@ class GameScene extends Application implements Runnable {
 
     private EventHandler<MouseEvent> getMove() {
         return event -> {
-            if (playerBoard.areAllShipsSunk()) {
+            if (playerBoard.areAllShipsSunk() && shipPlacer.areAllShipsPlaced()) {
                 new WindowDisplayer(MessageProviderImpl
                         .getCommunicate(Message.LOSE))
                         .withButtonWhoExitSystem().display();
