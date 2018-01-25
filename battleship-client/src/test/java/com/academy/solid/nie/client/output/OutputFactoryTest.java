@@ -3,7 +3,6 @@ package com.academy.solid.nie.client.output;
 import com.academy.solid.nie.client.config.Configuration;
 import com.academy.solid.nie.client.config.FileConfiguration;
 import org.testng.annotations.Test;
-
 import static org.testng.Assert.*;
 
 @Test

@@ -5,4 +5,8 @@ package com.academy.solid.nie.client.language;
  */
 public enum Language {
     POLISH, ENGLISH;
+
+    public static Language defaultLanguage() {
+        return POLISH;
+    }
 }
