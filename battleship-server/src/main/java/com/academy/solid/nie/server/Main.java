@@ -1,13 +1,13 @@
 package com.academy.solid.nie.server;
 
-import java.io.IOException;
-import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 /**
  * Main class for the game.
  */
 public final class Main {
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final int DEFAULT_PORT = 8080;
+    private static final int NUMBER_OF_GAMES = 10;
 
     private Main() {
     }
@@ -16,19 +16,13 @@ public final class Main {
      * Creates server here.
      *
      * @param args represents input
-     * @throws IOException when something happens with the Server.
      */
-    public static void main(final String[] args) throws IOException {
-        GameInitializer gameInitializer;
-        Player first = new NetPlayer();
-        Player second = new NetPlayer();
-        int port = Integer.parseInt(args[0]);
-        gameInitializer = new ServerGameInitializer(first, second, port);
-        gameInitializer.initializeGame();
-        Game game = new Game(first, second);
-        while (!game.isGameOver()) {
-            game.play();
+    public static void main(final String[] args) {
+        int firstPort = DEFAULT_PORT;
+        if (args.length > 0) {
+            firstPort = Integer.parseInt(args[0]);
         }
-        LOGGER.info("Game over");
+        int lastPort = firstPort + NUMBER_OF_GAMES;
+        IntStream.rangeClosed(firstPort, lastPort).forEach(i -> new Thread(new GameThread(i)).start());
     }
 }
