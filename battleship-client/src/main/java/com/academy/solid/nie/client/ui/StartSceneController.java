@@ -73,12 +73,12 @@ public final class StartSceneController {
     @FXML
     void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
-        Validator portValidator = new PortValidator(output);
+        Validator portValidator = new PortValidator();
         String ip = fieldIP.getText();
         String port = fieldPort.getText();
         String name = nameInput.getText();
         if (ipValidator.validate(ip) && portValidator.validate(port)) {
-            SocketServer socketServer = new SocketServer(output);
+            SocketServer socketServer = new SocketServer();
             socketServer.connect(ip, Integer.parseInt(port));
             GameScene gameScene = new GameScene(socketServer, output, name);
             gameScene.start();

@@ -1,12 +1,13 @@
 package com.academy.solid.nie.client.communication;
 
-import com.academy.solid.nie.client.output.Output;
 import lombok.Builder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of ShipClient interface.
@@ -16,20 +17,22 @@ import java.net.Socket;
  */
 @Builder
 public final class SocketClient implements ShipClient {
+    private static final Logger LOGGER = Logger.getLogger(SocketClient.class.getName());
     private static final int PORT_NUMBER = 8081;
     private String ip;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private String enemyShips;
-    private Output output;
 
     @Override
     public boolean receiveServerInitialMessage() throws IOException {
         String fromServer = in.readLine();
         boolean firstPlayer = false;
         while (!("Provide ships").equals(fromServer)) {
-            output.send("Server: " + fromServer);
+            if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.info("Server: " + fromServer);
+            }
             fromServer = in.readLine();
             if ("Game has started. 1".equals(fromServer)) {
                 firstPlayer = true;
@@ -48,7 +51,7 @@ public final class SocketClient implements ShipClient {
         try {
             return in.readLine();
         } catch (IOException e) {
-            output.send(e.getMessage());
+            LOGGER.warning(e.getMessage());
         }
         return null;
     }
