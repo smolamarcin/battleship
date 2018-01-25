@@ -17,12 +17,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
 
 /**
  * Class represents Game UI.
  */
 class GameScene extends Application implements Runnable {
+    private static final Logger LOGGER = Logger.getLogger(GameScene.class.getName());
     private static final int DEFAULT_ROOT_WIDTH = 500;
     private static final int DEFAULT_ROOT_HEIGHT = 1000;
     private static final int DEFAULT_SPACING = 50;
@@ -38,6 +41,7 @@ class GameScene extends Application implements Runnable {
     GameScene(final SocketServer socketServer, final Output output, String playerName) throws IOException {
         this.socketServer = socketServer;
         this.playerName = playerName;
+        this.output = output;
     }
 
 
@@ -46,10 +50,10 @@ class GameScene extends Application implements Runnable {
         root.setPrefSize(DEFAULT_ROOT_WIDTH, DEFAULT_ROOT_HEIGHT);
         Button randomPlacementButton = createRandomButton();
         root.setBottom(randomPlacementButton);
-        enemyBoard = new Board(true);
+        enemyBoard = new Board(true, output);
         enemyBoard.initialize(getMove());
-        playerBoard = new Board(false);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending);
+        playerBoard = new Board(false, output);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending, output);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         playerBoard.addLabel(MessageProviderImpl.getCommunicate(Message.YOUR_BOARD));
         enemyBoard.addLabel(MessageProviderImpl.getCommunicate(Message.ENEMY_BOARD));
@@ -93,20 +97,29 @@ class GameScene extends Application implements Runnable {
 
     private void handlePlayersMove(final Cell cell) {
         boolean isMyTurn = cell.shoot();
+        output.send("You shoot at: " + cell.toString());
         if (!isMyTurn) {
             waitForSending.release();
+            output.send("You missed\nIt is turn of your opponent");
         } else {
             myTurn.release();
+            output.send("You hit a ship.");
         }
         socketServer.sendPlayerMove(cell.toString());
         if (enemyBoard.areAllShipsSunk()) {
             new WindowDisplayer(MessageProviderImpl
                     .getCommunicate(Message.WIN))
                     .withButtonWhoExitSystem().display();
-            socketServer.sendGameOverToOpponent();
         }
         if (enemyBoard.isShipSunken(cell.getShip())) {
             enemyBoard.markShipAsSunken(cell.getShip());
+        }
+        if (enemyBoard.areAllShipsSunk()) {
+            output.send("You won");
+        } else {
+            if (isMyTurn) {
+                output.send("It is turn of yours");
+            }
         }
     }
 
@@ -129,16 +142,29 @@ class GameScene extends Application implements Runnable {
             try {
                 waitForSending.acquire();
             } catch (InterruptedException e) {
-                output.send(e.getMessage());
+                LOGGER.warning(e.getMessage());
             }
             try {
-                playerBoard.makeMoves(socketServer.receiveMoves());
+                List<Point2D> points = socketServer.receiveMoves();
+                StringBuilder stringBuilder = new StringBuilder("Opponent of yours shoot at: ");
+                points.forEach(stringBuilder::append);
+                output.send(stringBuilder.toString());
+                playerBoard.makeMoves(points);
+                if (playerBoard.isMyTurn())
+                    output.send("Opponent of yours hit a ship");
+                playerBoard.markSunkenShipOnPlayerBoard();
             } catch (IOException e) {
-                output.send(e.getMessage());
+                LOGGER.warning(e.getMessage());
             }
             if (playerBoard.isMyTurn()) {
-                waitForSending.release();
+                if (playerBoard.areAllShipsSunk()) {
+                    output.send("You lose");
+                } else {
+                    output.send("It is turn of his");
+                    waitForSending.release();
+                }
             } else {
+                output.send("Opponent of yours missed\nIt is turn of yours");
                 myTurn.release();
             }
         }

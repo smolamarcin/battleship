@@ -1,6 +1,7 @@
 package com.academy.solid.nie.client.ui;
 
 import com.academy.solid.nie.client.communication.SocketServer;
+import com.academy.solid.nie.client.output.Output;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -20,17 +21,19 @@ class ShipPlacer {
     private Semaphore myTurn;
     private boolean firstPlayer;
     private Semaphore waitForSending;
+    private Output output;
     private boolean areAllShipsPlaced = false;
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
             DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
-    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore myTurn, boolean firstPlayer, Semaphore waitForSending) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore myTurn, boolean firstPlayer, Semaphore waitForSending, Output output) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
         this.myTurn = myTurn;
         this.firstPlayer = firstPlayer;
         this.waitForSending = waitForSending;
+        this.output = output;
     }
 
     EventHandler<MouseEvent> setUpPlayerShips() {
@@ -54,8 +57,10 @@ class ShipPlacer {
             areAllShipsPlaced = true;
             if (firstPlayer) {
                 myTurn.release();
+                output.send("It is turn of yours.");
             } else {
                 waitForSending.release();
+                output.send("It is turn of your opponent.");
             }
         }
     }
