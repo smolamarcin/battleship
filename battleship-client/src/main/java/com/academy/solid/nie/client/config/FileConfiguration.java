@@ -2,9 +2,8 @@ package com.academy.solid.nie.client.config;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 /**
  * Reads configuration from the file.
@@ -15,6 +14,7 @@ public final class FileConfiguration implements Configuration {
      */
     private static final String NAME = "configuration";
     private static EnumMap<ConfigProperty, String> map = new EnumMap<>(ConfigProperty.class);
+    private static EnumMap<ConfigProperty, String> defaultPropertyMap = new EnumMap<>(ConfigProperty.class);
 
     /**
      * Return the config map which is used in the game.
@@ -24,14 +24,39 @@ public final class FileConfiguration implements Configuration {
      */
     public Map<ConfigProperty, String> provide() {
         if (map.isEmpty()) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(NAME);
-            Stream.of(ConfigProperty.values()).forEach(consume(resourceBundle));
+            try {
+                loadConfigFromFile();
+            } catch (MissingResourceException e) {
+                fillDefaultConfigMap();
+            }
         }
         return map;
     }
 
-    private Consumer<ConfigProperty> consume(final ResourceBundle resourceBundle) {
-        return element -> map.put(element, resourceBundle.getString(element.name()));
+    private void loadConfigFromFile() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(NAME);
+        for (ConfigProperty configProperty : ConfigProperty.values()) {
+            try {
+                map.put(configProperty, resourceBundle.getString(configProperty.name()));
+            } catch (MissingResourceException e) {
+                fillDefaultConfigMap();
+                provideDefaultProperty(configProperty, e);
+            }
+        }
+    }
+
+    private void provideDefaultProperty(ConfigProperty configProperty, MissingResourceException e) {
+        ConfigProperty defaultProperty = ConfigProperty.valueOf(e.getKey());
+        String defaultPropertyValue = defaultPropertyMap.get(defaultProperty);
+        map.put(configProperty, defaultPropertyValue);
+    }
+
+    private void fillDefaultConfigMap() {
+        defaultPropertyMap.put(ConfigProperty.LANGUAGE, "polish");
+        defaultPropertyMap.put(ConfigProperty.SERVER_IP, "127.0.0.1");
+        defaultPropertyMap.put(ConfigProperty.SERVER_PORT, "9970");
+        defaultPropertyMap.put(ConfigProperty.OUTPUT, "logger");
+        defaultPropertyMap.put(ConfigProperty.FILE, "file.txt");
     }
 
     /**

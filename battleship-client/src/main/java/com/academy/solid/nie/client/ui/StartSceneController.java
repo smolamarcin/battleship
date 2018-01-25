@@ -54,12 +54,22 @@ public final class StartSceneController {
     void initialize() {
         Configuration configuration = new FileConfiguration();
         configuration.provide();
-        String language = configuration.getCommunicate(ConfigProperty.LANGUAGE).toUpperCase();
-        Language defaultLanguage = Language.valueOf(language);
+        String language = configuration.getCommunicate(ConfigProperty.LANGUAGE);
+        Language defaultLanguage = provideLanguage(language);
         initializeLanguageMenu(defaultLanguage);
         initializeIpField(configuration.getCommunicate(ConfigProperty.SERVER_IP));
         initializePortField(configuration.getCommunicate(ConfigProperty.SERVER_PORT));
         output = new OutputFactory(configuration).create();
+    }
+
+    private Language provideLanguage(String providedLanguage) {
+        Language language;
+        try {
+            language = Language.valueOf(providedLanguage.toUpperCase());
+        } catch (Exception e) {
+            language=Language.defaultLanguage();
+        }
+        return language;
     }
 
     private void initializePortField(String communicate) {

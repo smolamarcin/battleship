@@ -25,12 +25,13 @@ public class OutputFactory {
 
     /**
      * @return provides implementation of output based on configuration file
+     * If something goes wrong, default outputy type is loaded.
      */
     public Output create() {
-        outputs.put(OutputType.FILE.name(), new FileOutputDispatcher(configuration.getCommunicate(FILE)));
-        outputs.put(OutputType.LOGGER.name(), new LoggerOutputDispatcher());
-        outputs.put(OutputType.WINDOW.name(), new WindowOutputDispatcher());
-        return outputs.get(configuration.getCommunicate(OUTPUT));
+        outputs.put(OutputType.FILE.name().toUpperCase(), new FileOutputDispatcher(configuration.getCommunicate(FILE)));
+        outputs.put(OutputType.LOGGER.name().toUpperCase(), new LoggerOutputDispatcher());
+        outputs.put(OutputType.WINDOW.name().toUpperCase(), new WindowOutputDispatcher());
+        return outputs.getOrDefault(configuration.getCommunicate(OUTPUT),new LoggerOutputDispatcher());
     }
 
     /**
