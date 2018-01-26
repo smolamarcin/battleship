@@ -5,12 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-final class Converter {
+class Converter {
     private static final String SHIPS_SEPARATOR = ";\\|";
     private static final String COORDINATES_SEPARATOR = ";";
-
-    private Converter() {
-    }
 
     static List<List<String>> convert(String shipsString) {
         List<List<String>> ships = new ArrayList<>();
