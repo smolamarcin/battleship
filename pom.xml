@@ -38,6 +38,21 @@
         <surefireVersion>2.20.1</surefireVersion>
         <checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
         <requiredSystem>unix</requiredSystem>
+        <sonar.exclusions>
+            **/WindowDisplayer.java,
+            **/transfer.java,
+            **/StartScene.java,
+            **/StartSceneController.java,
+            **/GameScene.java,
+            **/Point2D.java,
+            **/BoardFX.java,
+            **/Cell.java,
+            **/Type.java,
+            **/WindowTranscript.java,
+            **/Message.java,
+            **/Language.java,
+            **/OutputType.java
+        </sonar.exclusions>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
