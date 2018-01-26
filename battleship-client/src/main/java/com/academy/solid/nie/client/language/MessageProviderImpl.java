@@ -41,7 +41,7 @@ public class MessageProviderImpl implements MessageProvider {
      *
      * @return true if the map is empty
      */
-    final boolean isMapEmpty() {
+    boolean isMapEmpty() {
         return communicates.isEmpty();
     }
 }
