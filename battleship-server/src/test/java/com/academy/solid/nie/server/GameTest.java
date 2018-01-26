@@ -5,12 +5,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @Test
 public class GameTest {
@@ -68,5 +64,34 @@ public class GameTest {
         //then
         verify(second, times(2)).inform(moveOfFirstPlayer);
         verify(first).inform(moveOfSecondPlayer);
+    }
+
+    @Test(groups = {"unit"})
+    public void afterHittingShipPlayerShouldNotBeChanged() throws IOException {
+        //given
+        String moveOfFirstPlayer = "0,0";
+        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
+        when(second.shallPlayersBeChanged(anyString())).thenReturn(false);
+        //when
+        Game game = new Game(first, second);
+        game.play();
+        game.play();
+        //then
+        verify(second, times(2)).inform(moveOfFirstPlayer);
+    }
+
+    @Test(groups = {"unit"})
+    public void afterHittingLastShipGameShouldBeOver() throws IOException {
+        //given
+        String moveOfFirstPlayer = "0,0";
+        when(first.makeMove()).thenReturn(moveOfFirstPlayer);
+        when(second.shallPlayersBeChanged(anyString())).thenReturn(false);
+        when(second.isGameOver()).thenReturn(true);
+        //when
+        Game game = new Game(first, second);
+        game.play();
+        //then
+        verify(second).inform(moveOfFirstPlayer);
+        Assert.assertTrue(game.isGameOver());
     }
 }
