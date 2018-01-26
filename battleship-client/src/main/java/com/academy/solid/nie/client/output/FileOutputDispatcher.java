@@ -1,9 +1,6 @@
 package com.academy.solid.nie.client.output;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.logging.Logger;
 
 /**
@@ -22,7 +19,8 @@ public class FileOutputDispatcher implements Output {
 
     @Override
     public final void send(String msg) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName),
+                "UTF-8")))) {
             out.println(msg);
         } catch (IOException e) {
             logger.warning(e.getMessage());

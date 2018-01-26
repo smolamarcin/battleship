@@ -16,7 +16,7 @@ public class WindowTranscript {
     /**
      * displays window for user
      */
-    public void display(){
+    public void display() {
         StackPane secondaryLayout = new StackPane();
         textArea.setDisable(Boolean.TRUE);
         secondaryLayout.getChildren().add(textArea);
@@ -29,6 +29,7 @@ public class WindowTranscript {
 
     /**
      * appends string to window
+     *
      * @param msg message added to textArea in window
      */
     public void append(String msg) {

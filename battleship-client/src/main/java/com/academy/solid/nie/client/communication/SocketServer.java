@@ -23,12 +23,14 @@ import java.util.stream.Stream;
 public final class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
+    private boolean firstPlayer;
 
+    /**
+     * @return true when the player is first player
+     */
     public boolean isFirstPlayer() {
         return firstPlayer;
     }
-
-    private boolean firstPlayer;
 
     @Override
     public void connect(String ip, int port) {
@@ -96,6 +98,10 @@ public final class SocketServer implements Server {
         return new OutputStreamWriter(inputSocket.getOutputStream(), StandardCharsets.UTF_8);
     }
 
+    /**
+     * @return list of all moves send by server
+     * @throws IOException when there was problems during receiving data from server
+     */
     public List<Point2D> receiveMoves() throws IOException {
         String moves = server.receiveMoves();
         if (moves == null || moves.equals("Q")) {

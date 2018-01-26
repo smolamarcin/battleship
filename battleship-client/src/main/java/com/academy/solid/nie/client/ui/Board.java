@@ -208,7 +208,7 @@ class Board {
     }
 
     void markShipAsSunken(Ship ship) {
-        output.send("The last shoot has sunk the ship");
+        output.send("The last shot has sunk the ship");
         getAllNeighborsOf(ship).stream().filter(this::isInScope).forEach(e -> boardFX.shoot(e));
     }
 

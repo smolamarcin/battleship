@@ -20,6 +20,8 @@ import javafx.scene.text.FontWeight;
  * @since 1.0.1
  */
 class BoardFX extends Parent {
+    public static final int SIZE = 20;
+    public static final int LEFT = 85;
     private VBox rows = new VBox();
     private final int maxHeight;
     private final int maxWidth;
@@ -31,8 +33,8 @@ class BoardFX extends Parent {
 
     void addLabel(String labelTitle) {
         Label lbl = new Label(labelTitle);
-        lbl.setFont(Font.font("Courier New", FontWeight.BOLD, 20));
-        lbl.setPadding(new Insets(0, 0, 0, 85));
+        lbl.setFont(Font.font("Courier New", FontWeight.BOLD, SIZE));
+        lbl.setPadding(new Insets(0, 0, 0, LEFT));
         rows.getChildren().add(lbl);
     }
 

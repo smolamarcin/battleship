@@ -1,9 +1,6 @@
 package com.academy.solid.nie.client.output;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.logging.Logger;
 
 /**
@@ -17,7 +14,8 @@ public class FileContentCleaner {
      * @param fileName name of file to being cleared
      */
     public final void clear(String fileName) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, false)))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName),
+                "UTF-8")))) {
             out.println(EMPTY);
         } catch (IOException e) {
             logger.warning(e.getMessage());

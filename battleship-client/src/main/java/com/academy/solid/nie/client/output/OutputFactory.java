@@ -17,6 +17,7 @@ public class OutputFactory {
 
     /**
      * constructor for output factory
+     *
      * @param configuration used to get correct output type from file
      */
     public OutputFactory(Configuration configuration) {
@@ -31,11 +32,12 @@ public class OutputFactory {
         outputs.put(OutputType.FILE.name().toUpperCase(), new FileOutputDispatcher(configuration.getCommunicate(FILE)));
         outputs.put(OutputType.LOGGER.name().toUpperCase(), new LoggerOutputDispatcher());
         outputs.put(OutputType.WINDOW.name().toUpperCase(), new WindowOutputDispatcher());
-        return outputs.getOrDefault(configuration.getCommunicate(OUTPUT),new LoggerOutputDispatcher());
+        return outputs.getOrDefault(configuration.getCommunicate(OUTPUT), new LoggerOutputDispatcher());
     }
 
     /**
      * getter for output
+     *
      * @return output
      */
     public Output getOutput() {

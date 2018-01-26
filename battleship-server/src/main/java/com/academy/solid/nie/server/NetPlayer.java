@@ -36,6 +36,9 @@ public final class NetPlayer implements Player {
     public String provideShips() throws IOException {
         out.println("Provide ships");
         String ships = in.readLine();
+        if (ships == null) {
+            throw new IOException();
+        }
         shipsPositions = Converter.convert(ships);
         return ships;
     }

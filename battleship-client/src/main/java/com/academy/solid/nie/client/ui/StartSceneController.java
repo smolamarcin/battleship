@@ -64,11 +64,7 @@ public final class StartSceneController {
 
     private Language provideLanguage(String providedLanguage) {
         Language language;
-        try {
-            language = Language.valueOf(providedLanguage.toUpperCase());
-        } catch (Exception e) {
-            language=Language.defaultLanguage();
-        }
+        language = Language.valueOf(providedLanguage.toUpperCase());
         return language;
     }
 
@@ -103,7 +99,19 @@ public final class StartSceneController {
 
     @FXML
     void languageChosen(ActionEvent actionEvent) {
-        communicateProvider.populate(languageChoice.getValue());
+        if (languageChoice.getValue() == Language.POLSKI || languageChoice.getValue() == Language.POLISH) {
+            availableLanguages = FXCollections.
+                    observableArrayList(Language.POLSKI, Language.ANGIELSKI);
+            communicateProvider.populate(Language.POLISH);
+            languageChoice.setItems(availableLanguages);
+            languageChoice.setValue(Language.POLSKI);
+        } else {
+            availableLanguages = FXCollections.
+                    observableArrayList(Language.POLISH, Language.ENGLISH);
+            communicateProvider.populate(Language.ENGLISH);
+            languageChoice.setItems(availableLanguages);
+            languageChoice.setValue(Language.ENGLISH);
+        }
         updateFields();
     }
 

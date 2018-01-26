@@ -26,7 +26,8 @@ class ShipPlacer {
     private Queue<Integer> typesOfShips = new LinkedList<>(Arrays.asList(FOUR_MAST, THREE_MAST, THREE_MAST,
             DOUBLE_MAST, DOUBLE_MAST, DOUBLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST, SINGLE_MAST));
 
-    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore myTurn, boolean firstPlayer, Semaphore waitForSending, Output output) {
+    ShipPlacer(Board enemyBoard, Board playerBoard, SocketServer socketServer, Semaphore myTurn, boolean firstPlayer,
+               Semaphore waitForSending, Output output) {
         this.enemyBoard = enemyBoard;
         this.playerBoard = playerBoard;
         this.socketServer = socketServer;
@@ -57,10 +58,10 @@ class ShipPlacer {
             areAllShipsPlaced = true;
             if (firstPlayer) {
                 myTurn.release();
-                output.send("It is turn of yours.");
+                output.send("Your turn.");
             } else {
                 waitForSending.release();
-                output.send("It is turn of your opponent.");
+                output.send("Your opponent turn.");
             }
         }
     }

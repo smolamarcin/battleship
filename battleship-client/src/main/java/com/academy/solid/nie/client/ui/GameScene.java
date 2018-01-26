@@ -28,7 +28,7 @@ class GameScene extends Application implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(GameScene.class.getName());
     private static final int DEFAULT_ROOT_WIDTH = 650;
     private static final int DEFAULT_ROOT_HEIGHT = 950;
-    private static final int DEFAULT_SPACING = 50;
+    private static final int DEFAULT_SPACING = 0;
     private Output output;
     private Board enemyBoard;
     private Board playerBoard;
@@ -53,7 +53,8 @@ class GameScene extends Application implements Runnable {
         enemyBoard = new Board(true, output);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false, output);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending, output);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(),
+                waitForSending, output);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         playerBoard.addLabel(MessageProviderImpl.getCommunicate(Message.YOUR_BOARD));
         enemyBoard.addLabel(MessageProviderImpl.getCommunicate(Message.ENEMY_BOARD));
@@ -97,10 +98,10 @@ class GameScene extends Application implements Runnable {
 
     private void handlePlayersMove(final Cell cell) {
         boolean isMyTurn = cell.shoot();
-        output.send("You shoot at: " + cell.toString());
+        output.send("You shot at: " + cell.toString());
         if (!isMyTurn) {
             waitForSending.release();
-            output.send("You missed\nIt is turn of your opponent");
+            output.send("You missed\nIt is your opponent turn.");
         } else {
             myTurn.release();
             output.send("You hit a ship.");
@@ -115,10 +116,10 @@ class GameScene extends Application implements Runnable {
             enemyBoard.markShipAsSunken(cell.getShip());
         }
         if (enemyBoard.areAllShipsSunk()) {
-            output.send("You won");
+            output.send("You won.");
         } else {
             if (isMyTurn) {
-                output.send("It is turn of yours");
+                output.send("Your turn.");
             }
         }
     }
@@ -146,25 +147,26 @@ class GameScene extends Application implements Runnable {
             }
             try {
                 List<Point2D> points = socketServer.receiveMoves();
-                StringBuilder stringBuilder = new StringBuilder("Opponent of yours shoot at: ");
+                StringBuilder stringBuilder = new StringBuilder("Your opponent shot at: ");
                 points.forEach(stringBuilder::append);
                 output.send(stringBuilder.toString());
                 playerBoard.makeMoves(points);
-                if (playerBoard.isMyTurn())
+                if (playerBoard.isMyTurn()) {
                     output.send("Opponent of yours hit a ship");
+                }
                 playerBoard.markSunkenShipOnPlayerBoard();
             } catch (IOException e) {
                 LOGGER.warning(e.getMessage());
             }
             if (playerBoard.isMyTurn()) {
                 if (playerBoard.areAllShipsSunk()) {
-                    output.send("You lose");
+                    output.send("You lost.");
                 } else {
-                    output.send("It is turn of his");
+                    output.send("It is your turn.");
                     waitForSending.release();
                 }
             } else {
-                output.send("Opponent of yours missed\nIt is turn of yours");
+                output.send("Your opponent missed.\nIt is your turn.");
                 myTurn.release();
             }
         }
