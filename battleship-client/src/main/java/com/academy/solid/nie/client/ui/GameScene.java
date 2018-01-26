@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
@@ -155,6 +156,8 @@ class GameScene extends Application implements Runnable {
                     output.send("Opponent of yours hit a ship");
                 }
                 playerBoard.markSunkenShipOnPlayerBoard();
+            } catch (ConnectException e) {
+                System.exit(0);
             } catch (IOException e) {
                 LOGGER.warning(e.getMessage());
             }

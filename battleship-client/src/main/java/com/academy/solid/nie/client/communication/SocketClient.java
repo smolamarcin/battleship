@@ -1,10 +1,12 @@
 package com.academy.solid.nie.client.communication;
 
+import com.academy.solid.nie.client.ui.ConnectionValidator;
 import lombok.Builder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,6 +65,11 @@ public final class SocketClient implements ShipClient {
 
     @Override
     public String receiveMoves() throws IOException {
-        return in.readLine();
+        Validator connectionValidator = new ConnectionValidator();
+        if (connectionValidator.validate(ip)) {
+            return in.readLine();
+        } else {
+            throw new ConnectException();
+        }
     }
 }

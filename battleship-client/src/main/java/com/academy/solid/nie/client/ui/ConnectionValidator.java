@@ -5,7 +5,7 @@ import com.academy.solid.nie.client.communication.Validator;
 import java.io.IOException;
 import java.net.InetAddress;
 
-class ConnectionValidator implements Validator {
+public class ConnectionValidator implements Validator {
     private static final int CONNECTION_TIMEOUT = 3000;
 
     @Override
