@@ -19,8 +19,7 @@ public class FileOutputDispatcher implements Output {
 
     @Override
     public final void send(String msg) {
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName),
-                "UTF-8")))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)))) {
             out.println(msg);
         } catch (IOException e) {
             logger.warning(e.getMessage());
