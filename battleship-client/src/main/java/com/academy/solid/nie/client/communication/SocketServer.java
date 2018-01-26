@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @since 1.0.1
  */
 
-public final class SocketServer implements Server {
+public class SocketServer implements Server {
     private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
     private ShipClient server;
 
