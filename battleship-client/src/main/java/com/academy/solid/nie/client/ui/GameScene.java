@@ -53,7 +53,8 @@ class GameScene extends Application implements Runnable {
         enemyBoard = new Board(true, output);
         enemyBoard.initialize(getMove());
         playerBoard = new Board(false, output);
-        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(), waitForSending, output);
+        shipPlacer = new ShipPlacer(enemyBoard, playerBoard, socketServer, myTurn, socketServer.isFirstPlayer(),
+                waitForSending, output);
         playerBoard.initialize(shipPlacer.setUpPlayerShips());
         playerBoard.addLabel(MessageProviderImpl.getCommunicate(Message.YOUR_BOARD));
         enemyBoard.addLabel(MessageProviderImpl.getCommunicate(Message.ENEMY_BOARD));
@@ -150,8 +151,9 @@ class GameScene extends Application implements Runnable {
                 points.forEach(stringBuilder::append);
                 output.send(stringBuilder.toString());
                 playerBoard.makeMoves(points);
-                if (playerBoard.isMyTurn())
-                    output.send("Your opponent hit the ship.");
+                if (playerBoard.isMyTurn()) {
+                    output.send("Opponent of yours hit a ship");
+                }
                 playerBoard.markSunkenShipOnPlayerBoard();
             } catch (IOException e) {
                 LOGGER.warning(e.getMessage());

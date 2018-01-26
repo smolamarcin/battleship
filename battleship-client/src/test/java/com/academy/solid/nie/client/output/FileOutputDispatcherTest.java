@@ -47,7 +47,7 @@ public class FileOutputDispatcherTest extends FileCommon {
 
     public void saveMessageToFileIOException() throws IOException {
         //given
-        new File(ONE).mkdir();
+        boolean wasDirectoryCreated = new File(ONE).mkdir();
         attachLogCapturer();
         Output output = new FileOutputDispatcher(ONE);
 
@@ -56,6 +56,7 @@ public class FileOutputDispatcherTest extends FileCommon {
         String testCapturedLog = getTestCapturedLog();
 
         //then
+        assertTrue(wasDirectoryCreated);
         assertTrue(testCapturedLog.contains("WARNING"));
         }
 

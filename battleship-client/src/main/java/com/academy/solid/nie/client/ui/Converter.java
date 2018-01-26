@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class Converter {
+final class Converter {
     private static final String SHIPS_SEPARATOR = ";\\|";
     private static final String COORDINATES_SEPARATOR = ";";
+
+    private Converter() {
+    }
 
     static List<List<Point2D>> convert(String shipsString) {
         List<List<Point2D>> ships = new ArrayList<>();

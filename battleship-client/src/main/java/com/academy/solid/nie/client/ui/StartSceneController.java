@@ -99,13 +99,13 @@ public final class StartSceneController {
 
     @FXML
     void languageChosen(ActionEvent actionEvent) {
-         if (languageChoice.getValue() == Language.POLSKI || languageChoice.getValue() == Language.POLISH){
+        if (languageChoice.getValue() == Language.POLSKI || languageChoice.getValue() == Language.POLISH) {
             availableLanguages = FXCollections.
                     observableArrayList(Language.POLSKI, Language.ANGIELSKI);
             communicateProvider.populate(Language.POLISH);
             languageChoice.setItems(availableLanguages);
             languageChoice.setValue(Language.POLSKI);
-        }else {
+        } else {
             availableLanguages = FXCollections.
                     observableArrayList(Language.POLISH, Language.ENGLISH);
             communicateProvider.populate(Language.ENGLISH);
