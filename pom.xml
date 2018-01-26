@@ -155,12 +155,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacocoMavenPluginVersion}</version>
-                </plugin>
-
-                <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>${sonarMavenPlugin}</version>
@@ -173,6 +167,23 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacocoMavenPluginVersion}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/WindowDisplayer.*</exclude>
+                        <exclude>**/StartScene.*</exclude>
+                        <exclude>**/StartSceneController.*</exclude>
+                        <exclude>**/GameScene.*</exclude>
+                        <exclude>**/Point2D.*</exclude>
+                        <exclude>**/BoardFX.*</exclude>
+                        <exclude>**/Cell.*</exclude>
+                        <exclude>**/Type.*</exclude>
+                        <exclude>**/WindowTranscript.*</exclude>
+                        <exclude>**/Message.*</exclude>
+                        <exclude>**/Language.*</exclude>
+                        <exclude>**/OutputType.*</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
