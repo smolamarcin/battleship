@@ -3,6 +3,8 @@ package com.academy.solid.nie.server;
 import com.academy.solid.nie.client.communication.SocketServer;
 import com.academy.solid.nie.client.output.LoggerOutputDispatcher;
 
+import java.io.IOException;
+
 import static com.academy.solid.nie.server.ServerGameInitializerTest.IP;
 import static com.academy.solid.nie.server.ServerGameInitializerTest.PORT;
 

@@ -80,15 +80,23 @@ public final class StartSceneController {
     void btnConnectClicked(final ActionEvent event) throws IOException {
         Validator ipValidator = new IpValidator();
         Validator portValidator = new PortValidator();
+        Validator connectionValidator = new ConnectionValidator();
         String ip = fieldIP.getText();
         String port = fieldPort.getText();
         String name = nameInput.getText();
         if (ipValidator.validate(ip) && portValidator.validate(port)) {
             SocketServer socketServer = new SocketServer();
-            socketServer.connect(ip, Integer.parseInt(port));
-            GameScene gameScene = new GameScene(socketServer, output, name);
-            gameScene.start();
-            new Thread(gameScene).start();
+            if (!connectionValidator.validate(ip)) {
+                WindowDisplayer wrongIpWindow = new WindowDisplayer(
+                        MessageProviderImpl.getCommunicate(Message.CONNECTION_PROBLEM))
+                        .withButtonWhoExitThisWindow();
+                wrongIpWindow.display();
+            } else {
+                socketServer.connect(ip, Integer.parseInt(port));
+                GameScene gameScene = new GameScene(socketServer, output, name);
+                gameScene.start();
+                new Thread(gameScene).start();
+            }
         } else {
             WindowDisplayer wrongIpWindow = new WindowDisplayer(
                     MessageProviderImpl.getCommunicate(Message.WRONG_INPUT))
@@ -105,11 +113,16 @@ public final class StartSceneController {
             communicateProvider.populate(Language.POLISH);
             languageChoice.setItems(availableLanguages);
             languageChoice.setValue(Language.POLSKI);
-        } else {
+        } else if (languageChoice.getValue() == Language.ANGIELSKI) {
             availableLanguages = FXCollections.
                     observableArrayList(Language.POLISH, Language.ENGLISH);
             communicateProvider.populate(Language.ENGLISH);
             languageChoice.setItems(availableLanguages);
+            languageChoice.setValue(Language.ENGLISH);
+        } else {
+            availableLanguages = FXCollections.
+                    observableArrayList(Language.POLISH, Language.ENGLISH);
+            communicateProvider.populate(Language.ENGLISH);
             languageChoice.setValue(Language.ENGLISH);
         }
         updateFields();
