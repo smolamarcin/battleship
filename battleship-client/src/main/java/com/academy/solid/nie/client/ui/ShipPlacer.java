@@ -57,10 +57,10 @@ class ShipPlacer {
             areAllShipsPlaced = true;
             if (firstPlayer) {
                 myTurn.release();
-                output.send("It is turn of yours.");
+                output.send("Your turn.");
             } else {
                 waitForSending.release();
-                output.send("It is turn of your opponent.");
+                output.send("Your opponent turn.");
             }
         }
     }
